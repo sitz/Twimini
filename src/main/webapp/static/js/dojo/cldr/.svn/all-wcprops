@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/cldr
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/cldr/LICENSE
+END
+supplemental.js
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/cldr/supplemental.js
+END
+monetary.js
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/cldr/monetary.js
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/cldr/README
+END

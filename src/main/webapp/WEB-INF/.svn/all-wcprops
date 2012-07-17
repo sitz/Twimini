@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/62181/CPWS/java-train/todoapp/src/main/webapp/WEB-INF
+END
+dispatcher-servlet.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/62151/CPWS/java-train/todoapp/src/main/webapp/WEB-INF/dispatcher-servlet.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/62148/CPWS/java-train/todoapp/src/main/webapp/WEB-INF/web.xml
+END

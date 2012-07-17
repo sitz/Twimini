@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree
+END
+_dndSelector.js
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/_dndSelector.js
+END
+dndSource.js
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/dndSource.js
+END
+_dndContainer.js
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/_dndContainer.js
+END
+TreeStoreModel.js
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/TreeStoreModel.js
+END
+ForestStoreModel.js
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/ForestStoreModel.js
+END
+model.js
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dijit/tree/model.js
+END

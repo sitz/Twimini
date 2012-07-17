@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/rpc
+END
+RpcService.js
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/rpc/RpcService.js
+END
+JsonService.js
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/rpc/JsonService.js
+END
+JsonpService.js
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/44904/CPWS/java-train/todoapp/src/main/webapp/static/js/dojo/rpc/JsonpService.js
+END

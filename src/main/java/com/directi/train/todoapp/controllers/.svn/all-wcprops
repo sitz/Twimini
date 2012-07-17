@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/62148/CPWS/java-train/todoapp/src/main/java/com/directi/train/todoapp/controllers
+END
+AuthInterceptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/62148/CPWS/java-train/todoapp/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java
+END
+UserController.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/62148/CPWS/java-train/todoapp/src/main/java/com/directi/train/todoapp/controllers/UserController.java
+END
+TodoController.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/44908/CPWS/java-train/todoapp/src/main/java/com/directi/train/todoapp/controllers/TodoController.java
+END

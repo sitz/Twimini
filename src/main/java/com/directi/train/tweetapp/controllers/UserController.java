@@ -1,4 +1,4 @@
-package com.directi.train.todoapp.controllers;
+package com.directi.train.tweetapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,6 +29,36 @@ public class UserController {
         return "index";
     }
 
+    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
+    public ModelAndView registerForm() {
+        return new ModelAndView("register");
+    }
+    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    public ModelAndView register(@RequestParam("username") String userName,
+                              @RequestParam("password") String password,
+                              @RequestParam("email") String email,
+
+                              HttpSession session) {
+        ModelAndView mv = new ModelAndView("/index");
+        long userID;
+        try {
+            Map<String, Object> userData = db.queryForMap("select email,username from users where email= ? or username=?",
+                   email,userName);
+            if(userData.get("username").equals(userName)) {
+                mv.addObject("message", "UserName Already exists.");
+                return mv;
+            }
+            if(userData.get("email").equals(email)) {
+                mv.addObject("message", "Email Already exists.");
+                return mv;
+            }
+        } catch (EmptyResultDataAccessException e) {
+            db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
+            mv.addObject("message", "Email registered.");
+        }
+        return mv;
+    }
+
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam("username") String userName,
                               @RequestParam("password") String password,
@@ -44,12 +74,13 @@ public class UserController {
             }
             userID = (Integer) userData.get("id");
         } catch (EmptyResultDataAccessException e) {
-            db.update("insert into users (username, password) values(?, ?)", userName, password);
-            userID = db.queryForLong("CALL IDENTITY()");
+            mv.addObject("message", "User Does not register. Please register");
+            return mv;
         }
         session.setAttribute("userName", userName);
         session.setAttribute("userID", userID);
-        mv.setViewName("redirect:/todo");
+        System.out.println(userID);
+        mv.setViewName("redirect:/tweet");
         return mv;
     }
 

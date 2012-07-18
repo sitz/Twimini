@@ -14,6 +14,7 @@
 Login:
 <form action="/user/login" method="post">
     username: <input type="text" name="username"></br>
-    pasword: <input type="password" name="password"></br>
+    password: <input type="password" name="password"></br>
+    <a href="/user/register">Register</a>
     <input type="submit">
 </form>

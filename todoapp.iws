@@ -39,7 +39,40 @@
     </TreeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="530bb0bd-fdc5-4f99-a9c2-490cd9c80317" name="Default" comment="" />
+    <list default="true" id="530bb0bd-fdc5-4f99-a9c2-490cd9c80317" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/register.jsp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TodoController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/TodoItem.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/all-wcprops" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/entries" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/text-base/AppConfig.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/text-base/AppConfig.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/AppConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/all-wcprops" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/entries" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/AuthInterceptor.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/AuthInterceptor.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/TodoController.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/TodoController.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/UserController.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/UserController.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/all-wcprops" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/entries" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/text-base/TodoItem.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/text-base/TodoItem.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/all-wcprops" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/entries" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/text-base/TodoStore.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/text-base/TodoStore.java.svn-base" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/todo.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" afterPath="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoapp.ipr" afterPath="$PROJECT_DIR$/todoapp.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoapp.iws" afterPath="$PROJECT_DIR$/todoapp.iws" />
+    </list>
     <ignored path="todoapp.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -96,38 +129,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="todo.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/todo.jsp">
+      <file leaf-file-name="tweet.jsp" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="73" selection-start="929" selection-end="929" vertical-scroll-proportion="-11.875">
+            <state line="34" column="10" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.88850176">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TodoController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TodoController.java">
+      <file leaf-file-name="TweeetController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="40" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthInterceptor.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TodoStore.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="20" selection-start="881" selection-end="881" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="34" column="37" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="method#TweeetController#0;class#TweeetController#0" expanded="false" />
+                <element signature="method#create#0;class#TweeetController#0" expanded="false" />
+                <element signature="method#delete#0;class#TweeetController#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,9 +164,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/AppConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/TodoItem.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/todo.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TodoController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TweeetController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
       </list>
     </option>
   </component>
@@ -306,6 +338,40 @@
               <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="todoapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Twimini" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -330,6 +396,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="todoapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Twimini" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -403,7 +507,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="todoapp" />
+              <option name="myItemId" value="tweetapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -429,7 +533,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tweetapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="todoapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Twimini" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tweetapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -459,7 +593,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="todoapp" />
+              <option name="myItemId" value="tweetapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -473,10 +607,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.proportion" value="0.0" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="options.lastSelected" value="preferences.lookFeel" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -634,40 +771,61 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="530bb0bd-fdc5-4f99-a9c2-490cd9c80317" name="Default" comment="" />
       <created>1342533484641</created>
       <updated>1342533484641</updated>
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="0" y="19" width="1918" height="1059" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.4983957" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.4983957" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.67022413" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17398287" sideWeight="0.6709539" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24919786" sideWeight="0.67022413" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32977587" sideWeight="0.49786097" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19111349" sideWeight="0.6709539" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290461" sideWeight="0.49786097" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -730,81 +888,223 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="8" selection-start="352" selection-end="352" vertical-scroll-proportion="0.37958533" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/TodoItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="162" selection-end="162" vertical-scroll-proportion="0.010719755" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="33" selection-start="1769" selection-end="1769" vertical-scroll-proportion="0.28870967" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/AppConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="38" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.6094946" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="3" selection-start="833" selection-end="833" vertical-scroll-proportion="0.459375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="4" selection-start="981" selection-end="981" vertical-scroll-proportion="0.4310618" />
-      </provider>
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="20" selection-start="881" selection-end="881" vertical-scroll-proportion="0.0" />
+        <state line="50" column="10" selection-start="1897" selection-end="1897" vertical-scroll-proportion="0.09698997">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="54" selection-start="823" selection-end="823" vertical-scroll-proportion="0.33407572">
-          <folding />
-        </state>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/todo.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="73" selection-start="929" selection-end="929" vertical-scroll-proportion="-11.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TodoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="40" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/todo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="40" selection-start="352" selection-end="352" vertical-scroll-proportion="0.16574585">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#simpleJdbcTemplate#0;class#AppConfig#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="41" selection-start="46" selection-end="46" vertical-scroll-proportion="0.026132405">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="56" selection-start="82" selection-end="82" vertical-scroll-proportion="0.025083613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="77" selection-start="698" selection-end="698" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="36" selection-start="840" selection-end="840" vertical-scroll-proportion="0.46195653">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="34" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.8779264">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="2" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="10" selection-start="451" selection-end="451" vertical-scroll-proportion="0.41811848">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/register.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="6" selection-start="585" selection-end="585" vertical-scroll-proportion="0.4965157">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="43" selection-start="475" selection-end="475" vertical-scroll-proportion="0.25083613">
+          <folding>
+            <element signature="method#TweetItem#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#getTweet#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#setTweet#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#getId#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#setId#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#getReceiverId#0;class#TweetItem#0" expanded="false" />
+            <element signature="method#setReceiverId#0;class#TweetItem#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="111" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.8779264">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="37" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#TweeetController#0;class#TweeetController#0" expanded="false" />
+            <element signature="method#create#0;class#TweeetController#0" expanded="false" />
+            <element signature="method#delete#0;class#TweeetController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="10" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.88850176">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>todoapp:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>todoapp</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 

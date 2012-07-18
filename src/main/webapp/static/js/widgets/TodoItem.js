@@ -3,7 +3,7 @@ dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 
 dojo.declare("todo.TodoItem", [dijit._Widget, dijit._Templated], {
-    templateString: dojo.cache("todo", "TodoItem.html"),
+    templateString: dojo.cache("todo", "TweetItem.html"),
     deleteItem: function() {
         var widget = this
         dojo.xhrPost({

@@ -7,7 +7,7 @@
 
     <script type="text/javascript">
         function addItem2(form) {
-            $.post('/todo/create.json', $(form).serialize(),function(data) {
+            $.post('/tweet/new.json', $(form).serialize(),function(data) {
                 var todoItemLI = $(new EJS({url: '/static/ejs/todo.ejs'}).render(data)).data("todoID", data.id);
               $('#todoList').append(todoItemLI);
             });
@@ -15,14 +15,14 @@
 
         $(".todoDelete").live("click", function(evt){
             var id = $(evt.target).parents("li").data("todoID");
-            $.post('/todo/delete.json', {id:id},function(data) {
+            $.post('/tweet/delete.json', {id:id},function(data) {
                 $(evt.target).parents("li").remove();
             });
         });
         $(".todoUpdate").live("submit", function(evt){
             var form = evt.target;
             var data = {id:form.id.value, name:form.name.value};
-            $.post("/todo/update.json", $(form).serialize(),function() {
+            $.post("/tweet/update.json", $(form).serialize(),function() {
                 var todoItemLI = $(new EJS({url: '/static/ejs/todo.ejs'}).render(data)).data("todoID", data.id);
                 $('#todoItem' + data.id).replaceWith(todoItemLI);
             });
@@ -37,18 +37,18 @@
 <body>
 Hello ${sessionScope.userName} <a href="/user/logout">Logout</a>
 
-<h1>ToDo</h1>
-<ul id="todoList">
-    <c:forEach var='item' items='${todoItemList}'>
+<h1>Tweet</h1>
+<ul id="tweetList">
+    <c:forEach var='tweet' items='${tweetItemProfile}'>
         <script type="text/javascript">
-            appendItem({id:${item.id}, name:'${item.name}'})
+            appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
         </script>
     </c:forEach>
 </ul>
 
-<form action="/todo/create" onsubmit="addItem2(this); return false;">
-    New todo:
-    <input type="text" name="name"/>
+<form action="/tweet/create" onsubmit="addItem2(this); return false;">
+    New tweet:
+    <input type="text" name="tweet"/>
     <input type="submit" value="Add"/>
 </form>
 

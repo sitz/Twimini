@@ -8,29 +8,29 @@
     <script type="text/javascript">
         function addItem2(form) {
             $.post('/tweet/new.json', $(form).serialize(),function(data) {
-                var todoItemLI = $(new EJS({url: '/static/ejs/todo.ejs'}).render(data)).data("todoID", data.id);
-              $('#todoList').append(todoItemLI);
+                var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+              $('#tweetList').append(tweetItemLI);
             });
         }
 
-        $(".todoDelete").live("click", function(evt){
-            var id = $(evt.target).parents("li").data("todoID");
+        $(".tweetDelete").live("click", function(evt){
+            var id = $(evt.target).parents("li").data("tweetID");
             $.post('/tweet/delete.json', {id:id},function(data) {
                 $(evt.target).parents("li").remove();
             });
         });
-        $(".todoUpdate").live("submit", function(evt){
+        $(".tweetUpdate").live("submit", function(evt){
             var form = evt.target;
             var data = {id:form.id.value, name:form.name.value};
             $.post("/tweet/update.json", $(form).serialize(),function() {
-                var todoItemLI = $(new EJS({url: '/static/ejs/todo.ejs'}).render(data)).data("todoID", data.id);
-                $('#todoItem' + data.id).replaceWith(todoItemLI);
+                var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+                $('#tweetItem' + data.id).replaceWith(tweetItemLI);
             });
         });
 
         function appendItem(data) {
-            var todoItemLI = $(new EJS({url: '/static/ejs/todo.ejs'}).render(data)).data("todoID", data.id);
-            $('#todoList').append(todoItemLI);
+            var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+            $('#tweetList').append(tweetItemLI);
         }
     </script>
 </head>
@@ -39,8 +39,10 @@ Hello ${sessionScope.userName} <a href="/user/logout">Logout</a>
 
 <h1>Tweet</h1>
 <ul id="tweetList">
-    <c:forEach var='tweet' items='${tweetItemProfile}'>
+    <li> Hllo</li>
+    <c:forEach var='tweet' items='${tweets}'>
         <script type="text/javascript">
+            console.log("ER");
             appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
         </script>
     </c:forEach>

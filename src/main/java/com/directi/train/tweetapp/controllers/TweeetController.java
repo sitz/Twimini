@@ -26,7 +26,7 @@ public class TweeetController {
     @RequestMapping
     public ModelAndView tweet () {
         return new ModelAndView() {{
-            addObject("tweetsList",tweetStore.list());
+            addObject("tweets",tweetStore.list());
         }};
     }
 

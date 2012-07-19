@@ -26,7 +26,7 @@ public class TweetStore {
     public TweetItem add(TweetItem tweetItem) {
         System.out.println(userID.get());
         System.out.println(tweetItem.getTweet());
-        db.update("insert into feeds (user_id, receiver_id, description) values(?,?,?)",userID.get(), userID.get(), tweetItem.getTweet());
+        db.update("insert into feeds (user_id, receiver_id, tweet) values(?,?,?)",userID.get(), userID.get(), tweetItem.getTweet());
         int id = db.queryForInt("CALL IDENTITY()");
         return db.queryForObject("select * from feeds where id=?", TweetItem.rowMapper, id);
     }

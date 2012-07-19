@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping("/user/follower")
+@RequestMapping("/user/followers")
 public class FollowersController {
 }

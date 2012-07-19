@@ -17,7 +17,7 @@ public class TweetItem {
     };
     public TweetItem(ResultSet rs) throws SQLException {
         id = rs.getInt("id");
-        tweet = rs.getString("description");
+        tweet = rs.getString("tweet");
         receiverId = rs.getInt("receiver_id");
     }
 

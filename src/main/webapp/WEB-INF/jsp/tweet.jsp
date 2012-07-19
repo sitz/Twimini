@@ -9,7 +9,7 @@
 
     <script type="text/javascript">
         function addItem2(element) {
-            var form = $(element).parent();
+            var form = $(element).parent().parent();
             $.post('/tweet/new.json', $(form).serialize(),function(data) {
                 var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
               $('#tweetList').append(tweetItemLI);
@@ -72,14 +72,14 @@
     <div class="span6">
         <form class="form-horizontal well">
         <h1>Some Fancy Title</h1>
-<div id="tweetList">
-    <c:forEach var='tweet' items='${tweets}'>
+        <div id="tweetList">
+            <c:forEach var='tweet' items='${tweets}'>
 
-        <script type="text/javascript">
-            appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
-        </script>
-    </c:forEach>
-</div>
+                <script type="text/javascript">
+                    appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
+                </script>
+            </c:forEach>
+        </div>
         </form>
 </div>
 </div>

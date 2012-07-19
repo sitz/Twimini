@@ -45,8 +45,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView("/index");
         long userID;
         try {
-            Map<String, Object> userData = db.queryForMap("select email,username from users where email= ? or username=?",
-                   email,userName);
+            Map<String, Object> userData = db.queryForMap("select email,username from users where email='"+ email + "' or username='"+ userName +"'");
             if(userData.get("username").equals(userName)) {
                 mv.addObject("message", "UserName Already exists.");
                 return mv;
@@ -67,7 +66,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView("/index");
         long userID;
         try {
-            Map<String, Object> userData = db.queryForMap("select id, username, password from users where username=?", userName);
+            Map<String, Object> userData = db.queryForMap("select id, username, password  from users where username='"+ userName +"'");
             if (!userData.get("password").equals(password)) {
                 mv.addObject("message", "Invalid password.");
                 return mv;
@@ -92,9 +91,10 @@ public class UserController {
 
     @RequestMapping(value = "/user/following", method = RequestMethod.GET)
     public ModelAndView getFollowing(@RequestParam("username") String userName) {
+        System.out.println(userName);
         ModelAndView mv = new ModelAndView("following");
-        int userId = db.queryForInt("select id from users where username=?", userName);
-        List<Map<String, Object>> followingList = db.queryForList("select following_id from following where user_id=?", userId);
+        int userId = db.queryForInt("select id from users where username='"+ userName+ "'");
+        List<Map<String, Object>> followingList = db.queryForList(String.format("select following_id from following where user_id='%d'", userId));
         mv.addObject(followingList);
 
         return mv;
@@ -102,9 +102,10 @@ public class UserController {
 
     @RequestMapping(value = "/user/followers", method = RequestMethod.GET)
     public ModelAndView getFollowers(@RequestParam("username") String userName) {
+        System.out.println(userName);
         ModelAndView mv = new ModelAndView("followers");
-        int userId = db.queryForInt("select id from users where username=?", userName);
-        List<Map<String, Object>> followersList = db.queryForList("select follower_id from followers where user_id=?", userId);
+        int userId = db.queryForInt("select id from users where username='"+userName+"'", userName);
+        List<Map<String, Object>> followersList = db.queryForList(String.format("select follower_id from followers where user_id='%d'", userId));
         mv.addObject(followersList);
 
         return  mv;

@@ -47,6 +47,7 @@
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: postgresql:postgresql:9.0-801.jdbc4" level="project" />
   </component>
 </module>
 

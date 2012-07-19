@@ -13,7 +13,7 @@ public class AppConfig {
         basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
-        basicDataSource.setPassword("postgres");
+        basicDataSource.setPassword("qwerty");
         return new SimpleJdbcTemplate(basicDataSource);
     }
 

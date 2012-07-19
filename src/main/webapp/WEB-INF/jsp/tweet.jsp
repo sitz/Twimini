@@ -12,7 +12,7 @@
             var form = $(element).parent().parent();
             $.post('/tweet/new.json', $(form).serialize(),function(data) {
                 var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
-              $('#tweetList').append(tweetItemLI);
+              $('#tweetList').prepend(tweetItemLI);
             });
         }
 
@@ -63,7 +63,7 @@
     <div class="span4">
     <form class="form-horizontal well">
         <div>
-        <textarea rows="5" name="tweet" class="input-xlarge" style="width:330px;padding-bottom: 10px"> Tweet </textarea>
+        <textarea rows="5" name="tweet" class="input-xlarge" style="width:330px;padding-bottom: 10px"></textarea>
         </div>
         <div style="text-align: right;padding-top: 10px;">
         <a class="btn" href="#" onclick="addItem2(this); return false;">Tweett!</a>

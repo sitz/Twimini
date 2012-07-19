@@ -14,7 +14,6 @@ public class AppConfig {
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("postgres");
-
         return new SimpleJdbcTemplate(basicDataSource);
     }
 

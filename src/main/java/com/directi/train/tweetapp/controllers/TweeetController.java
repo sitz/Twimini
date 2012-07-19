@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("tweet")
+@RequestMapping("/tweet")
 public class TweeetController {
     private final TweetStore tweetStore;
 
@@ -26,7 +26,7 @@ public class TweeetController {
     @RequestMapping
     public ModelAndView tweet () {
         return new ModelAndView() {{
-            addObject("tweets",tweetStore.list());
+            addObject("tweets", tweetStore.list());
         }};
     }
 
@@ -39,6 +39,9 @@ public class TweeetController {
     @RequestMapping("new")
     @ResponseBody
     public TweetItem create(TweetItem tweetItem) {
+        System.out.println(tweetItem.getTweet());
+        System.out.println(tweetItem.getId() );
+        System.out.println(tweetItem.getReceiverId());
         return tweetStore.add(tweetItem);
     }
 

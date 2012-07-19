@@ -20,25 +20,19 @@ public class TweetStore {
     }
 
     public List<TweetItem> list() {
-        return db.query("select * from todos where user_id=? order by id asc",
-                        TweetItem.rowMapper,
-                        userID.get());
+        return db.query("select * from feeds where user_id=? order by id asc", TweetItem.rowMapper, userID.get());
     }
 
     public TweetItem add(TweetItem tweetItem) {
         System.out.println(userID.get());
         System.out.println(tweetItem.getTweet());
-        db.update("insert into todos (user_id, receiver_id, description) values(?,?,?)",userID.get(), userID.get(), tweetItem.getTweet());
+        db.update("insert into feeds (user_id, receiver_id, description) values(?,?,?)",userID.get(), userID.get(), tweetItem.getTweet());
         int id = db.queryForInt("CALL IDENTITY()");
-        return db.queryForObject("select * from todos where id=?",
-                                 TweetItem.rowMapper,
-                                 id);
-    }
-    public void delete(int id) {
-        db.update("delete from todos where id=? and user_id=?", id, userID.get());
+        return db.queryForObject("select * from feeds where id=?", TweetItem.rowMapper, id);
     }
 
     public List<TweetItem> profile() {
-        return db.query("select * from todos where user_id=? order by id dsc",TweetItem.rowMapper,userID.get());
+        return list();
     }
+
 }

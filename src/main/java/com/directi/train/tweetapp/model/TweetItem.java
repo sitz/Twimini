@@ -24,7 +24,7 @@ public class TweetItem {
     public TweetItem() { }
 
     public String getTweet() {
-        return tweet;
+        return this.tweet;
     }
 
     public void setTweet(String name) {
@@ -32,7 +32,7 @@ public class TweetItem {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -40,7 +40,7 @@ public class TweetItem {
     }
 
     public int getReceiverId() {
-        return receiverId;
+        return this.receiverId;
     }
 
     public void setReceiverId(int receiverId) {

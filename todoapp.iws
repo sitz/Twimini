@@ -40,37 +40,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="530bb0bd-fdc5-4f99-a9c2-490cd9c80317" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/register.jsp" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TodoController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/TodoItem.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/all-wcprops" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/entries" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/.svn/text-base/AppConfig.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/.svn/text-base/AppConfig.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/AppConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/all-wcprops" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/entries" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/AuthInterceptor.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/AuthInterceptor.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/TodoController.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/TodoController.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/.svn/text-base/UserController.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/.svn/text-base/UserController.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/all-wcprops" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/entries" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/.svn/text-base/TodoItem.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/.svn/text-base/TodoItem.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/all-wcprops" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/entries" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/entries" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/.svn/text-base/TodoStore.java.svn-base" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/.svn/text-base/TodoStore.java.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/todo.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" afterPath="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoapp.ipr" afterPath="$PROJECT_DIR$/todoapp.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/AppConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/AppConfig.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/UserController.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/UserController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/services/TweetStore.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/services/TweetStore.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoapp.iws" afterPath="$PROJECT_DIR$/todoapp.iws" />
     </list>
     <ignored path="todoapp.iws" />
@@ -129,10 +107,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tweet.jsp" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp">
+      <file leaf-file-name="AuthInterceptor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="10" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.88850176">
+            <state line="31" column="13" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -141,12 +119,50 @@
       <file leaf-file-name="TweeetController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="37" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+            <state line="38" column="33" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TweetItem.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="20" selection-start="1125" selection-end="1125" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="method#TweeetController#0;class#TweeetController#0" expanded="false" />
-                <element signature="method#create#0;class#TweeetController#0" expanded="false" />
-                <element signature="method#delete#0;class#TweeetController#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#307#488#0" expanded="true" />
+                <element signature="e#481#482#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="111" column="14" selection-start="4577" selection-end="4577" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppConfig.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="21" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TweetStore.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.7475083">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -164,9 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/AuthInterceptor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/model/TodoItem.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" />
@@ -175,11 +188,14 @@
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/services/TodoStore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TweeetController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
+        <option value="$PROJECT_DIR$/todoapp.iws" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
       </list>
     </option>
   </component>
@@ -258,9 +274,10 @@
     <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="19" />
-    <option name="width" value="1918" />
-    <option name="height" value="1059" />
+    <option name="x" value="1360" />
+    <option name="y" value="24" />
+    <option name="width" value="1920" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -269,6 +286,8 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
@@ -620,9 +639,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
@@ -734,9 +753,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
     <option name="LAST_MERGED_REVISION" />
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
@@ -750,24 +771,6 @@
     <configuration useDefault="false">$USER_HOME$/.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
     <supportedVersion>125</supportedVersion>
-  </component>
-  <component name="SvnFileUrlMappingImpl">
-    <option name="myMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
-    <option name="myMoreRealMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="$PROJECT_DIR$" />
-          <option name="myCopyRoot" value="$PROJECT_DIR$" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -798,14 +801,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="19" width="1918" height="1059" extended-state="0" />
+    <frame x="1360" y="24" width="1920" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32869378" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -814,12 +817,12 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32869378" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17398287" sideWeight="0.6709539" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1736111" sideWeight="0.6723769" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19111349" sideWeight="0.6709539" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290461" sideWeight="0.49786097" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19070514" sideWeight="0.6723769" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32762313" sideWeight="0.49786097" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -888,44 +891,25 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="10" selection-start="1897" selection-end="1897" vertical-scroll-proportion="0.09698997">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
+        <state />
+      </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
         <state />
       </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/todo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="40" selection-start="352" selection-end="352" vertical-scroll-proportion="0.16574585">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#simpleJdbcTemplate#0;class#AppConfig#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.html">
@@ -937,16 +921,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="56" selection-start="82" selection-end="82" vertical-scroll-proportion="0.025083613">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="77" selection-start="698" selection-end="698" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="56" selection-start="82" selection-end="82" vertical-scroll-proportion="0.025083613" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
@@ -959,13 +934,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="34" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.8779264">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="2" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
@@ -973,56 +941,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
+    <entry file="file://$PROJECT_DIR$/todoapp.iws">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="10" selection-start="451" selection-end="451" vertical-scroll-proportion="0.41811848">
+        <state line="595" column="44" selection-start="29002" selection-end="29002" vertical-scroll-proportion="1.0186757">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/AuthInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="10" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.9156194">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/register.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="6" selection-start="585" selection-end="585" vertical-scroll-proportion="0.4965157">
+        <state line="19" column="6" selection-start="585" selection-end="585" vertical-scroll-proportion="0.51166964">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="43" selection-start="475" selection-end="475" vertical-scroll-proportion="0.25083613">
-          <folding>
-            <element signature="method#TweetItem#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#getTweet#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#setTweet#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#getId#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#setId#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#getReceiverId#0;class#TweetItem#0" expanded="false" />
-            <element signature="method#setReceiverId#0;class#TweetItem#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="111" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.8779264">
+        <state line="16" column="10" selection-start="451" selection-end="451" vertical-scroll-proportion="0.4152249">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="37" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+        <state line="38" column="33" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="20" selection-start="1125" selection-end="1125" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="method#TweeetController#0;class#TweeetController#0" expanded="false" />
-            <element signature="method#create#0;class#TweeetController#0" expanded="false" />
-            <element signature="method#delete#0;class#TweeetController#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#307#488#0" expanded="true" />
+            <element signature="e#481#482#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="10" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.88850176">
+        <state line="111" column="14" selection-start="4577" selection-end="4577" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="21" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.7475083">
           <folding />
         </state>
       </provider>

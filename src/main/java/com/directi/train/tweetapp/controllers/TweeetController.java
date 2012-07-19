@@ -42,10 +42,4 @@ public class TweeetController {
         return tweetStore.add(tweetItem);
     }
 
-    @RequestMapping("delete")
-    @ResponseBody
-    public Map<String, String> delete(@RequestParam("id") int id) {
-        tweetStore.delete(id);
-        return ImmutableMap.of("status", "success");
-    }
 }

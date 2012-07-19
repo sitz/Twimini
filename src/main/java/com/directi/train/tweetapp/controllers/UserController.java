@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.Map;
 
 @Controller
@@ -37,8 +40,8 @@ public class UserController {
     public ModelAndView register(@RequestParam("username") String userName,
                               @RequestParam("password") String password,
                               @RequestParam("email") String email,
-
                               HttpSession session) {
+
         ModelAndView mv = new ModelAndView("/index");
         long userID;
         try {
@@ -60,14 +63,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("username") String userName,
-                              @RequestParam("password") String password,
-                              HttpSession session) {
+    public ModelAndView login(@RequestParam("username") String userName, @RequestParam("password") String password, HttpSession session) {
         ModelAndView mv = new ModelAndView("/index");
         long userID;
         try {
-            Map<String, Object> userData = db.queryForMap("select id, username, password from users where username=?",
-                                                          userName);
+            Map<String, Object> userData = db.queryForMap("select id, username, password from users where username=?", userName);
             if (!userData.get("password").equals(password)) {
                 mv.addObject("message", "Invalid password.");
                 return mv;
@@ -88,5 +88,25 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/user/following", method = RequestMethod.GET)
+    public ModelAndView getFollowing(@RequestParam("username") String userName) {
+        ModelAndView mv = new ModelAndView("following");
+        int userId = db.queryForInt("select id from users where username=?", userName);
+        List<Map<String, Object>> followingList = db.queryForList("select following_id from following where user_id=?", userId);
+        mv.addObject(followingList);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/user/followers", method = RequestMethod.GET)
+    public ModelAndView getFollowers(@RequestParam("username") String userName) {
+        ModelAndView mv = new ModelAndView("followers");
+        int userId = db.queryForInt("select id from users where username=?", userName);
+        List<Map<String, Object>> followersList = db.queryForList("select follower_id from followers where user_id=?", userId);
+        mv.addObject(followersList);
+
+        return  mv;
     }
 }

@@ -1,15 +1,23 @@
 package com.directi.train.tweetapp.controllers;
 
+import com.directi.train.tweetapp.model.UserItem;
+import com.directi.train.tweetapp.services.TweetStore;
+import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpSession;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListResourceBundle;
@@ -18,9 +26,10 @@ import java.util.Map;
 @Controller
 public class UserController {
     public final SimpleJdbcTemplate db;
+    private final UserStore userStore;
 
     @Autowired
-    public UserController(SimpleJdbcTemplate db) {this.db = db;}
+    public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
 
     @RequestMapping("/")
     public String index() {
@@ -90,24 +99,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/following", method = RequestMethod.GET)
-    public ModelAndView getFollowing(@RequestParam("username") String userName) {
-        System.out.println(userName);
-        ModelAndView mv = new ModelAndView("following");
-        int userId = db.queryForInt("select id from users where username='"+ userName+ "'");
-        List<Map<String, Object>> followingList = db.queryForList(String.format("select following_id from following where user_id='%d'", userId));
-        mv.addObject(followingList);
-
-        return mv;
+    @ResponseBody
+    public List<Object> getFollowing(@RequestParam("username") String userName) {
+        return userStore.follower_list(userName);
     }
 
     @RequestMapping(value = "/user/followers", method = RequestMethod.GET)
-    public ModelAndView getFollowers(@RequestParam("username") String userName) {
-        System.out.println(userName);
-        ModelAndView mv = new ModelAndView("followers");
-        int userId = db.queryForInt("select id from users where username='"+userName+"'", userName);
-        List<Map<String, Object>> followersList = db.queryForList(String.format("select follower_id from followers where user_id='%d'", userId));
-        mv.addObject(followersList);
-
-        return  mv;
+    @ResponseBody
+    public List<Object> getFollowers(@RequestParam("username") String userName) {
+        return userStore.follower_list(userName);
     }
 }

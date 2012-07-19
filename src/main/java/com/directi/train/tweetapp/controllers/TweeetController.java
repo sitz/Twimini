@@ -39,9 +39,6 @@ public class TweeetController {
     @RequestMapping("new")
     @ResponseBody
     public TweetItem create(TweetItem tweetItem) {
-        System.out.println(tweetItem.getTweet());
-        System.out.println(tweetItem.getId() );
-        System.out.println(tweetItem.getReceiverId());
         return tweetStore.add(tweetItem);
     }
 

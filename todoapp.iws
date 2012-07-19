@@ -40,16 +40,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="530bb0bd-fdc5-4f99-a9c2-490cd9c80317" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/AppConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/AppConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/UserController.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/UserController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/services/TweetStore.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/services/TweetStore.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/todoapp.iws" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController$1.class" afterPath="$PROJECT_DIR$/target/classes/com/directi/train/tweetapp/controllers/TweeetController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/tmp/jsp/org/apache/jsp/WEB_002dINF/jsp/tweet_jsp.class" afterPath="$PROJECT_DIR$/target/tmp/jsp/org/apache/jsp/WEB_002dINF/jsp/tweet_jsp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" afterPath="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todoapp.iws" afterPath="$PROJECT_DIR$/todoapp.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
     </list>
     <ignored path="todoapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -119,7 +115,7 @@
       <file leaf-file-name="TweeetController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="33" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0">
+            <state line="37" column="33" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -138,10 +134,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="UserController.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="14" selection-start="4577" selection-end="4577" vertical-scroll-proportion="0.0">
+            <state line="18" column="13" selection-start="704" selection-end="704" vertical-scroll-proportion="-1.4667774">
               <folding />
             </state>
           </provider>
@@ -158,10 +154,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TweetStore.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TweetStore.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.7475083">
+            <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TodoItem.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="2" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -190,12 +195,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/todoapp/controllers/TweeetController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/tweet.jsp" />
-        <option value="$PROJECT_DIR$/todoapp.iws" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java" />
+        <option value="$PROJECT_DIR$/todoapp.iws" />
       </list>
     </option>
   </component>
@@ -453,6 +458,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="todoapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Twimini" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -919,31 +950,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/ejs/todo.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="56" selection-start="82" selection-end="82" vertical-scroll-proportion="0.025083613" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
       <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="36" selection-start="840" selection-end="840" vertical-scroll-proportion="0.46195653">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="2" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/todoapp.iws">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="595" column="44" selection-start="29002" selection-end="29002" vertical-scroll-proportion="1.0186757">
           <folding />
         </state>
       </provider>
@@ -976,13 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="33" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/model/TweetItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="20" selection-start="1125" selection-end="1125" vertical-scroll-proportion="0.0">
@@ -991,13 +996,6 @@
             <element signature="e#307#488#0" expanded="true" />
             <element signature="e#481#482#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="14" selection-start="4577" selection-end="4577" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1012,7 +1010,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/services/TweetStore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.7475083">
+        <state line="36" column="0" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/widgets/TodoItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="2" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/TweeetController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="33" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/directi/train/tweetapp/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="704" selection-end="704" vertical-scroll-proportion="-1.4667774">
           <folding />
         </state>
       </provider>

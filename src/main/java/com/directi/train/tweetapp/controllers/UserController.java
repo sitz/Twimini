@@ -71,12 +71,24 @@ public class UserController {
     @RequestMapping(value = "/user/following/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Object> getFollowing(@PathVariable("username") String userName) {
-        return userStore.follower_list(userName);
+        return userStore.following_list(userName);
     }
 
     @RequestMapping(value = "/user/followers/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Object> getFollowers(@PathVariable ("username") String userName) {
         return userStore.follower_list(userName);
+    }
+
+    @RequestMapping(value = "/user/follow/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public void followUser(@PathVariable ("username") String userName) {
+        userStore.follow_user(userName);
+    }
+
+    @RequestMapping(value = "/user/unfollow/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public void unfollowUser(@PathVariable ("username") String userName) {
+        userStore.unfollow_user(userName);
     }
 }

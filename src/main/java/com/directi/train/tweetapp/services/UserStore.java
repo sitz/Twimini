@@ -34,13 +34,14 @@ public class UserStore {
 
     public List<Object> following_list(String userName) {
         int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
-        return db.query(String.format("select follower_id from following where user_id =%d", userId), new RowMapper<Object>() {
+        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Object>() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("follower_id");
+                return resultSet.getInt("following_id");
             }
         });
     }
+
 
     public List<Object> follower_list(String userName) {
         int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
@@ -93,5 +94,43 @@ public class UserStore {
             throw new Exception("User does not exist.Please Register");
         }
         return userData;
+    }
+
+    public void follow_user(String userName) {
+        try {
+            long thisUserID = this.userID.get();
+            System.out.println(thisUserID);
+            long thatUserID = getUserId(userName);
+            System.out.println(thatUserID);
+
+            db.update("insert into following (user_id, following_id) values (? ,?)", thisUserID, thatUserID);
+            db.update("insert into followers (user_id, follower_id) values  (?, ?)", thatUserID, thisUserID);
+        }
+        catch (IndexOutOfBoundsException E) {
+            System.out.println("User " + userName + "doesn't exist !");
+        }
+        catch (Exception E) {
+            System.out.println("Follow operation unsuccessful !");
+            E.printStackTrace();
+        }
+    }
+
+    public void unfollow_user(String userName) {
+        try {
+            long thisUserID = this.userID.get();
+            System.out.println(thisUserID);
+            long thatUserID = getUserId(userName);
+            System.out.println(thatUserID);
+
+            db.update(String.format("delete from following where following_id = %d and user_id = %d", thisUserID, thatUserID));
+            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thatUserID, thisUserID));
+        }
+        catch (IndexOutOfBoundsException E) {
+            System.out.println("User " + userName + "doesn't exist !");
+        }
+        catch (Exception E) {
+            System.out.println("Unfollow operation unsuccessful !");
+            E.printStackTrace();
+        }
     }
 }

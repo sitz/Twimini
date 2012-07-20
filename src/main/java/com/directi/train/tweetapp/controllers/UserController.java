@@ -1,23 +1,15 @@
 package com.directi.train.tweetapp.controllers;
 
-import com.directi.train.tweetapp.model.UserItem;
-import com.directi.train.tweetapp.services.TweetStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListResourceBundle;
 import java.util.Map;
 
 @Controller
@@ -44,47 +36,28 @@ public class UserController {
     }
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam("username") String userName,
-                              @RequestParam("password") String password,
-                              @RequestParam("email") String email,
-                              HttpSession session) {
-
+                                 @RequestParam("password") String password,
+                                 @RequestParam("email") String email, HttpSession session) {
         ModelAndView mv = new ModelAndView("/index");
-        long userID;
-        try {
-            Map<String, Object> userData = db.queryForMap("select email,username from users where email='"+ email + "' or username='"+ userName +"'");
-            if(userData.get("username").equals(userName)) {
-                mv.addObject("message", "UserName Already exists.");
-                return mv;
-            }
-            if(userData.get("email").equals(email)) {
-                mv.addObject("message", "Email Already exists.");
-                return mv;
-            }
-        } catch (EmptyResultDataAccessException e) {
-            db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
-            mv.addObject("message", "Email registered.");
-        }
+        mv.addObject("message",userStore.registerUser(email,userName,password));
         return mv;
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("username") String userName, @RequestParam("password") String password, HttpSession session) {
+    public ModelAndView login(@RequestParam("username") String userName,
+                              @RequestParam("password") String password, HttpSession session) {
         ModelAndView mv = new ModelAndView("/index");
         long userID;
+        System.out.println(userName+password);
         try {
-            Map<String, Object> userData = db.queryForMap("select id, username, password  from users where username='"+ userName +"'");
-            if (!userData.get("password").equals(password)) {
-                mv.addObject("message", "Invalid password.");
-                return mv;
-            }
-            userID = (Integer) userData.get("id");
-        } catch (EmptyResultDataAccessException e) {
-            mv.addObject("message", "User Does not register. Please register");
-            return mv;
+            userID = userStore.checkLogin(userName,password).getId();
+            System.out.println(userID);
+            session.setAttribute("userName", userName);
+            session.setAttribute("userID", userID);
+        } catch (Exception e) {
+            System.out.println(e);
+            mv.addObject("message",e.getMessage());
         }
-        session.setAttribute("userName", userName);
-        session.setAttribute("userID", userID);
-        System.out.println(userID);
         mv.setViewName("redirect:/tweet");
         return mv;
     }
@@ -95,7 +68,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/following/{usrname}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/following/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Object> getFollowing(@PathVariable("username") String userName) {
         return userStore.follower_list(userName);

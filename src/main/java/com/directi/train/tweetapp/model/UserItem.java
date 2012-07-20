@@ -31,12 +31,16 @@ public class UserItem {
         email = resultSet.getString("email");
         password = resultSet.getString("password");
     }
-
-    public String getpassword() {
+    public String getPassword() {
         return password;
     }
-
-    public Object getid() {
+    public int getId() {
         return user_id;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getUsername() {
+        return username;
     }
 }

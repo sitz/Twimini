@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +24,7 @@ import java.util.Map;
 public class UserStore {
     private final ThreadLocal<Long> userID;
     public SimpleJdbcTemplate db;
+
 
     @Autowired
     public UserStore(@Qualifier("userID") ThreadLocal<Long> userID, SimpleJdbcTemplate template) {
@@ -56,22 +56,24 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s';", userName));
     }
 
-    public boolean user_exist(String userName) {
+    public String registerUser(String email,String userName,String password) {
+        List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'", userName,email), UserItem.rowMapper);
+        UserItem userItem;
+        long userID;
         try {
-            int i = getUserId(userName);
-            return true;
-        }
-        catch (EmptyResultDataAccessException e) {
-            return false;
-        }
-    }
-    public boolean password_correct(String userName,String password) {
-        return password.equals( db.queryForObject(String.format((String)("select password from users where username='%s'"),userName), new RowMapper<Object>() {
-            @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getString("password");
+            userItem = userData.get(0);
+            if(userItem.getEmail().equals(email) ){
+                return "Email Already Registered to a different Username.";
             }
-        }));
+            if(userItem.getUsername().equals(userName)){
+                return "Username Already Registered";
+            }
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
+        }
+        return "User Registered.";
     }
 
     public UserItem checkLogin(String userName,String password) throws Exception{
@@ -79,15 +81,16 @@ public class UserStore {
         UserItem userData;
         long userID;
         try {
-            userData = db.query("select id, username, password  from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
-            if (userData.getpassword() == password) {
-                userID = (Integer) userData.getid();
+            userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
+            if (userData.getPassword().equals(password)) {
+                userID = (Integer) userData.getId();
             } else {
+                System.out.println(userData.getPassword());
                 throw new Exception("Invalid Password");
             }
         }
         catch (EmptyResultDataAccessException e) {
-            throw new Exception("User does not exist.Please Register")
+            throw new Exception("User does not exist.Please Register");
         }
         return userData;
     }

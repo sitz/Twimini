@@ -32,22 +32,22 @@ public class UserStore {
         db = template;
     }
 
-    public List<Object> following_list(String userName) {
+    public List<Integer> following_list(String userName) {
         int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
-        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Object>() {
+        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getInt("following_id");
             }
         });
     }
 
 
-    public List<Object> follower_list(String userName) {
+    public List<Integer> follower_list(String userName) {
         int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
-        return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Object>() {
+        return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getInt("follower_id");
             }
         });

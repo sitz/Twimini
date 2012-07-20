@@ -70,13 +70,13 @@ public class UserController {
 
     @RequestMapping(value = "/user/following/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Object> getFollowing(@PathVariable("username") String userName) {
+    public List<Integer> getFollowing(@PathVariable("username") String userName) {
         return userStore.following_list(userName);
     }
 
     @RequestMapping(value = "/user/followers/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Object> getFollowers(@PathVariable ("username") String userName) {
+    public List<Integer> getFollowers(@PathVariable("username") String userName) {
         return userStore.follower_list(userName);
     }
 

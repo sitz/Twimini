@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,5 +72,23 @@ public class UserStore {
                 return resultSet.getString("password");
             }
         }));
+    }
+
+    public UserItem checkLogin(String userName,String password) throws Exception{
+        ModelAndView mv = new ModelAndView("/index");
+        UserItem userData;
+        long userID;
+        try {
+            userData = db.query("select id, username, password  from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
+            if (userData.getpassword() == password) {
+                userID = (Integer) userData.getid();
+            } else {
+                throw new Exception("Invalid Password");
+            }
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new Exception("User does not exist.Please Register")
+        }
+        return userData;
     }
 }

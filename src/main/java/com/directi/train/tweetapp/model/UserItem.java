@@ -31,4 +31,12 @@ public class UserItem {
         email = resultSet.getString("email");
         password = resultSet.getString("password");
     }
+
+    public String getpassword() {
+        return password;
+    }
+
+    public Object getid() {
+        return user_id;
+    }
 }

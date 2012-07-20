@@ -8,8 +8,9 @@
         $('#tweetList').append(tweetItemLI);
     }
 </script>
-<div class="container">
-    <div class="span4">
+
+<div class="container" style="height: 1000px;">
+    <div class="span4" style="padding:15px;">
     <form class="form-horizontal well">
         <div>
         <textarea rows="5" name="tweet" class="input-xlarge" style="width:330px;padding-bottom: 10px"></textarea>
@@ -18,18 +19,23 @@
         <a class="btn" href="#" onclick="addItem2(this); return false;">Tweett!</a>
             </div>
     </form></div>
-    <div class="span6">
-        <form class="form-horizontal well">
-        <h1>Some Fancy Title</h1>
-        <div id="tweetList">
-            <c:forEach var='tweet' items='${tweets}'>
 
+
+
+
+    <div class="span7" style="padding:15px;padding-left: 0px;padding-right:0px">
+        <div style="border-style:ridge;border-radius:15px;">
+        <div style="height: 32px;padding: 15px;padding-bottom: 10px;padding-top: 20px;"><span style="font-size: 32px;"> Fancy Title</span></div>
+        <table id="tweetList" class="table table-bordered table-striped">
+            <c:forEach var='tweet' items='${tweets}'>
                 <script type="text/javascript">
                     appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
                 </script>
             </c:forEach>
-        </div>
-        </form>
+        </table>
+    </div>
+
+
 </div>
 </div>
 

@@ -29,7 +29,7 @@
         <table id="tweetList" class="table table-bordered table-striped">
             <c:forEach var='tweet' items='${tweets}'>
                 <script type="text/javascript">
-                    appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',receiverId : '${tweet.receiverId}'})
+                    appendItem({id:${tweet.id}, tweet :'${tweet.tweet}',userId : '${tweet.userId}'})
                 </script>
             </c:forEach>
         </table>

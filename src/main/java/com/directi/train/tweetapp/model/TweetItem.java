@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class TweetItem {
     private String tweet;
     private int id;
+    private int userId;
     private int receiverId;
 
     public static final RowMapper<TweetItem> rowMapper = new RowMapper<TweetItem>() {
@@ -18,6 +19,7 @@ public class TweetItem {
     public TweetItem(ResultSet rs) throws SQLException {
         id = rs.getInt("id");
         tweet = rs.getString("tweet");
+        userId = rs.getInt("user_id");
         receiverId = rs.getInt("receiver_id");
     }
 
@@ -45,5 +47,13 @@ public class TweetItem {
 
     public void setReceiverId(int receiverId) {
         this.receiverId = receiverId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

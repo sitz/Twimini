@@ -8,10 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.print.attribute.HashAttributeSet;
@@ -98,15 +95,15 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/following", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/following/{usrname}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Object> getFollowing(@RequestParam("username") String userName) {
+    public List<Object> getFollowing(@PathVariable("username") String userName) {
         return userStore.follower_list(userName);
     }
 
-    @RequestMapping(value = "/user/followers", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/followers/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Object> getFollowers(@RequestParam("username") String userName) {
+    public List<Object> getFollowers(@PathVariable ("username") String userName) {
         return userStore.follower_list(userName);
     }
 }

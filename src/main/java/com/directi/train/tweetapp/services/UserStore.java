@@ -3,6 +3,7 @@ package com.directi.train.tweetapp.services;
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,5 +49,27 @@ public class UserStore {
                 return resultSet.getInt("follower_id");
             }
         });
+    }
+
+    public int getUserId(String userName) {
+        return db.queryForInt(String.format("select id from users where username='%s';", userName));
+    }
+
+    public boolean user_exist(String userName) {
+        try {
+            int i = getUserId(userName);
+            return true;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+    public boolean password_correct(String userName,String password) {
+        return password.equals( db.queryForObject(String.format((String)("select password from users where username='%s'"),userName), new RowMapper<Object>() {
+            @Override
+            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getString("password");
+            }
+        }));
     }
 }

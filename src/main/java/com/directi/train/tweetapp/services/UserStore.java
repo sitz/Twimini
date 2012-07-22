@@ -22,13 +22,11 @@ import java.util.List;
  */
 @Service
 public class UserStore {
-    private final ThreadLocal<Long> userID;
     public SimpleJdbcTemplate db;
 
 
     @Autowired
-    public UserStore(@Qualifier("userID") ThreadLocal<Long> userID, SimpleJdbcTemplate template) {
-        this.userID = userID;
+    public UserStore(SimpleJdbcTemplate template) {
         db = template;
     }
 
@@ -96,9 +94,9 @@ public class UserStore {
         return userData;
     }
 
-    public void follow_user(String userName) {
+    public void follow_user(String userName,Long userID) {
         try {
-            long thisUserID = this.userID.get();
+            long thisUserID = userID;
             System.out.println(thisUserID);
             long thatUserID = getUserId(userName);
             System.out.println(thatUserID);
@@ -115,9 +113,9 @@ public class UserStore {
         }
     }
 
-    public void unfollow_user(String userName) {
+    public void unFollowUser(String userName,Long userID) {
         try {
-            long thisUserID = this.userID.get();
+            long thisUserID = userID;
             System.out.println(thisUserID);
             long thatUserID = getUserId(userName);
             System.out.println(thatUserID);
@@ -129,7 +127,7 @@ public class UserStore {
             System.out.println("User " + userName + "doesn't exist !");
         }
         catch (Exception E) {
-            System.out.println("Unfollow operation unsuccessful !");
+            System.out.println("unFollow operation unsuccessful !");
             E.printStackTrace();
         }
     }

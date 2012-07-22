@@ -2,7 +2,6 @@ package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -37,7 +35,7 @@ public class UserController {
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam("username") String userName,
                                  @RequestParam("password") String password,
-                                 @RequestParam("email") String email, HttpSession session) {
+                                 @RequestParam("email") String email) {
         ModelAndView mv = new ModelAndView("/index");
         mv.addObject("message",userStore.registerUser(email,userName,password));
         return mv;
@@ -82,13 +80,13 @@ public class UserController {
 
     @RequestMapping(value = "/user/follow/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public void followUser(@PathVariable ("username") String userName) {
-        userStore.follow_user(userName);
+    public void followUser(@PathVariable ("username") String userName,HttpSession session) {
+        userStore.follow_user(userName, (Long)session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "/user/unfollow/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public void unfollowUser(@PathVariable ("username") String userName) {
-        userStore.unfollow_user(userName);
+    public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
+        userStore.unFollowUser(userName, (Long)session.getAttribute("userID"));
     }
 }

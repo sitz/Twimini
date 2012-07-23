@@ -1,5 +1,7 @@
 package com.directi.train.tweetapp.controllers;
 
+import com.directi.train.tweetapp.model.TweetItem;
+import com.directi.train.tweetapp.services.TweetStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -19,10 +21,6 @@ public class UserController {
     @Autowired
     public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
 
-    @RequestMapping("/")
-    public String index() {
-        return "index";
-    }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm() {
@@ -89,4 +87,5 @@ public class UserController {
     public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
         userStore.unFollowUser(userName, (Long)session.getAttribute("userID"));
     }
+
 }

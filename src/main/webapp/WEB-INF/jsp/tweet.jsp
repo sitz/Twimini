@@ -49,18 +49,13 @@
         });
     }
 
-    $(".tweetDelete").live("click", function(evt){
-        var id = $(evt.target).parents("li").data("tweetID");
-        $.post('/tweet/delete.json', {id:id},function(data) {
-            $(evt.target).parents("li").remove();
-        });
-    });
-    $(".tweetUpdate").live("submit", function(evt){
-        var form = evt.target;
-        var data = {id:form.id.value, name:form.name.value};
-        $.post("/tweet/update.json", $(form).serialize(),function() {
-            var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
-            $('#tweetItem' + data.id).replaceWith(tweetItemLI);
+    $(document).ready(function () {
+        $.post('/tweet/feed.json',function(data) {
+            var i=0;
+            for(var i in data) {
+                var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data[i])).data("tweetID", data[i].id);
+                $('#tweetList').prepend(tweetItemLI);
+            }
         });
     });
 </script>

@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.services;
 
+import com.directi.train.tweetapp.model.TweetItem;
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +40,6 @@ public class UserStore {
             }
         });
     }
-
 
     public List<Integer> follower_list(String userName) {
         int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
@@ -94,7 +94,7 @@ public class UserStore {
         return userData;
     }
 
-    public void follow_user(String userName,Long userID) {
+    public int followUser(String userName, Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
@@ -103,32 +103,57 @@ public class UserStore {
 
             db.update("insert into following (user_id, following_id) values (? ,?)", thisUserID, thatUserID);
             db.update("insert into followers (user_id, follower_id) values  (?, ?)", thatUserID, thisUserID);
+            return 0;
         }
         catch (IndexOutOfBoundsException E) {
             System.out.println("User " + userName + "doesn't exist !");
+            return 1;
         }
         catch (Exception E) {
             System.out.println("Follow operation unsuccessful !");
             E.printStackTrace();
+            return 1;
         }
     }
 
-    public void unFollowUser(String userName,Long userID) {
+    public int unFollowUser(String userName,Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
             long thatUserID = getUserId(userName);
             System.out.println(thatUserID);
 
-            db.update(String.format("delete from following where following_id = %d and user_id = %d", thisUserID, thatUserID));
-            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thatUserID, thisUserID));
+            db.update(String.format("delete from following where following_id = %d and user_id = %d",  thatUserID,thisUserID));
+            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thisUserID,thatUserID ));
+            return 0;
         }
         catch (IndexOutOfBoundsException E) {
             System.out.println("User " + userName + "doesn't exist !");
+            return 1;
         }
         catch (Exception E) {
             System.out.println("unFollow operation unsuccessful !");
             E.printStackTrace();
+            return 1;
         }
     }
+
+    public List<TweetItem> tweetList(String userName) {
+        int userID = getUserId(userName);
+        return db.query(String.format("select * from feeds where receiver_id = %d and user_id = %d order by id desc",userID,userID), TweetItem.rowMapper);
+    }
+
+    public Integer checkFollowingStatus(String curUser,String otherUser) {
+        return db.queryForInt(String.format("select count(*) from followers where user_id = %d and follower_id = %d",
+                getUserId(otherUser),getUserId(curUser)));
+    }
+
+    public Integer noOfFollowers(String userName) {
+        return db.queryForInt(String.format("select count(*) from followers where user_id=%d",getUserId(userName)));
+    }
+
+    public Integer noOfFollowing(String userName) {
+        return db.queryForInt(String.format("select count(*) from following where user_id=%d",getUserId(userName)));
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.TweetItem;
-import com.directi.train.tweetapp.services.TweetStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -20,6 +19,28 @@ public class UserController {
 
     @Autowired
     public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TweetItem> curProfile(HttpSession session ) {
+        return userStore.tweetList((String)session.getAttribute("userName"));
+    }
+
+    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
+    public ModelAndView profile(@PathVariable("userName") String userName, HttpSession session) {
+        ModelAndView r = new ModelAndView("user");
+        r.addObject("userName",userName);
+        r.addObject("noFollow",userStore.noOfFollowers(userName));
+        r.addObject("noFollowing",userStore.noOfFollowing(userName));
+        r.addObject("followStatus",userStore.checkFollowingStatus((String)session.getAttribute("userName"),userName));
+        return r;
+    }
+
+    @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)
+    @ResponseBody
+    public List<TweetItem> jsonProfile(@PathVariable("userName") String userName) {
+        return userStore.tweetList(userName);
+    }
 
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -79,7 +100,7 @@ public class UserController {
     @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public void followUser(@PathVariable ("username") String userName,HttpSession session) {
-        userStore.follow_user(userName, (Long)session.getAttribute("userID"));
+        userStore.followUser(userName, (Long) session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)

@@ -1,0 +1,40 @@
+div.containers {
+    height: 1000px;
+}
+
+.left {
+    padding: 15px;
+}
+
+.tweetarea {
+    width : 330px;
+    padding-bottom: 10px;
+}
+
+div.buttonHolder {
+    text-align: right;
+    padding-top: 10px;
+}
+
+.right {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.tweetContainer {
+    border-style: groove;
+    border-radius: 15px;
+}
+
+.tweetContainerTitle {
+    height: 32px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 32px;
+}
+
+.fill {
+    min-height: 100%;
+}

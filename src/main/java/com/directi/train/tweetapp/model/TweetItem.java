@@ -10,6 +10,7 @@ public class TweetItem {
     private int id;
     private int userId;
     private int receiverId;
+    private int tweetId;
 
     public static final RowMapper<TweetItem> rowMapper = new RowMapper<TweetItem>() {
         @Override public TweetItem mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -21,6 +22,7 @@ public class TweetItem {
         tweet = rs.getString("tweet");
         userId = rs.getInt("user_id");
         receiverId = rs.getInt("receiver_id");
+        tweetId = rs.getInt("tweet_id");
     }
 
     public TweetItem() { }
@@ -55,5 +57,13 @@ public class TweetItem {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getTweetId() {
+        return tweetId;
+    }
+
+    public void setTweetId(int tweetId) {
+        this.tweetId = tweetId;
     }
 }

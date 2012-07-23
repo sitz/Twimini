@@ -1,14 +1,12 @@
 package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.TweetItem;
+import com.directi.train.tweetapp.model.UserItem;
 import com.directi.train.tweetapp.services.TweetStore;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -17,11 +15,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/tweet")
-public class TweeetController {
+public class TweetController {
     private final TweetStore tweetStore;
 
     @Autowired
-    public TweeetController(TweetStore tweetStore) {
+    public TweetController(TweetStore tweetStore) {
         this.tweetStore = tweetStore;
     }
 
@@ -41,4 +39,17 @@ public class TweeetController {
     public List<TweetItem> feed_list() {
         return tweetStore.feed();
     }
+
+    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Integer> getUsersWhoFavorited(@PathVariable("tweetid") Integer tweetId) {
+        return tweetStore.favoriting_users(tweetId);
+    }
+
+    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Integer> getUsersWhoReTweeted(@PathVariable("tweetid") Integer tweetId) {
+        return tweetStore.retweeting_users(tweetId);
+    }
+
 }

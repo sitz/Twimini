@@ -32,19 +32,41 @@ public class TweetStore {
     public TweetItem add(TweetItem tweetItem) {
         System.out.println(userID.get());
         System.out.println(tweetItem.getTweet());
+
         String userName = (String)db.query(String.format("select username from users where id=%d", userID.get()),new RowMapper<Object>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("username");
             }
         }).get(0);
+        int nextUniqueTweetId = 1 + (int) db.queryForInt("select max(tweet_id) from feeds");
         List<Integer> followerIdList = userStore.follower_list(userName);
         for (Integer i : followerIdList) {
             System.out.println(i);
-            db.update("insert into feeds (user_id, receiver_id, tweet, timestamp) values(?,?,?,now())",userID.get(), i, tweetItem.getTweet());
+            db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, timestamp) values(?, ?, ?, ?, now())",
+                    userID.get(), i, tweetItem.getTweet(), nextUniqueTweetId);
         }
-        db.update("insert into feeds (user_id, receiver_id, tweet,timestamp) values(?,?,?,now())",userID.get(), userID.get(), tweetItem.getTweet());
+        db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, timestamp) values(?, ?, ?, ?, now())",
+                userID.get(), userID.get(), tweetItem.getTweet(), nextUniqueTweetId);
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userID.get()));
         return db.queryForObject("select * from feeds where id=?", TweetItem.rowMapper, id);
+    }
+
+    public List<Integer> favoriting_users(Integer tweetId) {
+        return db.query(String.format("select user_id from favorites where tweet_id = %d", userID.get()), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("user_id");
+            }
+        });
+    }
+
+    public List<Integer> retweeting_users(Integer tweetId) {
+        return db.query(String.format("select user_id from retweets where tweet_id = %d", userID.get()), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("user_id");
+            }
+        });
     }
 }

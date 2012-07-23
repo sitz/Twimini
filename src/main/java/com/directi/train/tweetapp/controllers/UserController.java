@@ -1,7 +1,5 @@
 package com.directi.train.tweetapp.controllers;
 
-import com.directi.train.tweetapp.model.TweetItem;
-import com.directi.train.tweetapp.services.TweetStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -64,6 +62,7 @@ public class UserController {
         return "redirect:/";
     }
 
+
     @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getFollowing(@PathVariable("username") String userName) {
@@ -76,16 +75,52 @@ public class UserController {
         return userStore.follower_list(userName);
     }
 
+    @RequestMapping(value = "favorite/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Integer> getFavoriteTweetsOfAUser(@PathVariable("username") String userName) {
+        return userStore.favorite_tweets(userName);
+    }
+
+    @RequestMapping(value = "retweet/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Integer> getReTweetsOfAUser(@PathVariable("username") String userName) {
+        return userStore.re_tweets(userName);
+    }
+
     @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public void followUser(@PathVariable ("username") String userName,HttpSession session) {
-        userStore.follow_user(userName, (Long)session.getAttribute("userID"));
+        userStore.follow_user(userName, (Long) session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
-        userStore.unFollowUser(userName, (Long)session.getAttribute("userID"));
+        userStore.unfollow_user(userName, (Long) session.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.POST)
+    @ResponseBody
+    public void favoriteTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
+        userStore.favorite_tweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "unfavorite/{tweetid}", method = RequestMethod.POST)
+    @ResponseBody
+    public void unFavoriteTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
+        userStore.unfavorite_tweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.POST)
+    @ResponseBody
+    public void reTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
+        userStore.re_tweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "unretweet/{tweetid}", method = RequestMethod.POST)
+    @ResponseBody
+    public void unReTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
+        userStore.un_retweet(tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
 }

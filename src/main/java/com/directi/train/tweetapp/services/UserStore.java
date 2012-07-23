@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.services;
 
+import com.directi.train.tweetapp.model.TweetItem;
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,8 +31,12 @@ public class UserStore {
         db = template;
     }
 
+    public int getUserId(String userName) {
+        return db.queryForInt(String.format("select id from users where username='%s';", userName));
+    }
+
     public List<Integer> following_list(String userName) {
-        int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
+        int userId = getUserId(userName);
         return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -42,17 +47,13 @@ public class UserStore {
 
 
     public List<Integer> follower_list(String userName) {
-        int userId = db.queryForInt(String.format("select id from users where username='%s';", userName));
+        int userId = getUserId(userName);
         return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getInt("follower_id");
             }
         });
-    }
-
-    public int getUserId(String userName) {
-        return db.queryForInt(String.format("select id from users where username='%s';", userName));
     }
 
     public String registerUser(String email,String userName,String password) {
@@ -94,7 +95,7 @@ public class UserStore {
         return userData;
     }
 
-    public void follow_user(String userName,Long userID) {
+    public void follow_user(String userName, Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
@@ -113,7 +114,7 @@ public class UserStore {
         }
     }
 
-    public void unFollowUser(String userName,Long userID) {
+    public void unfollow_user(String userName, Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
@@ -130,5 +131,41 @@ public class UserStore {
             System.out.println("unFollow operation unsuccessful !");
             E.printStackTrace();
         }
+    }
+
+    public List<Integer> favorite_tweets(String userName) {
+        int userId = getUserId(userName);
+        return db.query(String.format("select tweet_id from favorites where user_id = %d", userId), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("tweet_id");
+            }
+        } );
+    }
+
+    public List<Integer> re_tweets(String userName) {
+        int userId = getUserId(userName);
+        return db.query(String.format("select tweet_id from retweets where user_id = %d", userId), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("tweet_id");
+            }
+        } );
+    }
+
+    public void favorite_tweet(Integer tweetId, Long userID) {
+        db.update("insert into favorites (tweet_id, user_id) values (?, ?)", tweetId, userID);
+    }
+
+    public void unfavorite_tweet(Integer tweetId, Long userID) {
+        db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
+    }
+
+    public void re_tweet(Integer tweetId, Long userID) {
+        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
+    }
+
+    public void un_retweet(Integer tweetId, Long userID) {
+        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
     }
 }

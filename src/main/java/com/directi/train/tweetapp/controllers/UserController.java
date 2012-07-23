@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
     public final SimpleJdbcTemplate db;
     private final UserStore userStore;
@@ -23,16 +24,16 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm() {
         return "index";
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
+    @RequestMapping(value = "register", method = RequestMethod.GET)
     public ModelAndView registerForm() {
         return new ModelAndView("register");
     }
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam("username") String userName,
                                  @RequestParam("password") String password,
                                  @RequestParam("email") String email) {
@@ -41,7 +42,7 @@ public class UserController {
         return mv;
     }
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam("username") String userName,
                               @RequestParam("password") String password, HttpSession session) {
         ModelAndView mv = new ModelAndView("/index");
@@ -49,7 +50,6 @@ public class UserController {
         System.out.println(userName+password);
         try {
             userID = userStore.checkLogin(userName,password).getId();
-            System.out.println(userID);
             session.setAttribute("userName", userName);
             session.setAttribute("userID", userID);
         } catch (Exception e) {
@@ -60,31 +60,31 @@ public class UserController {
         return mv;
     }
 
-    @RequestMapping(value = "/user/logout")
+    @RequestMapping(value = "logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/following/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getFollowing(@PathVariable("username") String userName) {
         return userStore.following_list(userName);
     }
 
-    @RequestMapping(value = "/user/followers/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "followers/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getFollowers(@PathVariable("username") String userName) {
         return userStore.follower_list(userName);
     }
 
-    @RequestMapping(value = "/user/follow/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public void followUser(@PathVariable ("username") String userName,HttpSession session) {
         userStore.follow_user(userName, (Long)session.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "/user/unfollow/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
         userStore.unFollowUser(userName, (Long)session.getAttribute("userID"));

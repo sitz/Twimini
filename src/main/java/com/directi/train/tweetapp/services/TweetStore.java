@@ -25,7 +25,7 @@ public class TweetStore {
         this.userStore= userStore;
     }
 
-    public List<TweetItem> list() {
+    public List<TweetItem> feed() {
         return db.query("select * from feeds where receiver_id = ? order by id desc", TweetItem.rowMapper, userID.get());
     }
 
@@ -47,9 +47,4 @@ public class TweetStore {
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userID.get()));
         return db.queryForObject("select * from feeds where id=?", TweetItem.rowMapper, id);
     }
-
-    public List<TweetItem> profile() {
-        return list();
-    }
-
 }

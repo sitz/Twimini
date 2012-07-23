@@ -24,16 +24,10 @@ public class TweeetController {
     }
 
     @RequestMapping
-    public ModelAndView tweet () {
+    public ModelAndView feed() {
         return new ModelAndView() {{
-            addObject("tweets", tweetStore.list());
+            addObject("tweets", tweetStore.feed());
         }};
-    }
-
-    @RequestMapping("profile")
-    @ResponseBody
-    public List<TweetItem> profile() {
-        return tweetStore.profile();
     }
 
     @RequestMapping("new")
@@ -41,5 +35,4 @@ public class TweeetController {
     public TweetItem create(TweetItem tweetItem) {
         return tweetStore.add(tweetItem);
     }
-
 }

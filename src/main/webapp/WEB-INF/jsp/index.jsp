@@ -3,7 +3,7 @@
 
 <c:if test="${not empty sessionScope.userName}">
     <script type="text/javascript">
-        window.location = "/todo"
+        window.location = "/tweet"
     </script>
 </c:if>
 

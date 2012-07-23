@@ -40,7 +40,7 @@ public class TweetStore {
             }
         }).get(0);
         int nextUniqueTweetId = 1 + (int) db.queryForInt("select max(tweet_id) from feeds");
-        List<Integer> followerIdList = userStore.follower_list(userName);
+        List<Integer> followerIdList = userStore.followerList(userName);
         for (Integer i : followerIdList) {
             System.out.println(i);
             db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, timestamp) values(?, ?, ?, ?, now())",

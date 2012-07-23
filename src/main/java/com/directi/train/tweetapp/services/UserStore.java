@@ -35,7 +35,7 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s';", userName));
     }
 
-    public List<Integer> following_list(String userName) {
+    public List<Integer> followingList(String userName) {
         int userId = getUserId(userName);
         return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
@@ -45,8 +45,7 @@ public class UserStore {
         });
     }
 
-
-    public List<Integer> follower_list(String userName) {
+    public List<Integer> followerList(String userName) {
         int userId = getUserId(userName);
         return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Integer>() {
             @Override
@@ -95,7 +94,7 @@ public class UserStore {
         return userData;
     }
 
-    public void follow_user(String userName, Long userID) {
+    public int followUser(String userName, Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
@@ -104,36 +103,60 @@ public class UserStore {
 
             db.update("insert into following (user_id, following_id) values (? ,?)", thisUserID, thatUserID);
             db.update("insert into followers (user_id, follower_id) values  (?, ?)", thatUserID, thisUserID);
+            return 0;
         }
         catch (IndexOutOfBoundsException E) {
             System.out.println("User " + userName + "doesn't exist !");
+            return 1;
         }
         catch (Exception E) {
             System.out.println("Follow operation unsuccessful !");
             E.printStackTrace();
+            return 1;
         }
     }
 
-    public void unfollow_user(String userName, Long userID) {
+    public int unFollowUser(String userName, Long userID) {
         try {
             long thisUserID = userID;
             System.out.println(thisUserID);
             long thatUserID = getUserId(userName);
             System.out.println(thatUserID);
 
-            db.update(String.format("delete from following where following_id = %d and user_id = %d", thisUserID, thatUserID));
-            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thatUserID, thisUserID));
+            db.update(String.format("delete from following where following_id = %d and user_id = %d",  thatUserID,thisUserID));
+            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thisUserID,thatUserID ));
+            return 0;
         }
         catch (IndexOutOfBoundsException E) {
             System.out.println("User " + userName + "doesn't exist !");
+            return 1;
         }
         catch (Exception E) {
             System.out.println("unFollow operation unsuccessful !");
             E.printStackTrace();
+            return 1;
         }
     }
 
-    public List<Integer> favorite_tweets(String userName) {
+    public List<TweetItem> tweetList(String userName) {
+        int userID = getUserId(userName);
+        return db.query(String.format("select * from feeds where receiver_id = %d and user_id = %d order by id desc",userID,userID), TweetItem.rowMapper);
+    }
+
+    public Integer checkFollowingStatus(String curUser,String otherUser) {
+        return db.queryForInt(String.format("select count(*) from followers where user_id = %d and follower_id = %d",
+                getUserId(otherUser),getUserId(curUser)));
+    }
+
+    public Integer noOfFollowers(String userName) {
+        return db.queryForInt(String.format("select count(*) from followers where user_id=%d",getUserId(userName)));
+    }
+
+    public Integer noOfFollowing(String userName) {
+        return db.queryForInt(String.format("select count(*) from following where user_id=%d",getUserId(userName)));
+    }
+
+    public List<Integer> getFavoriteTweetsOfAUser(String userName) {
         int userId = getUserId(userName);
         return db.query(String.format("select tweet_id from favorites where user_id = %d", userId), new RowMapper<Integer>() {
             @Override
@@ -143,7 +166,7 @@ public class UserStore {
         } );
     }
 
-    public List<Integer> re_tweets(String userName) {
+    public List<Integer> getReTweetsOfAUser(String userName) {
         int userId = getUserId(userName);
         return db.query(String.format("select tweet_id from retweets where user_id = %d", userId), new RowMapper<Integer>() {
             @Override
@@ -153,19 +176,19 @@ public class UserStore {
         } );
     }
 
-    public void favorite_tweet(Integer tweetId, Long userID) {
+    public void favoriteTweet(Integer tweetId, Long userID) {
         db.update("insert into favorites (tweet_id, user_id) values (?, ?)", tweetId, userID);
     }
 
-    public void unfavorite_tweet(Integer tweetId, Long userID) {
+    public void unFavoriteTweet(Integer tweetId, Long userID) {
         db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
     }
 
-    public void re_tweet(Integer tweetId, Long userID) {
+    public void reTweet(Integer tweetId, Long userID) {
         db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
     }
 
-    public void un_retweet(Integer tweetId, Long userID) {
+    public void unReTweet(Integer tweetId, Long userID) {
         db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
     }
 }

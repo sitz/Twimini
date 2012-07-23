@@ -2,6 +2,7 @@
 <head>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="/static/css/custom.css" rel="stylesheet" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
 </head>

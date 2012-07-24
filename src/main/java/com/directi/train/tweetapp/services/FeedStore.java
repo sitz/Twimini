@@ -73,11 +73,21 @@ public class FeedStore {
     }
 
     public List<Integer> favoritingUsers(Integer tweetId) {
-        return null;
+        return db.query(String.format("select user_id from favorites where tweet_id = %d", tweetId), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("user_id");
+            }
+        });
     }
 
     public List<Integer> retweetingUsers(Integer tweetId) {
-        return null;
+        return db.query(String.format("select user_id from retweets where tweet_id = %d", tweetId), new RowMapper<Integer>() {
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("user_id");
+            }
+        });
     }
 
 }

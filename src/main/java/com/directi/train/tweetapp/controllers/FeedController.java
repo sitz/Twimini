@@ -47,13 +47,13 @@ public class FeedController {
         return feedStore.feed();
     }
 
-    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorites/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getUsersWhoFavorited(@PathVariable("tweetid") Integer tweetId) {
         return feedStore.favoritingUsers(tweetId);
     }
 
-    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweets/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getUsersWhoReTweeted(@PathVariable("tweetid") Integer tweetId) {
         return feedStore.retweetingUsers(tweetId);

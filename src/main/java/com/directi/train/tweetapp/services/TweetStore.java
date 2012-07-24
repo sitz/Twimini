@@ -52,7 +52,7 @@ public class TweetStore {
         return db.queryForObject("select * from feeds where id=?", TweetItem.rowMapper, id);
     }
 
-    public List<Integer> favoriting_users(Integer tweetId) {
+    public List<Integer> favoritingUsers(Integer tweetId) {
         return db.query(String.format("select user_id from favorites where tweet_id = %d", userID.get()), new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -61,7 +61,7 @@ public class TweetStore {
         });
     }
 
-    public List<Integer> retweeting_users(Integer tweetId) {
+    public List<Integer> retweetingUsers(Integer tweetId) {
         return db.query(String.format("select user_id from retweets where tweet_id = %d", userID.get()), new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {

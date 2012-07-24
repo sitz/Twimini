@@ -98,13 +98,13 @@ public class UserController {
         return userStore.followerList(userName);
     }
 
-    @RequestMapping(value = "favorite/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorites/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getFavoriteTweetsOfAUser(@PathVariable("username") String userName) {
         return userStore.getFavoriteTweetsOfAUser(userName);
     }
 
-    @RequestMapping(value = "retweet/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweets/{username}", method = RequestMethod.GET)
     @ResponseBody
     public List<Integer> getReTweetsOfAUser(@PathVariable("username") String userName) {
         return userStore.getReTweetsOfAUser(userName);
@@ -122,25 +122,25 @@ public class UserController {
         userStore.unFollowUser(userName, (Long) session.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.POST)
+    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public void favoriteTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
         userStore.favoriteTweet(tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "unfavorite/{tweetid}", method = RequestMethod.POST)
+    @RequestMapping(value = "unfavorite/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public void unFavoriteTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
         userStore.unFavoriteTweet(tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.POST)
+    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public void reTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
         userStore.reTweet(tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "unretweet/{tweetid}", method = RequestMethod.POST)
+    @RequestMapping(value = "unretweet/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public void unReTweet(@PathVariable("tweetid") Integer tweetId, HttpSession httpSession) {
         userStore.unReTweet(tweetId, (Long) httpSession.getAttribute("userID"));

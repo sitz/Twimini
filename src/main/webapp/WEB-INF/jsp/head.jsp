@@ -22,7 +22,7 @@
             <div class="nav-collapse" id="main-menu"><ul class="nav" id="main-menu-left">
             </ul>
                 <ul class="nav pull-right" id="main-menu-right">
-                    <li><a rel="tooltip" href="/user"  data-original-title="Customize your settings">Hello, <%= session.getAttribute("userName") %></a></li>
+                    <li><a rel="tooltip" href="/user/"  data-original-title="Customize your settings">Hello, <%= session.getAttribute("userName") %></a></li>
                     <li><a rel="tooltip" href="/tweet"  data-original-title="Go to you Homepage">Home</a></li>
                     <li><a rel="tooltip" href="/user/logout"  data-original-title="Logout">Logout</a></li>
                 </ul></div>

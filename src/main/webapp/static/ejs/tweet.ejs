@@ -4,12 +4,17 @@ padding-top: 5px;
 padding-bottom: 10px;
 padding-left: 10px;
 ">
-  <div><b><%=userId%> Says:</b></div>
-  <div id="itemName<%=tweet%>" style="
-  padding-top:5px;
-  padding-left:15px;
-  ">
-  <%=tweet%></div>
-</div>
+  <div><b><a style="text-decoration:none;color:aqua"  href="/user/<%=creatorName%>"><%=creatorName%></a> Says:</b></div>
+    <div id="itemName<%=tweet%>" style="
+    padding-top:5px;
+    padding-left:15px;
+    ">
+    <%=tweet%>
+    </div>
+  <%if (retweet==true) {%> Retweeted By <%= userName %><%}%>
+  <div style="padding-top:10px;font-size:12px;">
+      <span style="z-index:10;"><a id="<%= tweetId %>" href="#" style="text-decoration:none">Retweet</a></span>
+      <span style="padding-left:10px;z-index:10;"><a href="#" id="<%=tweetId%>" style="text-decoration:none;">Favourite</a></span>
+  </div>
 </div>
 </td></tr>

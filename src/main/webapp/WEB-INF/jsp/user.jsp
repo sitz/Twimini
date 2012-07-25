@@ -48,12 +48,12 @@
             var following = $("#hidden2").html();
             var t = $("#followStatus");
             if(following == "1") {
-                $.get('/user/unfollow/' + ${userName},function(data) {
+                $.get('/user/unfollow/${userName}',function(data) {
                     setStatusNotFollowing();
                 });
             }
             else {
-                $.get('/user/follow/' + ${userName},function(data) {
+                $.get('/user/follow/${userName}',function(data) {
                     setStatusFollowing();
                 });
             }

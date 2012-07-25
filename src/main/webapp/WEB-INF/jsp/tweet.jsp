@@ -2,7 +2,7 @@
 <jsp:include page="head.jsp"/>
 
 
-<div class="container-fluid containers">
+<div class="container containers">
     <div class="span4 left fill">
     <form class="form-horizontal well">
         <div>
@@ -14,9 +14,9 @@
     </form></div>
 
     <div class="span6 right fill">
-        <div class = "tweetContainer"  >
-        <div class = "tweetContainerTitle">Fancy Title</div>
-        <table id="tweetList" class="table table-bordered table-striped">
+        <div class = "tweetContainer fill"  >
+        <div class = "tweetContainerTitle">Tweet Feed</div>
+        <table id="tweetList" class="table ">
         </table>
     </div>
 

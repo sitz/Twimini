@@ -1,10 +1,8 @@
 package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.FeedItem;
-import com.directi.train.tweetapp.model.TweetItem;
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -25,7 +23,6 @@ import java.util.List;
 @Service
 public class UserStore {
     public SimpleJdbcTemplate db;
-
 
     @Autowired
     public UserStore(SimpleJdbcTemplate template) {
@@ -149,6 +146,10 @@ public class UserStore {
                 "order by feeds.id desc) something inner join users " +
                 "on something.creator_id = users.id " +
                 "order by something.id desc", userID, userID), FeedItem.rowMapper);
+    }
+
+    public boolean checkFavoriteStatus(Long tweetId, Long userId) {
+        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d", tweetId, userId)) > 0;
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {

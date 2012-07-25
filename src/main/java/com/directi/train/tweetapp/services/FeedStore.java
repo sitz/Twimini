@@ -48,7 +48,8 @@ public class FeedStore {
 
         Long nextUniqueTweetId = feedItem.getTweetId();
         if (nextUniqueTweetId == null)
-            nextUniqueTweetId = 1 + db.queryForLong("select max(tweet_id) from feeds");
+            nextUniqueTweetId = 1 + db.queryForLong(String.format("SELECT MAX(tweet_id) from (SELECT tweet_id from feeds where creator_id = %d) tweetidtable",
+                                                    userID.get()));
         System.out.println("nextUniqueTweetId: " + nextUniqueTweetId);
 
         Long creatorId = feedItem.getCreatorId();
@@ -75,7 +76,7 @@ public class FeedStore {
     }
 
     public List<FeedItem> feed() {
-        return db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
+        List<FeedItem> feedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
@@ -83,17 +84,21 @@ public class FeedStore {
                 "order by feeds.id desc) something inner join users " +
                 "on something.creator_id = users.id " +
                 "order by something.id desc", userID.get()), FeedItem.rowMapper);
+        for (FeedItem feedItem : feedItems) {
+                feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", feedItem.getTweetId(), feedItem.getUserId())) > 0);
+        }
+        return feedItems;
     }
 
-    public void favoriteTweet(Long tweetId, Long userId) {
-        db.update("insert into favorites (tweet_id, user_id) values (?, ?)", tweetId, userID);
+    public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {
+        return db.update(String.format("insert into favorites (tweet_id, user_id) values (%d, %d)", tweetId, userId)) > 0;
     }
 
-    public void unFavoriteTweet(Long tweetId, Long userID) {
-        db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
+    public boolean unFavoriteTweet(Long creatorId, Long tweetId, Long userID) {
+        return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID)) > 0;
     }
 
-    public FeedItem reTweet(Long tweetId, Long userID) {
+    public FeedItem reTweet(Long creatorId, Long tweetId, Long userID) {
         db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
 
         FeedItem feedItem = new FeedItem();
@@ -105,17 +110,11 @@ public class FeedStore {
             }
         });
         feedItem.setTweet(tweet);
-        Long creatorId = db.queryForObject(String.format("select creator_id from feeds where tweet_id = %d and user_id = creator_id and user_id = receiver_id", tweetId), new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getLong("creator_id");
-            }
-        });
         feedItem.setCreatorId(creatorId);
         return this.add(feedItem);
     }
 
-    public void unReTweet(Long tweetId, Long userID) {
+    public void unReTweet(Long creatorId, Long tweetId, Long userID) {
         db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
     }
 

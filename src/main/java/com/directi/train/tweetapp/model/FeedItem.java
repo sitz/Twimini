@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.model;
 
+import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ public class FeedItem {
     private Long creatorId;
     private String creatorName;
     private boolean isRetweet;
+    private boolean isFavorite;
 
     public static final RowMapper<FeedItem> rowMapper = new RowMapper<FeedItem>() {
         @Override public FeedItem mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -39,6 +41,7 @@ public class FeedItem {
         this.creatorId = resultSet.getLong("creator_id");
         this.creatorName = resultSet.getString("creatorname");
         this.isRetweet = !creatorId.equals(userId);
+        this.isFavorite = false;
     }
 
     public Long getUserId() {
@@ -103,5 +106,13 @@ public class FeedItem {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

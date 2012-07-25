@@ -32,8 +32,8 @@ public class UserStore {
         db = template;
     }
 
-    public int getUserId(String userName) {
-        return db.queryForInt(String.format("select id from users where username='%s';", userName));
+    public long getUserId(String userName) {
+        return db.queryForInt(String.format("select id from users where username='%s'", userName));
     }
 
     public List<Long> followingList(String userName) {
@@ -145,10 +145,10 @@ public class UserStore {
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
-                "where feeds.receiver_id = %d and feeds.user_id = %d" +
+                "where feeds.receiver_id = %d and feeds.user_id = %d " +
                 "order by feeds.id desc) something inner join users " +
-                "on something.creator_id = users.id" +
-                "order by id desc", userID, userID), FeedItem.rowMapper);
+                "on something.creator_id = users.id " +
+                "order by something.id desc", userID, userID), FeedItem.rowMapper);
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
@@ -164,22 +164,22 @@ public class UserStore {
         return db.queryForInt(String.format("select count(*) from following where user_id=%d",getUserId(userName)));
     }
 
-    public List<Integer> getFavoriteTweetsOfAUser(String userName) {
-        int userId = getUserId(userName);
-        return db.query(String.format("select tweet_id from favorites where user_id = %d", userId), new RowMapper<Integer>() {
+    public List<Long> getFavoriteTweetsOfAUser(String userName) {
+        long userId = getUserId(userName);
+        return db.query(String.format("select tweet_id from favorites where user_id = %d", userId), new RowMapper<Long>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("tweet_id");
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("tweet_id");
             }
         } );
     }
 
-    public List<Integer> getReTweetsOfAUser(String userName) {
-        int userId = getUserId(userName);
-        return db.query(String.format("select tweet_id from retweets where user_id = %d", userId), new RowMapper<Integer>() {
+    public List<Long> getReTweetsOfAUser(String userName) {
+        long userId = getUserId(userName);
+        return db.query(String.format("select tweet_id from retweets where user_id = %d", userId), new RowMapper<Long>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("tweet_id");
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("tweet_id");
             }
         } );
     }

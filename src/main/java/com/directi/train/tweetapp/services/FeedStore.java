@@ -34,7 +34,7 @@ public class FeedStore {
         this.userStore = userStore;
     }
 
-    public FeedItem add(FeedItem feedItem) {
+    public FeedItem                                          add(FeedItem feedItem) {
         System.out.println("userID: " + userID.get());
         System.out.println("tweet: " + feedItem.getTweet());
 

@@ -101,13 +101,13 @@ public class UserController {
 
     @RequestMapping(value = "favorites/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getFavoriteTweetsOfAUser(@PathVariable("username") String userName) {
+    public List<Long> getFavoriteTweetsOfAUser(@PathVariable("username") String userName) {
         return userStore.getFavoriteTweetsOfAUser(userName);
     }
 
     @RequestMapping(value = "retweets/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getReTweetsOfAUser(@PathVariable("username") String userName) {
+    public List<Long> getReTweetsOfAUser(@PathVariable("username") String userName) {
         return userStore.getReTweetsOfAUser(userName);
     }
 

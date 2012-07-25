@@ -71,7 +71,7 @@
         $("#followStatus").mouseleave(function()) {
 
         }*/
-        $.post('/user/' + ${userName} + '/json',function(data) {
+        $.post('/user/${userName}/json',function(data) {
             for(var i in data) {
                 var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data[i])).data("tweetID", data[i].id);
                 $('#tweetList').prepend(tweetItemLI);

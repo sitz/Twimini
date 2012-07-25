@@ -22,9 +22,8 @@ public class UserController {
     public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> curProfile(HttpSession session ) {
-        return userStore.tweetList((String)session.getAttribute("userName"));
+    public ModelAndView curProfile(HttpSession session ) {
+        return profile((String)session.getAttribute("userName"),session);
     }
 
     @RequestMapping(value = "{userName}", method = RequestMethod.GET)

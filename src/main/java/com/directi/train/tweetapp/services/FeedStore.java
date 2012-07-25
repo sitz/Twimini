@@ -34,7 +34,7 @@ public class FeedStore {
         this.userStore = userStore;
     }
 
-    public FeedItem                                          add(FeedItem feedItem) {
+    public FeedItem add(FeedItem feedItem) {
         System.out.println("userID: " + userID.get());
         System.out.println("tweet: " + feedItem.getTweet());
 
@@ -70,7 +70,8 @@ public class FeedStore {
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
                 "where feeds.id = %d order by feeds.id desc) something inner join users " +
-                "on something.creator_id = users.id", id), FeedItem.rowMapper);
+                "on something.creator_id = users.id " +
+                "order by something.id desc", id), FeedItem.rowMapper);
     }
 
     public List<FeedItem> feed() {
@@ -80,7 +81,8 @@ public class FeedStore {
                 "on users.id = feeds.user_id " +
                 "where feeds.receiver_id = %d " +
                 "order by feeds.id desc) something inner join users " +
-                "on something.creator_id = users.id", userID.get()), FeedItem.rowMapper);
+                "on something.creator_id = users.id " +
+                "order by something.id desc", userID.get()), FeedItem.rowMapper);
     }
 
     public void favoriteTweet(Long tweetId, Long userId) {
@@ -91,7 +93,7 @@ public class FeedStore {
         db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
     }
 
-    public void reTweet(Long tweetId, Long userID) {
+    public FeedItem reTweet(Long tweetId, Long userID) {
         db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
 
         FeedItem feedItem = new FeedItem();
@@ -110,7 +112,7 @@ public class FeedStore {
             }
         });
         feedItem.setCreatorId(creatorId);
-        this.add(feedItem);
+        return this.add(feedItem);
     }
 
     public void unReTweet(Long tweetId, Long userID) {

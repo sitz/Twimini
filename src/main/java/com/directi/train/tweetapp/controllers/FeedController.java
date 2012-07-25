@@ -62,8 +62,8 @@ public class FeedController {
 
     @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
-    public void reTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
-        feedStore.reTweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    public FeedItem reTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+        return feedStore.reTweet(tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "unretweet/{tweetid}", method = RequestMethod.GET)

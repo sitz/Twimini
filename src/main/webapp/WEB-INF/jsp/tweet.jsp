@@ -32,6 +32,12 @@
             $('#tweetList').prepend(tweetItemLI);
         });
     }
+    function retweet(element) {
+        $.get('/tweet/retweet/'+ element ,function(data) {
+            var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+            $('#tweetList').prepend(tweetItemLI);
+        });
+    }
     $(document).ready(function () {
         $.post('/tweet/feed.json',function(data) {
             for(var i in data) {

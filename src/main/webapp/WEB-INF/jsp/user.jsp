@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="head.jsp"/>
 
-<div class="container-fluid">
+<div class="container">
     <div class="span4 left fill">
         <form class="form-horizontal well">
             <div> No of Followers :${noFollow} </div>
@@ -16,7 +16,7 @@
     <div class="span7 right">
         <div class = "tweetContainer"  >
             <div class = "tweetContainerTitle">Fancy Title</div>
-            <table id="tweetList" class="table table-bordered table-striped">
+            <table id="tweetList" class="table">
             </table>
     </div>
 </div>
@@ -58,19 +58,6 @@
                 });
             }
         });
-        /*
-        $("#followStatus").mouseover(function() {
-            var following = $("#hidden2").html();
-            if(following) {
-                $(this).html("UnFollow");
-            }
-            else {
-                $(this).html("Follow");
-            }
-        });
-        $("#followStatus").mouseleave(function()) {
-
-        }*/
         $.post('/user/${userName}/json',function(data) {
             for(var i in data) {
                 var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data[i])).data("tweetID", data[i].id);

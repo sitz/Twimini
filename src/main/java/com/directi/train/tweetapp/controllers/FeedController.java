@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -47,15 +48,39 @@ public class FeedController {
         return feedStore.feed();
     }
 
+    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public void favoriteTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+        feedStore.favoriteTweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "unfavorite/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public void unFavoriteTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+        feedStore.unFavoriteTweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public void reTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+        feedStore.reTweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "unretweet/{tweetid}", method = RequestMethod.GET)
+    @ResponseBody
+    public void unReTweet(@PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+        feedStore.unReTweet(tweetId, (Long) httpSession.getAttribute("userID"));
+    }
+
     @RequestMapping(value = "favorites/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getUsersWhoFavorited(@PathVariable("tweetid") Integer tweetId) {
+    public List<Long> getUsersWhoFavorited(@PathVariable("tweetid") Long tweetId) {
         return feedStore.favoritingUsers(tweetId);
     }
 
     @RequestMapping(value = "retweets/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getUsersWhoReTweeted(@PathVariable("tweetid") Integer tweetId) {
+    public List<Long> getUsersWhoReTweeted(@PathVariable("tweetid") Long tweetId) {
         return feedStore.retweetingUsers(tweetId);
     }
 

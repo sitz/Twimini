@@ -35,24 +35,35 @@ public class FeedStore {
     }
 
     public FeedItem add(FeedItem feedItem) {
-        System.out.println(userID.get());
-        System.out.println(feedItem.getTweet());
+        System.out.println("userID: " + userID.get());
+        System.out.println("tweet: " + feedItem.getTweet());
 
-        String userName = (String)db.query(String.format("select username from users where id=%d", userID.get()),new RowMapper<Object>() {
+        String userName = (String)db.query(String.format("select username from users where id = %d", userID.get()),new RowMapper<Object>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("username");
             }
         }).get(0);
-        int nextUniqueTweetId = 1 + (int) db.queryForInt("select max(tweet_id) from feeds");
-        List<Integer> followerIdList = userStore.followerList(userName);
-        for (Integer i : followerIdList) {
-            System.out.println(i);
+        System.out.println("userName: " + userName);
+
+        Long nextUniqueTweetId = feedItem.getTweetId();
+        if (nextUniqueTweetId == null)
+            nextUniqueTweetId = 1 + db.queryForLong("select max(tweet_id) from feeds");
+        System.out.println("nextUniqueTweetId: " + nextUniqueTweetId);
+
+        Long creatorId = feedItem.getCreatorId();
+        if (creatorId == null)
+            creatorId = userID.get();
+        System.out.println("creatorId: " + creatorId);
+
+        List<Long> followerIdList = userStore.followerList(userName);
+        for (Long i : followerIdList) {
+            System.out.println("followerId: " + i);
             db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
-                    userID.get(), i, feedItem.getTweet(), nextUniqueTweetId, userID.get());
+                    userID.get(), i, feedItem.getTweet(), nextUniqueTweetId, creatorId);
         }
         db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
-                userID.get(), userID.get(), feedItem.getTweet(), nextUniqueTweetId, userID.get());
+                userID.get(), userID.get(), feedItem.getTweet(), nextUniqueTweetId, creatorId);
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userID.get()));
         return db.queryForObject(String.format("select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname " +
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
@@ -72,22 +83,55 @@ public class FeedStore {
                 "on something.creator_id = users.id", userID.get()), FeedItem.rowMapper);
     }
 
-    public List<Integer> favoritingUsers(Integer tweetId) {
-        return db.query(String.format("select user_id from favorites where tweet_id = %d", tweetId), new RowMapper<Integer>() {
+    public void favoriteTweet(Long tweetId, Long userId) {
+        db.update("insert into favorites (tweet_id, user_id) values (?, ?)", tweetId, userID);
+    }
+
+    public void unFavoriteTweet(Long tweetId, Long userID) {
+        db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
+    }
+
+    public void reTweet(Long tweetId, Long userID) {
+        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
+
+        FeedItem feedItem = new FeedItem();
+        feedItem.setTweetId(tweetId);
+        String tweet = db.queryForObject(String.format("select tweet from feeds where tweet_id = %d and user_id = creator_id and user_id = receiver_id", tweetId), new RowMapper<String>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("user_id");
+            public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getString("tweet");
+            }
+        });
+        feedItem.setTweet(tweet);
+        Long creatorId = db.queryForObject(String.format("select creator_id from feeds where tweet_id = %d and user_id = creator_id and user_id = receiver_id", tweetId), new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("creator_id");
+            }
+        });
+        feedItem.setCreatorId(creatorId);
+        this.add(feedItem);
+    }
+
+    public void unReTweet(Long tweetId, Long userID) {
+        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
+    }
+
+    public List<Long> favoritingUsers(Long tweetId) {
+        return db.query(String.format("select user_id from favorites where tweet_id = %d", tweetId), new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("user_id");
             }
         });
     }
 
-    public List<Integer> retweetingUsers(Integer tweetId) {
-        return db.query(String.format("select user_id from retweets where tweet_id = %d", tweetId), new RowMapper<Integer>() {
+    public List<Long> retweetingUsers(Long tweetId) {
+        return db.query(String.format("select user_id from retweets where tweet_id = %d", tweetId), new RowMapper<Long>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("user_id");
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("user_id");
             }
         });
     }
-
 }

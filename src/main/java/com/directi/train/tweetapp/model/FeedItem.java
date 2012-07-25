@@ -13,12 +13,12 @@ import java.sql.SQLException;
  * To change this template use File | Settings | File Templates.
  */
 public class FeedItem {
-    private Integer id;
-    private Integer userId;
+    private Long id;
+    private Long userId;
     private String userName;
-    private Integer tweetId;
+    private Long tweetId;
     private String tweet;
-    private Integer creatorId;
+    private Long creatorId;
     private String creatorName;
     private boolean isRetweet;
 
@@ -31,21 +31,21 @@ public class FeedItem {
     public FeedItem() {}
 
     public FeedItem(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("id");
-        this.userId = resultSet.getInt("user_id");
+        this.id = resultSet.getLong("id");
+        this.userId = resultSet.getLong("user_id");
         this.userName = resultSet.getString("username");
-        this.tweetId = resultSet.getInt("tweet_id");
+        this.tweetId = resultSet.getLong("tweet_id");
         this.tweet = resultSet.getString("tweet");
-        this.creatorId = resultSet.getInt("creator_id");
+        this.creatorId = resultSet.getLong("creator_id");
         this.creatorName = resultSet.getString("creatorname");
         this.isRetweet = !creatorId.equals(userId);
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -57,11 +57,11 @@ public class FeedItem {
         this.userName = userName;
     }
 
-    public Integer getTweetId() {
+    public Long getTweetId() {
         return tweetId;
     }
 
-    public void setTweetId(Integer tweetId) {
+    public void setTweetId(Long tweetId) {
         this.tweetId = tweetId;
     }
 
@@ -73,11 +73,11 @@ public class FeedItem {
         this.tweet = tweet;
     }
 
-    public Integer getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(Integer creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -97,11 +97,11 @@ public class FeedItem {
         isRetweet = retweet;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

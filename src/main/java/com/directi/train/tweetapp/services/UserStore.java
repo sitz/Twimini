@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.services;
 
+import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.TweetItem;
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,22 +36,22 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s';", userName));
     }
 
-    public List<Integer> followingList(String userName) {
-        int userId = getUserId(userName);
-        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Integer>() {
+    public List<Long> followingList(String userName) {
+        long userId = getUserId(userName);
+        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Long>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("following_id");
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("following_id");
             }
         });
     }
 
-    public List<Integer> followerList(String userName) {
-        int userId = getUserId(userName);
-        return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Integer>() {
+    public List<Long> followerList(String userName) {
+        long userId = getUserId(userName);
+        return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Long>() {
             @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("follower_id");
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("follower_id");
             }
         });
     }
@@ -138,9 +139,16 @@ public class UserStore {
         }
     }
 
-    public List<TweetItem> tweetList(String userName) {
-        int userID = getUserId(userName);
-        return db.query(String.format("select * from feeds where receiver_id = %d and user_id = %d order by id desc",userID,userID), TweetItem.rowMapper);
+    public List<FeedItem> tweetList(String userName) {
+        long userID = getUserId(userName);
+        return db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
+                "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+                "from feeds inner join users " +
+                "on users.id = feeds.user_id " +
+                "where feeds.receiver_id = %d and feeds.user_id = %d" +
+                "order by feeds.id desc) something inner join users " +
+                "on something.creator_id = users.id" +
+                "order by id desc", userID, userID), FeedItem.rowMapper);
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
@@ -176,19 +184,4 @@ public class UserStore {
         } );
     }
 
-    public void favoriteTweet(Integer tweetId, Long userID) {
-        db.update("insert into favorites (tweet_id, user_id) values (?, ?)", tweetId, userID);
-    }
-
-    public void unFavoriteTweet(Integer tweetId, Long userID) {
-        db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID));
-    }
-
-    public void reTweet(Integer tweetId, Long userID) {
-        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
-    }
-
-    public void unReTweet(Integer tweetId, Long userID) {
-        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
-    }
 }

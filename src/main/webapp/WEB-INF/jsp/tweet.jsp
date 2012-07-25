@@ -32,8 +32,8 @@
             $('#tweetList').prepend(tweetItemLI);
         });
     }
-    function retweet(element) {
-        $.get('/tweet/retweet/'+ element ,function(data) {
+    function retweet(userid,tweetid) {
+        $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
             var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
             $('#tweetList').prepend(tweetItemLI);
         });

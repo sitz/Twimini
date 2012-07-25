@@ -13,8 +13,21 @@ padding-left: 10px;
     <%=tweet%>
     </div>
     <div style="padding-top:10px;font-size:12px;">
-        <span style="padding-left:10px;z-index:10;"><a href="#" id="<%= tweetId %>" style="text-decoration:none;" onclick="retweet(<%= tweetId %>);return false;">Retweet</a></span>
-        <span style="padding-left:10px;z-index:10;"><a href="#" id="<%= tweetId %>" style="text-decoration:none;" onclick="fav(<%= tweetId %>);return false;">Favourite</a></span>
+        <span style="padding-left:10px;z-index:10;">
+            <a href="#" style="text-decoration:none;" onclick="retweet(<%= tweetId %>,<%= creatorId %>);return false;">
+                Retweet
+            </a>
+        </span>
+        <span style="padding-left:10px;z-index:10;">
+        <%if (favourite==true) {%>
+        <a href="#" style="text-decoration:none;" onclick="fav(<%= tweetId %>,<%= creatorId %>);return false;">
+            Like
+        </a>
+        <%} else {%>
+        <a href="#" style="text-decoration:none;" onclick="return false;">
+            Liked
+        </a>
+        </span>
       <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
   </div>
 </div>

@@ -19,7 +19,7 @@ padding-left: 10px;
             </a>
         </span>
         <span style="padding-left:10px;z-index:10;">
-        <%if (favourite==true) {%>
+        <%if (favorite==true) {%>
         <a href="#" style="text-decoration:none;" onclick="fav(<%= tweetId %>,<%= creatorId %>);return false;">
             Like
         </a>
@@ -28,6 +28,7 @@ padding-left: 10px;
             Liked
         </a>
         </span>
+        <%}%>
       <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
   </div>
 </div>

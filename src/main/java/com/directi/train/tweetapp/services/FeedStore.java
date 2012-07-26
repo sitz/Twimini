@@ -99,7 +99,7 @@ public class FeedStore {
     }
 
     public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
-        if (creatorId == userId) {
+        if (creatorId.equals(userId)) {
             System.out.println("User #" + userId + " can't retweet its own!");
             return null;
         }
@@ -120,7 +120,7 @@ public class FeedStore {
     }
 
     public void unReTweet(Long creatorId, Long tweetId, Long userId) {
-        if (creatorId == userId) {
+        if (creatorId.equals(userId)) {
             System.out.println("User #" + userId + " can't unretweet its own!");
             return;
         }

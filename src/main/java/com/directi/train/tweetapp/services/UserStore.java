@@ -148,14 +148,18 @@ public class UserStore {
 
     public List<FeedItem> tweetList(String userName) {
         long userId = getUserId(userName);
-        return db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
+        List<FeedItem> feedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
-                "where feeds.receiver_id = %d and feeds.user_id = %d " +
+                "where feeds.receiver_id = %d " +
                 "order by feeds.id desc) something inner join users " +
                 "on something.creator_id = users.id " +
-                "order by something.id desc", userId, userId), FeedItem.rowMapper);
+                "order by something.id desc", userId), FeedItem.rowMapper);
+        for (FeedItem feedItem : feedItems) {
+            feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", feedItem.getTweetId(), feedItem.getUserId())) > 0);
+        }
+        return feedItems;
     }
 
     public boolean checkFavoriteStatus(Long tweetId, Long userId) {

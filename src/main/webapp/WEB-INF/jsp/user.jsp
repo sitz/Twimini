@@ -23,6 +23,10 @@
 
 
 <script type="text/javascript">
+    function ejs(data) {
+        data.currentUser = "<%= session.getAttribute("userName") %>";
+        return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+    }
     function retweet(tweetid,userid) {
         $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
             alert("Re-Tweeted");
@@ -70,8 +74,8 @@
         });
         $.post('/user/${userName}/json',function(data) {
             for(var i in data) {
-                var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data[i])).data("tweetID", data[i].id);
-                $('#tweetList').prepend(tweetItemLI);
+                var tweetItemLI = ejs(data[i]);
+                $('#tweetList').append(tweetItemLI);
             }
         });
     });

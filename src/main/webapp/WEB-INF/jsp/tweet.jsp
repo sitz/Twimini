@@ -27,13 +27,12 @@
 
 <script type="text/javascript">
     function ejs(data) {
-        data.currentUser = <%= session.getAttribute("userName") %>;
+        data.currentUser = "<%= session.getAttribute("userName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function addItem2(element) {
         var form = $(element).parent().parent();
         $.post('/tweet/new.json', $(form).serialize(),function(data) {
-                data.currentUser = <%= session.getAttribute("userName") %>;
             var tweetItemLI = ejs(data);
             $('#tweetList').prepend(tweetItemLI);
         });

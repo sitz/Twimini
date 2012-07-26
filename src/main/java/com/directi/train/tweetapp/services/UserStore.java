@@ -116,13 +116,13 @@ public class UserStore {
 
     public int unFollowUser(String userName, Long userID) {
         try {
-            long thisUserID = userID;
-            System.out.println(thisUserID);
-            long thatUserID = getUserId(userName);
+            long thatUserID = userID;
             System.out.println(thatUserID);
+            long otherUserID = getUserId(userName);
+            System.out.println(otherUserID);
 
-            db.update(String.format("delete from following where following_id = %d and user_id = %d",  thatUserID,thisUserID));
-            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", thisUserID,thatUserID ));
+            db.update(String.format("delete from following where following_id = %d and user_id = %d", otherUserID, otherUserID));
+            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", otherUserID, otherUserID));
             return 0;
         }
         catch (IndexOutOfBoundsException E) {

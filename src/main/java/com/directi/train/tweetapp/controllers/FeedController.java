@@ -38,8 +38,8 @@ public class FeedController {
 
     @RequestMapping("new")
     @ResponseBody
-    public FeedItem create(FeedItem feedItem) {
-        return feedStore.add(feedItem);
+    public FeedItem create(FeedItem feedItem,HttpSession session) {
+        return feedStore.add(feedItem,(Long)session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "feed", method = RequestMethod.POST)
@@ -75,13 +75,13 @@ public class FeedController {
     @RequestMapping(value = "favorites/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public List<Long> getUsersWhoFavorited(@PathVariable("tweetid") Long tweetId) {
-        return feedStore.favoritingUsers(tweetId);
+        return feedStore.favoritedUsers(tweetId);
     }
 
     @RequestMapping(value = "retweets/{tweetid}", method = RequestMethod.GET)
     @ResponseBody
     public List<Long> getUsersWhoReTweeted(@PathVariable("tweetid") Long tweetId) {
-        return feedStore.retweetingUsers(tweetId);
+        return feedStore.reTweetedUsers(tweetId);
     }
 
 }

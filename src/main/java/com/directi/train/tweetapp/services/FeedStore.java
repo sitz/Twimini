@@ -103,7 +103,10 @@ public class FeedStore {
             System.out.println("User #" + userId + " can't retweet its own!");
             return null;
         }
-
+        if (db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d", tweetId, userId)) > 0) {
+            System.out.println("User #" + userId + " can't retweet same twice!");
+            return null;
+        }
         db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userId);
 
         FeedItem feedItem = new FeedItem();

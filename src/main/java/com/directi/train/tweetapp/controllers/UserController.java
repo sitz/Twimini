@@ -21,28 +21,6 @@ public class UserController {
     @Autowired
     public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView curProfile(HttpSession session ) {
-        return profile((String)session.getAttribute("userName"),session);
-    }
-
-    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
-    public ModelAndView profile(@PathVariable("userName") String userName, HttpSession session) {
-        ModelAndView r = new ModelAndView("user");
-        r.addObject("userName",userName);
-        r.addObject("noFollow",userStore.noOfFollowers(userName));
-        r.addObject("noFollowing",userStore.noOfFollowing(userName));
-        r.addObject("followStatus",userStore.checkFollowingStatus((String)session.getAttribute("userName"),userName));
-        return r;
-    }
-
-    @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)
-    @ResponseBody
-    public List<FeedItem> jsonProfile(@PathVariable("userName") String userName) {
-        return userStore.tweetList(userName);
-    }
-
-
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm() {
         return "index";
@@ -84,42 +62,4 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-
-
-    @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Long> getFollowing(@PathVariable("username") String userName) {
-        return userStore.followingList(userName);
-    }
-
-    @RequestMapping(value = "followers/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Long> getFollowers(@PathVariable("username") String userName) {
-        return userStore.followerList(userName);
-    }
-
-    @RequestMapping(value = "favorites/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Long> getFavoriteTweetsOfAUser(@PathVariable("username") String userName) {
-        return userStore.getFavoriteTweetsOfAUser(userName);
-    }
-
-    @RequestMapping(value = "retweets/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Long> getReTweetsOfAUser(@PathVariable("username") String userName) {
-        return userStore.getReTweetsOfAUser(userName);
-    }
-
-    @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public void followUser(@PathVariable ("username") String userName,HttpSession session) {
-        userStore.followUser(userName, (Long) session.getAttribute("userID"));
-    }
-
-    @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
-        userStore.unFollowUser(userName, (Long) session.getAttribute("userID"));
-    }
-
 }

@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/tweet")
 public class TweetController {
     private final TweetStore tweetStore;
 
@@ -36,15 +35,15 @@ public class TweetController {
         return tweetStore.feed();
     }
 
-    @RequestMapping(value = "favorite/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorite/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getUsersWhoFavorited(@PathVariable("tweetid") Integer tweetId) {
+    public List<Integer> getUsersWhoFavorited(@PathVariable("tweetId") Integer tweetId) {
         return tweetStore.favoritingUsers(tweetId);
     }
 
-    @RequestMapping(value = "retweet/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweet/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Integer> getUsersWhoReTweeted(@PathVariable("tweetid") Integer tweetId) {
+    public List<Integer> getUsersWhoReTweeted(@PathVariable("tweetId") Integer tweetId) {
         return tweetStore.retweetingUsers(tweetId);
     }
 

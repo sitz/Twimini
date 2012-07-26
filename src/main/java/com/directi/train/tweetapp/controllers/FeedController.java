@@ -36,7 +36,7 @@ public class FeedController {
         return new ModelAndView();
     }
 
-    @RequestMapping("new")
+    @RequestMapping(value = "new", method = RequestMethod.POST)
     @ResponseBody
     public FeedItem create(FeedItem feedItem,HttpSession session) {
         return feedStore.add(feedItem,(Long)session.getAttribute("userID"));
@@ -48,40 +48,39 @@ public class FeedController {
         return feedStore.feed();
     }
 
-    @RequestMapping(value = "favorite/{creatorid}/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public boolean favoriteTweet(@PathVariable("creatorid") Long creatorId, @PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+    public boolean favoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
         return feedStore.favoriteTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "unfavorite/{creatorid}/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "unfavorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public boolean unFavoriteTweet(@PathVariable("creatorid") Long creatorId, @PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+    public boolean unFavoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
         return feedStore.unFavoriteTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "retweet/{creatorid}/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public FeedItem reTweet(@PathVariable("creatorid") Long creatorId, @PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+    public FeedItem reTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
         return feedStore.reTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "unretweet/{creatorid}/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "unretweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public void unReTweet(@PathVariable("creatorid") Long creatorId, @PathVariable("tweetid") Long tweetId, HttpSession httpSession) {
+    public void unReTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
         feedStore.unReTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "favorites/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorites/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoFavorited(@PathVariable("tweetid") Long tweetId) {
+    public List<Long> getUsersWhoFavorited(@PathVariable("tweetId") Long tweetId) {
         return feedStore.favoritedUsers(tweetId);
     }
 
-    @RequestMapping(value = "retweets/{tweetid}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweets/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoReTweeted(@PathVariable("tweetid") Long tweetId) {
+    public List<Long> getUsersWhoReTweeted(@PathVariable("tweetId") Long tweetId) {
         return feedStore.reTweetedUsers(tweetId);
     }
-
 }

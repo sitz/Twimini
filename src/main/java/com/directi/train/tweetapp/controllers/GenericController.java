@@ -22,5 +22,4 @@ public class GenericController {
     public String index() {
         return "index";
     }
-
 }

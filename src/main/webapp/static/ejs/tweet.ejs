@@ -14,9 +14,11 @@ padding-left: 10px;
     </div>
     <div style="padding-top:10px;font-size:12px;">
         <span style="padding-left:10px;z-index:10;">
+            <%if (creatorName != currentUser && userName!=currentUser) {%>
             <a href="#" style="text-decoration:none;" onclick="retweet(<%= tweetId %>,<%= creatorId %>);return false;">
                 Retweet
             </a>
+            <%}%>
         </span>
         <span style="padding-left:10px;z-index:10;">
         <%if (favorite==false) {%>

@@ -11,7 +11,8 @@
         <div class="buttonHolder">
         <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
             </div>
-    </form></div>
+    </form>
+    </div>
 
     <div class="span6 right fill">
         <div class = "tweetContainer fill"  >
@@ -25,16 +26,22 @@
 </div>
 
 <script type="text/javascript">
+    function ejs(data) {
+        data.currentUser = <%= session.getAttribute("userName") %>;
+        return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+    }
     function addItem2(element) {
         var form = $(element).parent().parent();
         $.post('/tweet/new.json', $(form).serialize(),function(data) {
-            var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+                data.currentUser = <%= session.getAttribute("userName") %>;
+            var tweetItemLI = ejs(data);
             $('#tweetList').prepend(tweetItemLI);
         });
     }
     function retweet(tweetid,userid) {
         $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
-            var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+            data.currentUser = <%= session.getAttribute("userName") %>;
+            var tweetItemLI = ejs(data);
             $('#tweetList').prepend(tweetItemLI).fadeIn();
         });
     }
@@ -46,7 +53,7 @@
     $(document).ready(function () {
         $.post('/tweet/feed.json',function(data) {
             for(var i in data) {
-                var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data[i])).data("tweetID", data[i].id);
+                var tweetItemLI = ejs(data[i]);
                 $('#tweetList').append(tweetItemLI);
             }
         });

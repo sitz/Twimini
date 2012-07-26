@@ -92,9 +92,9 @@ public class UserStore {
         return userData;
     }
 
-    public int followUser(String userName, Long userID) {
+    public int followUser(String userName, Long userId) {
         try {
-            long loggedUserId = userID;
+            long loggedUserId = userId;
             System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
             System.out.println(otherUserId);
@@ -119,9 +119,9 @@ public class UserStore {
         }
     }
 
-    public int unFollowUser(String userName, Long userID) {
+    public int unFollowUser(String userName, Long userId) {
         try {
-            long loggedUserId = userID;
+            long loggedUserId = userId;
             System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
             System.out.println(otherUserId);
@@ -147,7 +147,7 @@ public class UserStore {
     }
 
     public List<FeedItem> tweetList(String userName) {
-        long userID = getUserId(userName);
+        long userId = getUserId(userName);
         return db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
@@ -155,7 +155,7 @@ public class UserStore {
                 "where feeds.receiver_id = %d and feeds.user_id = %d " +
                 "order by feeds.id desc) something inner join users " +
                 "on something.creator_id = users.id " +
-                "order by something.id desc", userID, userID), FeedItem.rowMapper);
+                "order by something.id desc", userId, userId), FeedItem.rowMapper);
     }
 
     public boolean checkFavoriteStatus(Long tweetId, Long userId) {

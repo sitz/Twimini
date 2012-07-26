@@ -98,8 +98,13 @@ public class FeedStore {
         return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userID)) > 0;
     }
 
-    public FeedItem reTweet(Long creatorId, Long tweetId, Long userID) {
-        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userID);
+    public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
+        if (creatorId == userId) {
+            System.out.println("User #" + userId + " can't retweet its own!");
+            return null;
+        }
+
+        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userId);
 
         FeedItem feedItem = new FeedItem();
         feedItem.setTweetId(tweetId);
@@ -111,11 +116,15 @@ public class FeedStore {
         });
         feedItem.setTweet(tweet);
         feedItem.setCreatorId(creatorId);
-        return add(feedItem,userID);
+        return add(feedItem,userId);
     }
 
-    public void unReTweet(Long creatorId, Long tweetId, Long userID) {
-        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userID));
+    public void unReTweet(Long creatorId, Long tweetId, Long userId) {
+        if (creatorId == userId) {
+            System.out.println("User #" + userId + " can't unretweet its own!");
+            return;
+        }
+        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userId));
     }
 
     public List<Long> favoritedUsers(Long tweetId) {

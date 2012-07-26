@@ -94,13 +94,18 @@ public class UserStore {
 
     public int followUser(String userName, Long userID) {
         try {
-            long thisUserID = userID;
-            System.out.println(thisUserID);
-            long thatUserID = getUserId(userName);
-            System.out.println(thatUserID);
+            long loggedUserId = userID;
+            System.out.println(loggedUserId);
+            long otherUserId = getUserId(userName);
+            System.out.println(otherUserId);
 
-            db.update("insert into following (user_id, following_id) values (? ,?)", thisUserID, thatUserID);
-            db.update("insert into followers (user_id, follower_id) values  (?, ?)", thatUserID, thisUserID);
+            if (loggedUserId == otherUserId) {
+                System.err.println("User #" + loggedUserId + " can't follow itself!");
+                return 1;
+            }
+
+            db.update("insert into following (user_id, following_id) values (? ,?)", loggedUserId, otherUserId);
+            db.update("insert into followers (user_id, follower_id) values  (?, ?)", otherUserId, loggedUserId);
             return 0;
         }
         catch (IndexOutOfBoundsException E) {
@@ -116,13 +121,18 @@ public class UserStore {
 
     public int unFollowUser(String userName, Long userID) {
         try {
-            long thatUserID = userID;
-            System.out.println(thatUserID);
-            long otherUserID = getUserId(userName);
-            System.out.println(otherUserID);
+            long loggedUserId = userID;
+            System.out.println(loggedUserId);
+            long otherUserId = getUserId(userName);
+            System.out.println(otherUserId);
 
-            db.update(String.format("delete from following where following_id = %d and user_id = %d", otherUserID, otherUserID));
-            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", otherUserID, otherUserID));
+            if (loggedUserId == otherUserId) {
+                System.out.println("User #" + loggedUserId + " can't unFollow itself!");
+                return 1;
+            }
+
+            db.update(String.format("delete from following where following_id = %d and user_id = %d", loggedUserId, otherUserId));
+            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", otherUserId, loggedUserId));
             return 0;
         }
         catch (IndexOutOfBoundsException E) {

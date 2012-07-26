@@ -32,10 +32,15 @@
             $('#tweetList').prepend(tweetItemLI);
         });
     }
-    function retweet(userid,tweetid) {
+    function retweet(tweetid,userid) {
         $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
             var tweetItemLI = $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
-            $('#tweetList').prepend(tweetItemLI);
+            $('#tweetList').prepend(tweetItemLI).fadeIn();
+        });
+    }
+    function favorite(tweetid,userid,element) {
+        $.get('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
+            $(element).parent().html("Liked").hide().fadeIn();
         });
     }
     $(document).ready(function () {

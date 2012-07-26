@@ -23,6 +23,16 @@
 
 
 <script type="text/javascript">
+    function retweet(tweetid,userid) {
+        $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
+            alert("Re-Tweeted");
+        });
+    }
+    function favorite(tweetid,userid,element) {
+        $.get('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
+            $(element).parent().html("Liked").hide().fadeIn();
+        });
+    }
     $(document).ready(function () {
         $("#hidden2").hide();
         if($("#hidden2").html() =="1") {

@@ -12,9 +12,9 @@
 </c:if>
 
 Login:
-<form action="/user/login" method="post">
+<form action="/auth/login" method="post">
     username: <input type="text" name="username"></br>
     password: <input type="password" name="password"></br>
-    <a href="/user/register">Register</a>
+    <a href="/auth/register">Register</a>
     <input type="submit">
 </form>

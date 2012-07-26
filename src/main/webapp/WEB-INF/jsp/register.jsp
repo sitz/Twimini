@@ -3,7 +3,7 @@
 
 <c:if test="${not empty sessionScope.userName}">
     <script type="text/javascript">
-        window.location = "/todo"
+        window.location = "/tweet"
     </script>
 </c:if>
 
@@ -12,7 +12,7 @@
 </c:if>
 
 Login:
-<form action="/user/register" method="post">
+<form action="/user/tweet" method="post">
     email : <input type="text" name="email"></br>
     username: <input type="text" name="username"></br>
     password: <input type="password" name="password"></br>

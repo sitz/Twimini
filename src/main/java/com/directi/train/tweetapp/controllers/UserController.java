@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/auth")
 public class UserController {
     public final SimpleJdbcTemplate db;
     private final UserStore userStore;

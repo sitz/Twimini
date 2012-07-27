@@ -7,8 +7,8 @@
         <textarea rows="5" name="tweet" class="input-xlarge tweetarea" style="padding-bottom: 10px"></textarea>
         </div>
         <div class="buttonHolder">
-        <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
-            </div>
+            <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
+        </div>
     </form>
     </div>
 
@@ -17,6 +17,7 @@
         <div class = "tweetContainerTitle">Tweet Feed</div>
         <table id="tweetList" class="table ">
         </table>
+        <a class="btn" href="#" onclick="more();return false;">More</a>
     </div>
 
 
@@ -27,10 +28,18 @@
     var maxId = 0;
     var minId = undefined;
     function refresh() {
-        alert(maxId);
+        $.get('/tweet/feed/new/' + maxId,function(data) {
+            for(var i in data) {
+                prepenD(data[i]);
+            }
+        });
     }
     function more() {
-        alert(minId);
+        $.get('/tweet/feed/old/' + minId,function(data) {
+            for(var i in data) {
+                appenD(data[i]);
+            }
+        });
     }
     function prepenD(data) {
         maxId = data.id;
@@ -69,6 +78,7 @@
                 appenD(data[i]);
             }
         });
+        window.setInterval("refresh()",5000);
     });
 </script>
 

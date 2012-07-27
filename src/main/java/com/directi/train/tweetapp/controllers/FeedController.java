@@ -44,8 +44,15 @@ public class FeedController {
 
     @RequestMapping(value = "feed", method = RequestMethod.POST)
     @ResponseBody
-    public List<FeedItem> feed_list() {
+    public List<FeedItem> feedList() {
         return feedStore.feed();
+    }
+
+
+    @RequestMapping(value = "feed/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId) {
+        return feedStore.newFeedsList(feedId);
     }
 
     @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)

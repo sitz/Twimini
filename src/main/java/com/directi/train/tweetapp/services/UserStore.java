@@ -152,8 +152,7 @@ public class UserStore {
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
-                "where feeds.receiver_id = %d " +
-                "order by feeds.id desc) something inner join users " +
+                "where feeds.receiver_id = %d ) something inner join users " +
                 "on something.creator_id = users.id " +
                 "order by something.id desc", userId), FeedItem.rowMapper);
         for (FeedItem feedItem : feedItems) {

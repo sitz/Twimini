@@ -1,12 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="head.jsp"/>
-
-
-<div class="container containers">
-    <div class="span4 left fill">
+<div class="container">
+    <div class="span4">
     <form class="form-horizontal well">
         <div>
-        <textarea rows="5" name="tweet" class="input-xlarge tweetarea" style="width:330px;padding-bottom: 10px"></textarea>
+        <textarea rows="5" name="tweet" class="input-xlarge tweetarea" style="padding-bottom: 10px"></textarea>
         </div>
         <div class="buttonHolder">
         <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
@@ -14,7 +12,7 @@
     </form>
     </div>
 
-    <div class="span6 right fill">
+    <div class="span6">
         <div class = "tweetContainer fill"  >
         <div class = "tweetContainerTitle">Tweet Feed</div>
         <table id="tweetList" class="table ">
@@ -26,6 +24,25 @@
 </div>
 
 <script type="text/javascript">
+    var maxId = 0;
+    var minId = undefined;
+    function refresh() {
+        alert(maxId);
+    }
+    function more() {
+        alert(minId);
+    }
+    function prepenD(data) {
+        maxId = data.id;
+        data = ejs(data);
+        $('#tweetList').prepend(data);
+    }
+    function appenD(data) {
+        if(minId == undefined) maxId = data.id;
+        minId = data.id;
+        data = ejs(data);
+        $('#tweetList').append(data);
+    }
     function ejs(data) {
         data.currentUser = "<%= session.getAttribute("userName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
@@ -33,15 +50,12 @@
     function addItem2(element) {
         var form = $(element).parent().parent();
         $.post('/tweet/new.json', $(form).serialize(),function(data) {
-            var tweetItemLI = ejs(data);
-            $('#tweetList').prepend(tweetItemLI);
+                refresh();
         });
     }
     function retweet(tweetid,userid) {
         $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
-            data.currentUser = <%= session.getAttribute("userName") %>;
-            var tweetItemLI = ejs(data);
-            $('#tweetList').prepend(tweetItemLI).fadeIn();
+                refresh();
         });
     }
     function favorite(tweetid,userid,element) {
@@ -52,8 +66,7 @@
     $(document).ready(function () {
         $.post('/tweet/feed.json',function(data) {
             for(var i in data) {
-                var tweetItemLI = ejs(data[i]);
-                $('#tweetList').append(tweetItemLI);
+                appenD(data[i]);
             }
         });
     });

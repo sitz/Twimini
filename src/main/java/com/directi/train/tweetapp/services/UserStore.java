@@ -23,6 +23,15 @@ import java.util.List;
 @Service
 public class UserStore {
     public SimpleJdbcTemplate db;
+    private static final long feedItemLimit = 20;
+    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname " +
+            "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+            "from feeds inner join users " +
+            "on users.id = feeds.user_id " +
+            "where ";
+    private static final String postConditionSQL = " ) something inner join users " +
+            "on something.creator_id = users.id " +
+            "order by something.id ";
 
     @Autowired
     public UserStore(SimpleJdbcTemplate template) {
@@ -54,7 +63,8 @@ public class UserStore {
     }
 
     public String registerUser(String email,String userName,String password) {
-        List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'", userName,email), UserItem.rowMapper);
+        List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
+                                  userName,email), UserItem.rowMapper);
         UserItem userItem;
         long userID;
         try {
@@ -148,15 +158,11 @@ public class UserStore {
 
     public List<FeedItem> tweetList(String userName) {
         long userId = getUserId(userName);
-        List<FeedItem> feedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
-                "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
-                "from feeds inner join users " +
-                "on users.id = feeds.user_id " +
-                "where feeds.receiver_id = %d ) something inner join users " +
-                "on something.creator_id = users.id " +
-                "order by something.id desc", userId), FeedItem.rowMapper);
+        List<FeedItem> feedItems = db.query(String.format(preConditionSQL + "feeds.receiver_id = %d" + postConditionSQL + "desc limit %d",
+                                   userId, feedItemLimit), FeedItem.rowMapper);
         for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", feedItem.getTweetId(), feedItem.getUserId())) > 0);
+            feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
+                                 feedItem.getTweetId(), feedItem.getUserId())) > 0);
         }
         return feedItems;
     }

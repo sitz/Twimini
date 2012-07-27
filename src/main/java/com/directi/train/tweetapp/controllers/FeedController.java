@@ -48,11 +48,16 @@ public class FeedController {
         return feedStore.feed();
     }
 
-
-    @RequestMapping(value = "feed/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "feed/new/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId) {
         return feedStore.newFeedsList(feedId);
+    }
+
+    @RequestMapping(value = "feed/old/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId) {
+        return feedStore.oldFeedsList(feedId);
     }
 
     @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)

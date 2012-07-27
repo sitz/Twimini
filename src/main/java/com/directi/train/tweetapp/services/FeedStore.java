@@ -1,8 +1,6 @@
 package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.FeedItem;
-import com.directi.train.tweetapp.model.TweetItem;
-import org.hsqldb.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,6 +21,7 @@ import java.util.List;
 
 @Service
 public class FeedStore {
+    private static final long feedItemLimit = 20;
     private final ThreadLocal<Long> userID;
     public SimpleJdbcTemplate db;
     private UserStore userStore;
@@ -82,7 +81,7 @@ public class FeedStore {
                 "on users.id = feeds.user_id " +
                 "where feeds.receiver_id = %d ) something inner join users " +
                 "on something.creator_id = users.id " +
-                "order by something.id desc", userID.get()), FeedItem.rowMapper);
+                "order by something.id desc limit %d", userID.get(), feedItemLimit), FeedItem.rowMapper);
         for (FeedItem feedItem : feedItems) {
                 feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", feedItem.getTweetId(), feedItem.getUserId())) > 0);
         }
@@ -91,17 +90,31 @@ public class FeedStore {
 
 
     public List<FeedItem> newFeedsList(Long feedId) {
-        List<FeedItem> feedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
+        List<FeedItem> newFeedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
                 "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
                 "where feeds.receiver_id = %d and feeds.id > %d) something inner join users " +
                 "on something.creator_id = users.id " +
                 "order by something.id desc", userID.get(), feedId), FeedItem.rowMapper);
-        for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", feedItem.getTweetId(), feedItem.getUserId())) > 0);
+        for (FeedItem newFeedItem : newFeedItems) {
+            newFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", newFeedItem.getTweetId(), newFeedItem.getUserId())) > 0);
         }
-        return feedItems;
+        return newFeedItems;
+    }
+
+    public List<FeedItem> oldFeedsList(Long feedId) {
+        List<FeedItem> oldFeedItems = db.query(String.format("select something.id, user_id, something.username, tweet_id, tweet, something.creator_id, users.username as creatorname " +
+                "from (select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+                "from feeds inner join users " +
+                "on users.id = feeds.user_id " +
+                "where feeds.receiver_id = %d and feeds.id < %d) something inner join users " +
+                "on something.creator_id = users.id " +
+                "order by something.id desc limit %d", userID.get(), feedId, feedItemLimit), FeedItem.rowMapper);
+        for (FeedItem oldFeedItem : oldFeedItems) {
+            oldFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d", oldFeedItem.getTweetId(), oldFeedItem.getUserId())) > 0);
+        }
+        return oldFeedItems;
     }
 
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {

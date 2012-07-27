@@ -21,7 +21,6 @@ import java.util.List;
 
 @Service
 public class FeedStore {
-    private final ThreadLocal<Long> userID;
     public SimpleJdbcTemplate db;
     private UserStore userStore;
     private static final long feedItemLimit = 20;
@@ -35,8 +34,7 @@ public class FeedStore {
                                       "order by something.id ";
 
     @Autowired
-    public FeedStore(@Qualifier("userID") ThreadLocal<Long> userID, SimpleJdbcTemplate simpleJdbcTemplate, UserStore userStore) {
-        this.userID = userID;
+    public FeedStore(SimpleJdbcTemplate simpleJdbcTemplate, UserStore userStore) {
         this.db = simpleJdbcTemplate;
         this.userStore = userStore;
     }

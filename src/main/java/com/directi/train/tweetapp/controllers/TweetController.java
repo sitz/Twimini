@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -25,14 +26,14 @@ public class TweetController {
 
     @RequestMapping("new")
     @ResponseBody
-    public TweetItem create(TweetItem tweetItem) {
-        return tweetStore.add(tweetItem);
+    public TweetItem create(TweetItem tweetItem, HttpSession httpSession) {
+        return tweetStore.add(tweetItem, (Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "feed", method = RequestMethod.POST)
     @ResponseBody
-    public List<TweetItem> feed_list() {
-        return tweetStore.feed();
+    public List<TweetItem> feed_list(HttpSession httpSession) {
+        return tweetStore.feed((Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "favorite/{tweetId}", method = RequestMethod.GET)

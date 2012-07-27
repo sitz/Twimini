@@ -66,7 +66,7 @@ public class UserStore {
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
                                   userName,email), UserItem.rowMapper);
         UserItem userItem;
-        long userID;
+        long userId;
         try {
             userItem = userData.get(0);
             if(userItem.getEmail().equals(email) ){
@@ -86,11 +86,11 @@ public class UserStore {
     public UserItem checkLogin(String userName,String password) throws Exception{
         ModelAndView mv = new ModelAndView("/index");
         UserItem userData;
-        long userID;
+        long userId;
         try {
             userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
             if (userData.getPassword().equals(password)) {
-                userID = (Integer) userData.getId();
+                userId = (Integer) userData.getId();
             } else {
                 System.out.println(userData.getPassword());
                 throw new Exception("Invalid Password");

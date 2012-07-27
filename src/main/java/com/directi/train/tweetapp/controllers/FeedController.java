@@ -38,26 +38,26 @@ public class FeedController {
 
     @RequestMapping(value = "new", method = RequestMethod.POST)
     @ResponseBody
-    public FeedItem create(FeedItem feedItem,HttpSession session) {
-        return feedStore.add(feedItem,(Long)session.getAttribute("userID"));
+    public FeedItem create(FeedItem feedItem,HttpSession httpSession) {
+        return feedStore.add(feedItem,(Long)httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "feed", method = RequestMethod.POST)
     @ResponseBody
-    public List<FeedItem> feedList() {
-        return feedStore.feed();
+    public List<FeedItem> feedList(HttpSession httpSession) {
+        return feedStore.feed((Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "feed/new/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId) {
-        return feedStore.newFeedsList(feedId);
+    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId, HttpSession httpSession) {
+        return feedStore.newFeedsList(feedId, (Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "feed/old/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId) {
-        return feedStore.oldFeedsList(feedId);
+    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId, HttpSession httpSession) {
+        return feedStore.oldFeedsList(feedId, (Long) httpSession.getAttribute("userID"));
     }
 
     @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)

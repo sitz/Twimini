@@ -10,18 +10,20 @@
             <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
         </div>
     </form>
+    <form class="form-horizontal well">
+        <div>Followers ${noFollow}</div>
+        <div>Following ${noFollowing}</div>
+    </form>
     </div>
 
     <div class="span6">
         <div class = "tweetContainer fill"  >
-        <div class = "tweetContainerTitle">Tweet Feed</div>
-        <table id="tweetList" class="table ">
-        </table>
-        <a class="btn" href="#" onclick="more();return false;">More</a>
+            <div class = "tweetContainerTitle">Tweet Feed</div>
+            <table id="tweetList" class="table ">
+            </table>
+            <a class="btn" href="#" onclick="more();return false;">More</a>
+        </div>
     </div>
-
-
-</div>
 </div>
 
 <script type="text/javascript">
@@ -81,5 +83,4 @@
         window.setInterval("refresh()",5000);
     });
 </script>
-
 <jsp:include page="tail.jsp"/>

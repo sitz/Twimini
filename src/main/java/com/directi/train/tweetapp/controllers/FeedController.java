@@ -10,6 +10,7 @@ package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.services.FeedStore;
+import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,15 +26,21 @@ import java.util.List;
 @RequestMapping("/tweet")
 public class FeedController {
     private final FeedStore feedStore;
+    private final UserStore userStore;
 
     @Autowired
-    public FeedController(FeedStore feedStore) {
+    public FeedController(FeedStore feedStore,UserStore userStore) {
         this.feedStore = feedStore;
+        this.userStore = userStore;
     }
 
     @RequestMapping
-    public ModelAndView feed() {
-        return new ModelAndView();
+    public ModelAndView feed(HttpSession session) {
+        String user = (String)session.getAttribute("userName");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("noFollow",userStore.noOfFollowers(user));
+        modelAndView.addObject("noFollowing",userStore.noOfFollowing(user));
+        return modelAndView;
     }
 
     @RequestMapping(value = "new", method = RequestMethod.POST)

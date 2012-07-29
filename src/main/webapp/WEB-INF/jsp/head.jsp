@@ -32,7 +32,8 @@
                     </li>
                     <li><a rel="tooltip" href="/auth/logout"  data-original-title="Logout">Logout</a></li>
                     <%}%>
-                </ul></div>
+                </ul>
+            </div>
         </div>
    </div>
  </div>

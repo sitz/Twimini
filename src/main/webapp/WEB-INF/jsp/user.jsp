@@ -7,7 +7,7 @@
         <form class="form-horizontal well">
             <div> No of Followers :${noFollow} </div>
             <div> No of Following :${noFollowing} </div>
-            <div> Status : <span id="status">Following</span></div>
+            <div id="StatusDiv"> Status : <span id="status">Following</span></div>
             <div id="hidden2">${followStatus}</div>
             <div class="buttonHolder">
                 <a class="btn btn-info btn-large" id="followStatus" style="width: 100px">Follow</a>
@@ -38,6 +38,9 @@
         });
     }
     $(document).ready(function () {
+        <% if( ((String)session.getAttribute("userName")).equals((String)(request.getAttribute("userName"))) ) { %>
+        $("#StatusDiv").hide();
+        $("#followStatus").hide();  <%}%>
         $("#hidden2").hide();
         if($("#hidden2").html() =="1") {
             setStatusFollowing();

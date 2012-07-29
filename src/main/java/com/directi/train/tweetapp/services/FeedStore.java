@@ -1,6 +1,7 @@
 package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.FeedItem;
+import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,7 +25,8 @@ public class FeedStore {
     public SimpleJdbcTemplate db;
     private UserStore userStore;
     private static final long feedItemLimit = 20;
-    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname " +
+    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, " +
+                                   "creator_id,users.email as creatoremail, users.username as creatorname " +
                                    "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                                    "from feeds inner join users " +
                                    "on users.id = feeds.user_id " +
@@ -62,8 +64,9 @@ public class FeedStore {
             creatorId = userId;
         System.out.println("creatorId: " + creatorId);
 
-        List<Long> followerIdList = userStore.followerList(userName);
-        for (Long i : followerIdList) {
+        List<UserProfileItem> followerIdList = userStore.followerList(userName);
+        for (UserProfileItem userProfileItem : followerIdList) {
+            Integer i = (Integer)userProfileItem.getId();
             System.out.println("followerId: " + i);
             db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
                     userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId);

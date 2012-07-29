@@ -1,6 +1,7 @@
 package com.directi.train.tweetapp.model;
 
 import com.directi.train.tweetapp.services.UserStore;
+import de.bripkens.gravatar.Gravatar;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -23,6 +24,7 @@ public class FeedItem {
     private String creatorName;
     private boolean isRetweet;
     private boolean isFavorite;
+    private String profilePicURL;
 
     public static final RowMapper<FeedItem> rowMapper = new RowMapper<FeedItem>() {
         @Override public FeedItem mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -42,6 +44,7 @@ public class FeedItem {
         this.creatorName = resultSet.getString("creatorname");
         this.isRetweet = !creatorId.equals(userId);
         this.isFavorite = false;
+        this.profilePicURL = new Gravatar().getUrl( resultSet.getString("creatoremail") );
     }
 
     public Long getUserId() {
@@ -114,5 +117,13 @@ public class FeedItem {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public String getProfilePicURL() {
+        return profilePicURL;
+    }
+
+    public void setProfilePicURL(String profilePicURL) {
+        this.profilePicURL = profilePicURL;
     }
 }

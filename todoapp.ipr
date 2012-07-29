@@ -42,6 +42,8 @@
             <element id="library" level="project" name="Maven: org.hsqldb:hsqldb:2.0.0" />
             <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
             <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+            <element id="library" level="project" name="Maven: de.bripkens:gravatar4java:1.1" />
+            <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
             <element id="library" level="project" name="Maven: postgresql:postgresql:9.0-801.jdbc4" />
           </element>
         </element>
@@ -416,6 +418,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/google/collections/google-collections/1.0/google-collections-1.0-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: commons-codec:commons-codec:1.5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.5/commons-codec-1.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.5/commons-codec-1.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.5/commons-codec-1.5-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: commons-dbcp:commons-dbcp:1.4">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar!/" />
@@ -447,6 +460,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: de.bripkens:gravatar4java:1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/de/bripkens/gravatar4java/1.1/gravatar4java-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/de/bripkens/gravatar4java/1.1/gravatar4java-1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/de/bripkens/gravatar4java/1.1/gravatar4java-1.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: javax.servlet:jstl:1.2">

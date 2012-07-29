@@ -25,7 +25,7 @@ import java.util.List;
 public class UserStore {
     public SimpleJdbcTemplate db;
     private static final long feedItemLimit = 20;
-    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname " +
+    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
             "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
             "from feeds inner join users " +
             "on users.id = feeds.user_id " +

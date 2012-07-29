@@ -1,10 +1,17 @@
 <tr><td style="width:100%">
-<div>
-    <div>
-        <a href="/user/<%= username %>"><%= username %> </a>
+<div class="row-fluid">
+    <section>
+    <div class="span2">
+        <img src= "<%= profilePicURL %>" />
     </div>
-    <div>
-        Email: <%= email %>
+    <div class="span6">
+        <div>
+            <a href="/user/<%= username %>"><%= username %> </a>
+        </div>
+        <div>
+            Email: <%= email %>
+        </div>
     </div>
+    </section>
 </div>
 </td></tr>

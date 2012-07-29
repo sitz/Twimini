@@ -2,6 +2,7 @@ package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.TweetItem;
+import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -42,15 +43,15 @@ public class UserProfileController {
         return userStore.tweetList(userName);
     }
 
-    @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "following/{username}/json", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getFollowing(@PathVariable("username") String userName) {
+    public List<UserProfileItem> getFollowing(@PathVariable("username") String userName) {
         return userStore.followingList(userName);
     }
 
-    @RequestMapping(value = "followers/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "followers/{username}/json", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getFollowers(@PathVariable("username") String userName) {
+    public List<UserProfileItem> getFollowers(@PathVariable("username") String userName) {
         return userStore.followerList(userName);
     }
 

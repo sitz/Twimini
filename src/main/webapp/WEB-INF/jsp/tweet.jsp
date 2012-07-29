@@ -11,8 +11,8 @@
         </div>
     </form>
     <form class="form-horizontal well">
-        <div>Followers ${noFollow}</div>
-        <div>Following ${noFollowing}</div>
+        <div>Followers <a href="/user/followers/<%= session.getAttribute("userName")%>">${noFollow}</a></div>
+        <div>Following <a href="/user/following/<%= session.getAttribute("userName")%>">${noFollowing}</a></div>
     </form>
     </div>
 

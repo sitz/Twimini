@@ -5,8 +5,8 @@
 <div class="container">
     <div class="span4 left fill">
         <form class="form-horizontal well">
-            <div> No of Followers :${noFollow} </div>
-            <div> No of Following :${noFollowing} </div>
+            <div> No of Followers :<a href="/user/followers/<%= session.getAttribute("userName")%>">${noFollow}</a> </div>
+            <div> No of Following :<a href="/user/following/<%= session.getAttribute("userName")%>">${noFollowing}</a> </div>
             <div id="StatusDiv"> Status : <span id="status">Following</span></div>
             <div id="hidden2">${followStatus}</div>
             <div class="buttonHolder">

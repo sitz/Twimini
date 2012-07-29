@@ -2,6 +2,7 @@ package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserItem;
+import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -42,24 +43,14 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s'", userName));
     }
 
-    public List<Long> followingList(String userName) {
+    public List<UserProfileItem> followingList(String userName) {
         long userId = getUserId(userName);
-        return db.query(String.format("select following_id from following where user_id =%d", userId), new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getLong("following_id");
-            }
-        });
+        return db.query(String.format("select username,id,email from users inner join following on following.following_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
     }
 
-    public List<Long> followerList(String userName) {
+    public List<UserProfileItem> followerList(String userName) {
         long userId = getUserId(userName);
-        return db.query(String.format("select follower_id from followers where user_id =%d", userId), new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getLong("follower_id");
-            }
-        });
+        return db.query(String.format("select username,id,email from users inner join followers on followers.follower_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
     }
 
     public String registerUser(String email,String userName,String password) {

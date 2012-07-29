@@ -6,14 +6,10 @@
         window.location = "/tweet"
     </script>
 </c:if>
-
-<c:if test="${not empty message}">
-    ${message}</br>
-</c:if>
 <div class="container">
     <div class="row">
         <div class="span6 offset3"/ >
-            <form class="form-horizontal well" action="/auth/register" method="post">
+            <form class="form-horizontal well" id="form">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="control-group">
@@ -41,13 +37,33 @@
                         </div>
                     </div>
                         <div class="form-actions">
-                            <button type="sumbit" class="btn">Submit</button>
-                            <a class="btn" href="/auth/login">Back to Login Page</a>
+                            <button class="btn" onclick="return register();">Submit</button>
+                            <a class="btn" href="/auth/login" id="back">Back to Login Page</a>
                         </div>
                     </div>
-                <fieldset>
+                </fieldset>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function userAlert(data) {
+        alert(data);
+    }
+    function register() {
+        $.post("/auth/register",$("#form").serialize(),function(data){
+            if(data==0) {
+                alert("Successfully registerd");
+                window.location = "/auth/login"
+            }
+            if(data==1) {
+                userAlert("Email already exists");
+            }
+            if(data==2) {
+                userAlert("Username already exists");
+            }
+        });
+        return false;
+    }
+</script>
 <jsp:include page="tail.jsp"/>

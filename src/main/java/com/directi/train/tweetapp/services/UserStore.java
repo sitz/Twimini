@@ -66,31 +66,27 @@ public class UserStore {
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
                                   userName,email), UserItem.rowMapper);
         UserItem userItem;
-        long userId;
         try {
             userItem = userData.get(0);
             if(userItem.getEmail().equals(email) ){
-                return "Email Already Registered to a different Username.";
+                return "1";
             }
             if(userItem.getUsername().equals(userName)){
-                return "Username Already Registered";
+                return "2";
             }
         }
-        catch (IndexOutOfBoundsException e)
-        {
+        catch (IndexOutOfBoundsException e) {
             db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
         }
-        return "User Registered.";
+        return "0";
     }
 
     public UserItem checkLogin(String userName,String password) throws Exception{
-        ModelAndView mv = new ModelAndView("/index");
         UserItem userData;
-        long userId;
         try {
             userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
             if (userData.getPassword().equals(password)) {
-                userId = (Integer) userData.getId();
+                userData.getId();
             } else {
                 System.out.println(userData.getPassword());
                 throw new Exception("Invalid Password");

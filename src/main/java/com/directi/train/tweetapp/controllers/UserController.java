@@ -30,19 +30,19 @@ public class UserController {
     public ModelAndView registerForm() {
         return new ModelAndView("register");
     }
+
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView register(@RequestParam("username") String userName,
+    @ResponseBody
+    public String register(@RequestParam("username") String userName,
                                  @RequestParam("password") String password,
                                  @RequestParam("email") String email) {
-        ModelAndView mv = new ModelAndView("/index");
-        mv.addObject("message",userStore.registerUser(email,userName,password));
-        return mv;
+        return userStore.registerUser(email,userName,password);
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("username") String userName,
+    @ResponseBody
+    public String login(@RequestParam("username") String userName,
                               @RequestParam("password") String password, HttpSession session) {
-        ModelAndView mv = new ModelAndView("/index");
         long userID;
         System.out.println(userName+password);
         try {
@@ -50,11 +50,9 @@ public class UserController {
             session.setAttribute("userName", userName);
             session.setAttribute("userID", userID);
         } catch (Exception e) {
-            System.out.println(e);
-            mv.addObject("message",e.getMessage());
+            return "1";
         }
-        mv.setViewName("redirect:/tweet");
-        return mv;
+        return "0";
     }
 
     @RequestMapping(value = "logout")

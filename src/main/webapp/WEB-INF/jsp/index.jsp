@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="span6 offset3"/ >
-            <form class="form-horizontal well" action="/auth/login" method="post">
+            <form class="form-horizontal well" id="form">
                 <fieldset>
                     <legend>Login</legend>
                         <div class="control-group">
@@ -34,11 +34,25 @@
                         </div>
                         <div class="form-actions">
                             <a class="btn" href="/auth/register">Register</a>
-                            <button type="sumbit" class="btn" >Submit</button>
+                            <button class="btn" onclick="return sub();" >Submit</button>
                         </div>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function sub(){
+        $.post("/auth/login",$("#form").serialize(),function(data){
+            if(data==1) {
+                alert("Login Failed");
+            }
+            else {
+                window.location = "/tweet"
+            }
+        });
+        return false;
+    }
+
+</script>
 <jsp:include page="tail.jsp"/>

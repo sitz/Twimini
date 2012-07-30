@@ -23,7 +23,13 @@
             <div class="nav-collapse" id="main-menu"><ul class="nav" id="main-menu-left">
             </ul>
                 <ul class="nav pull-right" id="main-menu-right">
-                    <li><a rel="tooltip" href="/search/"  data-original-title="Search for a user">Search</a></li>
+                    <!-- <li><a rel="tooltip" href="/search/"  data-original-title="Search for a user">Search</a></li> -->
+                    <li>
+                        <form onsubmit="alert($('#query').val());window.location = '/search/' + $('#query').val();return false;">
+                            <input type="text" class="navbar-search" style="border-color:#CCC;" id="query" placeholder="Search"/>
+                            <!-- <button style="display:none;" /> -->
+                        </form>
+                    </li>
                     <% if (null != session.getAttribute("userName")) { %>
                     <li>
                         <a rel="tooltip" href="/user/"  data-original-title="Customize your settings">

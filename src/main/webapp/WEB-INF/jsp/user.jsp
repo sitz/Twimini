@@ -5,6 +5,7 @@
 <div class="container">
     <div class="span4 left fill">
         <form class="form-horizontal well">
+            <div>No of Tweets<a href="/user/${userName}">${noTweets}</a></div>
             <div> No of Followers :<a href="/user/followers/<%= session.getAttribute("userName")%>">${noFollow}</a> </div>
             <div> No of Following :<a href="/user/following/<%= session.getAttribute("userName")%>">${noFollowing}</a> </div>
             <div id="StatusDiv"> Status : <span id="status">Following</span></div>
@@ -13,7 +14,7 @@
                 <a class="btn btn-info btn-large" id="followStatus" style="width: 100px">Follow</a>
             </div>
         </form></div>
-    <div class="span7 right">
+    <div class="span6 right">
         <div class = "tweetContainer"  >
             <div class = "tweetContainerTitle">Fancy Title</div>
             <table id="tweetList" class="table">

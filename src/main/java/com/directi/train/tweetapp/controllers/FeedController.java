@@ -36,10 +36,12 @@ public class FeedController {
 
     @RequestMapping
     public ModelAndView feed(HttpSession session) {
-        String user = (String)session.getAttribute("userName");
+        String userName = (String)session.getAttribute("userName");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("noFollow",userStore.noOfFollowers(user));
-        modelAndView.addObject("noFollowing",userStore.noOfFollowing(user));
+        modelAndView.addObject("userName", userName);
+        modelAndView.addObject("noTweets",userStore.noOfTweets(userName));
+        modelAndView.addObject("noFollow",userStore.noOfFollowers(userName));
+        modelAndView.addObject("noFollowing",userStore.noOfFollowing(userName));
         return modelAndView;
     }
 

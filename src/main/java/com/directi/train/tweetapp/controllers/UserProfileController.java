@@ -28,12 +28,13 @@ public class UserProfileController {
 
     @RequestMapping(value = "{userName}", method = RequestMethod.GET)
     public ModelAndView profile(@PathVariable("userName") String userName, HttpSession session) {
-        ModelAndView r = new ModelAndView("user");
-        r.addObject("userName",userName);
-        r.addObject("noFollow",userStore.noOfFollowers(userName));
-        r.addObject("noFollowing",userStore.noOfFollowing(userName));
-        r.addObject("followStatus",userStore.checkFollowingStatus((String)session.getAttribute("userName"),userName));
-        return r;
+        ModelAndView modelAndView = new ModelAndView("user");
+        modelAndView.addObject("userName", userName);
+        modelAndView.addObject("noTweets", userStore.noOfTweets(userName));
+        modelAndView.addObject("noFollow", userStore.noOfFollowers(userName));
+        modelAndView.addObject("noFollowing", userStore.noOfFollowing(userName));
+        modelAndView.addObject("followStatus", userStore.checkFollowingStatus((String) session.getAttribute("userName"), userName));
+        return modelAndView;
     }
 
     @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)

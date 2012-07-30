@@ -36,9 +36,4 @@ public class SearchController {
         return searchStore.getResults(query);
     }
 
-    @RequestMapping(value = "search",method = RequestMethod.GET)
-    public ModelAndView search() {
-        return new ModelAndView();
-    }
-
 }

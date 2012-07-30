@@ -187,4 +187,7 @@ public class UserStore {
         } );
     }
 
+    public int noOfTweets(String userName) {
+        return db.queryForInt(String.format("select count(*) from feeds where user_id = receiver_id and user_id='%d'",getUserId(userName)));
+    }
 }

@@ -30,4 +30,11 @@ public class FollowController {
         modelAndView.addObject("head","List of Followers");
         return modelAndView;
     }
+    @RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
+    public ModelAndView getSearchResults(@PathVariable("query") String query) {
+        ModelAndView modelAndView = new ModelAndView("userlist");
+        modelAndView.addObject("url","/search/" + query + "/json");
+        modelAndView.addObject("head","Search Results");
+        return modelAndView;
+    }
 }

@@ -30,7 +30,7 @@ public class UserProfileItem {
         user_id = resultSet.getInt("id");
         username = resultSet.getString("username");
         email = resultSet.getString("email");
-        profilePicURL = new Gravatar().getUrl(email);
+        profilePicURL = new Gravatar().setSize(50).getUrl(email);
     }
     public int getId() {
         return user_id;

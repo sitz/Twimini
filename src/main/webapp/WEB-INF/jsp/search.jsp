@@ -3,12 +3,12 @@
 <jsp:include page="head.jsp"/>
 <div class = "container">
     <div class = "span4">
-        <form class="form-horizontal well">
+        <form class="form-horizontal well" onsubmit="return searchUser();">
             <div>
                 <input type="text" name="query" id="query" class="input-xlarge"/>
             </div>
             <div class="buttonHolder">
-                <a class="btn" href="#" onclick="return searchUser();">
+                <button type="submit" class="btn" href="#">
                     Search!
                 </a>
             </div>

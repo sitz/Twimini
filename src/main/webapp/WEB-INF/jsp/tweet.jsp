@@ -4,7 +4,7 @@
     <div class="span4">
     <form class="form-horizontal well">
         <div>
-        <textarea rows="5" name="tweet" class="input-xlarge tweetarea" style="padding-bottom: 10px"></textarea>
+        <textarea rows="5" name="tweet" id="tweet" class="input-xlarge tweetarea" style="padding-bottom: 10px"></textarea>
         </div>
         <div class="buttonHolder">
             <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
@@ -63,6 +63,8 @@
         $.post('/tweet/new.json', $(form).serialize(),function(data) {
                 refresh();
         });
+        $("#tweet").val("");
+
     }
     function retweet(tweetid,userid) {
         $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {

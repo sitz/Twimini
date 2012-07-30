@@ -1,7 +1,6 @@
 package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.FeedItem;
-import com.directi.train.tweetapp.model.TweetItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;

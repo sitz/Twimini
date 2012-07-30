@@ -20,6 +20,9 @@
     <div class="span6">
         <div class = "tweetContainer fill"  >
             <div class = "tweetContainerTitle">Tweet Feed</div>
+            <button class="btn" onclick="refresh();expandtweets();" id="extraTweetList" style="width:100%">
+                <span id="newTweetNumber">0</span> new tweets 
+            </button>
             <table id="tweetList" class="table ">
             </table>
             <a class="btn" href="#" onclick="more();return false;">More</a>
@@ -30,9 +33,18 @@
 <script type="text/javascript">
     var maxId = 0;
     var minId = undefined;
+    var stacK = [];
+    function expandtweets() {
+        for(var i in stacK) {
+            $("#tweetList").prepend(stacK[i]);
+        }
+        stacK = [];
+        $("#extraTweetList").hide();
+    }
     function refresh() {
         $.get('/tweet/feed/new/' + maxId,function(data) {
             for(var i in data) {
+                console.log("SOmething happend");
                 prepenD(data[i]);
             }
         });
@@ -44,10 +56,12 @@
             }
         });
     }
-    function prepenD(data) {
+    function prepenD(data){
+        $("#extraTweetList").show();
         maxId = data.id;
         data = ejs(data);
-        $('#tweetList').prepend(data);
+        stacK.push(data);
+        $("#newTweetNumber").html(stacK.length);
     }
     function appenD(data) {
         if(minId == undefined) maxId = data.id;
@@ -78,12 +92,13 @@
         });
     }
     $(document).ready(function () {
+        $("#extraTweetList").hide();
+        window.setInterval("refresh()",5000);
         $.post('/tweet/feed.json',function(data) {
             for(var i in data) {
                 appenD(data[i]);
             }
         });
-        window.setInterval("refresh()",5000);
     });
 </script>
 <jsp:include page="tail.jsp"/>

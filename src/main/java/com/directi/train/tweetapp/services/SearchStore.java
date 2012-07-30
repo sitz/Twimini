@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class SearchStore {
-    public SimpleJdbcTemplate db;
+    private SimpleJdbcTemplate db;
 
     @Autowired
     public SearchStore(SimpleJdbcTemplate template) {

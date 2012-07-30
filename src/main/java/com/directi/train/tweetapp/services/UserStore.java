@@ -23,14 +23,14 @@ import java.util.List;
  */
 @Service
 public class UserStore {
-    public SimpleJdbcTemplate db;
-    private static final long feedItemLimit = 20;
-    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
+    private SimpleJdbcTemplate db;
+    protected static final long feedItemLimit = 20;
+    protected static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
             "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
             "from feeds inner join users " +
             "on users.id = feeds.user_id " +
             "where ";
-    private static final String postConditionSQL = " ) something inner join users " +
+    protected static final String postConditionSQL = " ) something inner join users " +
             "on something.creator_id = users.id " +
             "order by something.id ";
 

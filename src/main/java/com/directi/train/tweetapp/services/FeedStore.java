@@ -22,18 +22,8 @@ import java.util.List;
 
 @Service
 public class FeedStore {
-    public SimpleJdbcTemplate db;
+    private SimpleJdbcTemplate db;
     private UserStore userStore;
-    private static final long feedItemLimit = 20;
-    private static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, " +
-                                   "creator_id,users.email as creatoremail, users.username as creatorname " +
-                                   "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
-                                   "from feeds inner join users " +
-                                   "on users.id = feeds.user_id " +
-                                   "where ";
-    private static final String postConditionSQL = " ) something inner join users " +
-                                      "on something.creator_id = users.id " +
-                                      "order by something.id ";
 
     @Autowired
     public FeedStore(SimpleJdbcTemplate simpleJdbcTemplate, UserStore userStore) {
@@ -75,12 +65,12 @@ public class FeedStore {
                 userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId);
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
 
-        return db.queryForObject(String.format(preConditionSQL + "feeds.id = %d" + postConditionSQL + "desc", id), FeedItem.rowMapper);
+        return db.queryForObject(String.format(userStore.preConditionSQL + "feeds.id = %d" + userStore.postConditionSQL + "desc", id), FeedItem.rowMapper);
     }
 
     public List<FeedItem> feed(Long userId) {
-        List<FeedItem> feedItems = db.query(String.format(preConditionSQL + "feeds.receiver_id = %d" + postConditionSQL + "desc limit %d",
-                                   userId, feedItemLimit), FeedItem.rowMapper);
+        List<FeedItem> feedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d" + userStore.postConditionSQL + "desc limit %d",
+                                   userId, userStore.feedItemLimit), FeedItem.rowMapper);
         for (FeedItem feedItem : feedItems) {
                 feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
                                      feedItem.getTweetId(), feedItem.getUserId())) > 0);
@@ -90,7 +80,7 @@ public class FeedStore {
 
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
-        List<FeedItem> newFeedItems = db.query(String.format(preConditionSQL + "feeds.receiver_id = %d and feeds.id > %d" + postConditionSQL,
+        List<FeedItem> newFeedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d and feeds.id > %d" + userStore.postConditionSQL,
                                       userId, feedId), FeedItem.rowMapper);
         for (FeedItem newFeedItem : newFeedItems) {
             newFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
@@ -100,8 +90,8 @@ public class FeedStore {
     }
 
     public List<FeedItem> oldFeedsList(Long feedId, Long userId) {
-        List<FeedItem> oldFeedItems = db.query(String.format(preConditionSQL + "feeds.receiver_id = %d and feeds.id < %d" + postConditionSQL + "desc limit %d",
-                                      userId, feedId, feedItemLimit), FeedItem.rowMapper);
+        List<FeedItem> oldFeedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d and feeds.id < %d" + userStore.postConditionSQL + "desc limit %d",
+                                      userId, feedId, userStore.feedItemLimit), FeedItem.rowMapper);
         for (FeedItem oldFeedItem : oldFeedItems) {
             oldFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
                                     oldFeedItem.getTweetId(), oldFeedItem.getUserId())) > 0);

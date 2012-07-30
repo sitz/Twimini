@@ -154,10 +154,6 @@ public class UserStore {
         return feedItems;
     }
 
-    public boolean checkFavoriteStatus(Long tweetId, Long userId) {
-        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d", tweetId, userId)) > 0;
-    }
-
     public Integer checkFollowingStatus(String curUser,String otherUser) {
         return db.queryForInt(String.format("select count(*) from followers where user_id = %d and follower_id = %d",
                 getUserId(otherUser),getUserId(curUser)));

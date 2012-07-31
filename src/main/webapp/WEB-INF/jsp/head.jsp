@@ -25,7 +25,7 @@
                 <ul class="nav pull-right" id="main-menu-right">
                     <!-- <li><a rel="tooltip" href="/search/"  data-original-title="Search for a user">Search</a></li> -->
                     <li>
-                        <form onsubmit="alert($('#query').val());window.location = '/search/' + $('#query').val();return false;">
+                        <form onsubmit="window.location = '/search/' + $('#query').val();return false;">
                             <input type="text" class="navbar-search" style="border-color:#CCC;" id="query" placeholder="Search"/>
                             <!-- <button style="display:none;" /> -->
                         </form>

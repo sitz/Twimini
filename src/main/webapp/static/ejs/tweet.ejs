@@ -1,6 +1,6 @@
 <tr><td style="width:100%;"><div class="row-fluid">
 <div class="span2"><img src="<%=profilePicURL%>" /></div>
-<div id="tweetItem<%=id%>" class="tweet span4" style="
+<div id="tweetItem<%=id%>" class="tweet span10" style="
 padding-top: 5px;
 padding-bottom: 10px;
 padding-left: 10px;
@@ -14,23 +14,22 @@ padding-left: 10px;
     <%=tweet%>
     </div>
     <div style="padding-top:10px;font-size:12px;">
+        <span style="z-index:10;">
+            <%if (favorite==false) {%>
+            <a href="#" style="text-decoration:none;" onclick="favorite(<%= tweetId %>,<%= creatorId %>,this);return false;">
+            <i class="icon-star-empty"></i> Like</a>
+            <%} else {%>
+            <i class="icon-star"></i> Liked</a>
+        <%}%>
+        </span>
         <span style="padding-left:10px;z-index:10;">
             <%if (creatorName != currentUser && userName!=currentUser) {%>
             <a href="#" style="text-decoration:none;" onclick="retweet(<%= tweetId %>,<%= creatorId %>);return false;">
-                Retweet
+                <i class="icon-repeat"></i> Retweet
             </a>
             <%}%>
         </span>
-        <span style="padding-left:10px;z-index:10;">
-        <%if (favorite==false) {%>
-        <a href="#" style="text-decoration:none;" onclick="favorite(<%= tweetId %>,<%= creatorId %>,this);return false;">
-            Like
-        </a>
-        <%} else {%>
-            Liked
-        </span>
-        <%}%>
-      <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
+        <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"><i class="icon-refresh"></i> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
   </div>
 </div>
 </td></tr>

@@ -1,20 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="head.jsp"/>
-
 <div class="container">
-    <div class="span4 left fill">
+    <div class="span4 ">
         <div class="form-horizontal well">
-            <img src="${userProfileItem.profilePicURL}" >
-            <div>${userProfileItem.username}</div>
-            <div>No of Tweets<a href="/user/${userName}">${noTweets}</a></div>
-            <div>No of Followers :<a href="/user/followers/<%= session.getAttribute("userName")%>">${noFollow}</a> </div>
-            <div>No of Following :<a href="/user/following/<%= session.getAttribute("userName")%>">${noFollowing}</a> </div>
-            <div id="StatusDiv"> Status : <span id="status">Following</span></div>
-            <div id="hidden2">${followStatus}</div>
-            <div class="buttonHolder">
-                <a class="btn btn-info btn-large" id="followStatus" style="width: 100px">Follow</a>
+            <div class="row-fluid">
+                <a href="/user/${userProfileItem.username}">
+                    <div class="span4">
+                        <img src="${userProfileItem.profilePicURL}" >
+                    </div>
+                    <div class="span4 pullright">
+                        <h1>${userProfileItem.username}</h1>
+                    </div>
+                </a>
+                <div class="buttonHolder span4">
+                    <a class="btn btn-info" id="followStatus" style="width: 75px">Follow</a>
+                </div>
             </div>
+            <br />
+            <div class="row-fluid">
+                <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
+                <a href="/user/followers/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
+                <a href="/user/following/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
+            </div>
+            <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
+            <div id="hidden2">${followStatus}</div>
         </div>
     </div>
     <div class="span6 right">
@@ -38,7 +48,7 @@
     }
     function favorite(tweetid,userid,element) {
         $.get('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
-            $(element).parent().html("Liked").hide().fadeIn();
+            $(element).parent().html('<i class="icon-star"></i>Liked</a>').hide().fadeIn();
         });
     }
     $(document).ready(function () {

@@ -31,7 +31,7 @@ public class UserProfileItem {
         user_id = resultSet.getInt("id");
         username = resultSet.getString("username");
         email = resultSet.getString("email");
-        profilePicURL = new Gravatar().setSize(30).getUrl(email);
+        profilePicURL = new Gravatar().getUrl(email);
         isFollowing = false;
     }
     public int getId() {

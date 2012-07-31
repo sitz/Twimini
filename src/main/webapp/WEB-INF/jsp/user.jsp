@@ -4,24 +4,24 @@
 <div class="container">
     <div class="span4 ">
         <div class="form-horizontal well">
-            <div class="row-fluid">
-                <a href="/user/${userProfileItem.username}">
+            <a href="/user/${userProfileItem.username}">
+                <div class="row-fluid">
                     <div class="span4">
                         <img src="${userProfileItem.profilePicURL}" >
                     </div>
-                    <div class="span4 pullright">
+                    <div class="span4">
                         <h1>${userProfileItem.username}</h1>
                     </div>
-                </a>
-                <div class="buttonHolder span4">
-                    <a class="btn btn-info" id="followStatus" style="width: 75px">Follow</a>
                 </div>
-            </div>
+            </a>
             <br />
             <div class="row-fluid">
                 <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
                 <a href="/user/followers/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
                 <a href="/user/following/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
+            </div>
+            <div class="buttonHolder">
+                <button class="btn btn-info" id="followStatus" style="z-index:100;width:100px">Follow</button>
             </div>
             <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
             <div id="hidden2">${followStatus}</div>

@@ -5,16 +5,16 @@
     <div class="span4 ">
         <form class="form-horizontal fill">
             <div class="well">
-                <div class="row-fluid">
-                    <a href="/user/${userProfileItem.username}">
+                <a href="/user/${userProfileItem.username}">
+                    <div class="row-fluid">
                         <div class="span4">
                             <img src="${userProfileItem.profilePicURL}" >
                         </div>
                         <div class="span4 pullright">
                             <h1>${userProfileItem.username}</h1>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
                 <br />
                 <div class="row-fluid">
                     <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 

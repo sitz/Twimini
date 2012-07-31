@@ -11,6 +11,8 @@
         </div>
     </form>
     <form class="form-horizontal well">
+        <img src="${userProfileItem.profilePicURL}" >
+        <div>${userProfileItem.username}</div>
         <div>No of Tweets<a href="/user/${userName}">${noTweets}</a></div>
         <div>Followers <a href="/user/followers/<%= session.getAttribute("userName")%>">${noFollow}</a></div>
         <div>Following <a href="/user/following/<%= session.getAttribute("userName")%>">${noFollowing}</a></div>

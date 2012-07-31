@@ -32,8 +32,13 @@ public class SearchController {
 
     @RequestMapping(value = "search/{query}/json", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> favoriteTweet(@PathVariable("query") String query) {
-        return searchStore.getResults(query);
+    public List<UserProfileItem> favoriteTweet(@PathVariable("query") String query, HttpSession httpSession) {
+        return searchStore.getResults(query, (Long) httpSession.getAttribute("userID"));
+    }
+
+    @RequestMapping(value = "search",method = RequestMethod.GET)
+    public ModelAndView search() {
+        return new ModelAndView();
     }
 
 }

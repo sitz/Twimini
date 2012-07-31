@@ -39,12 +39,21 @@ public class UserStore {
 
     public List<UserProfileItem> followingList(String userName) {
         long userId = getUserId(userName);
-        return db.query(String.format("select username,id,email from users inner join following on following.following_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
+        List<UserProfileItem> users = db.query(String.format("select username, id, email from users inner join following on following.following_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
+        return applyFollowing(userId, users);
     }
 
     public List<UserProfileItem> followerList(String userName) {
         long userId = getUserId(userName);
-        return db.query(String.format("select username,id,email from users inner join followers on followers.follower_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
+        List<UserProfileItem> users = db.query(String.format("select username, id, email from users inner join followers on followers.follower_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);
+        return applyFollowing(userId, users);
+    }
+
+    private List<UserProfileItem> applyFollowing(long userId, List<UserProfileItem> users) {
+        for (UserProfileItem user : users) {
+            user.setFollowing(db.queryForInt(String.format("select count(*) from following where user_id = %d and following_id = %d", userId, user.getId())) > 0);
+        }
+        return users;
     }
 
     public String registerUser(String email,String userName,String password) {

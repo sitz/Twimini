@@ -67,16 +67,6 @@ public class FeedStore  {
         return db.queryForObject(String.format(UserStore.getPreSQL() + "feeds.id = %d" + UserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
     }
 
-    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = db.query(String.format(UserStore.getPreSQL() + conditionalSQL + UserStore.getPostSQL() + orderingSQL,
-                userId, feedId, feedLimit), FeedItem.rowMapper);
-
-        for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), feedItem.getUserId()));
-        }
-        return feedItems;
-    }
-
     public List<FeedItem> feed(Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
         String orderingSQL = "desc limit %d";
@@ -96,20 +86,30 @@ public class FeedStore  {
         return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, feedId, UserStore.getFeedLimit());
     }
 
+    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = db.query(String.format(UserStore.getPreSQL() + conditionalSQL + UserStore.getPostSQL() + orderingSQL,
+                userId, feedId, feedLimit), FeedItem.rowMapper);
+
+        for (FeedItem feedItem : feedItems) {
+            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), feedItem.getUserId()));
+        }
+        return feedItems;
+    }
+
     public static boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
         return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {
         if (isFavorited(creatorId, tweetId, userId))
-            return true;
+            return false;
         return db.update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
     }
 
     public boolean unFavoriteTweet(Long creatorId, Long tweetId, Long userId) {
         if (isFavorited(creatorId, tweetId, userId))
             return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
-        return true;
+        return false;
     }
 
     private boolean isRetweeted(Long creatorId, Long tweetId, long userId) {

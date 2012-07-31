@@ -13,9 +13,16 @@ public class SearchStore {
 
     @Autowired
     public SearchStore(SimpleJdbcTemplate template) {
-        db = template;
+        this.db = template;
     }
-    public List<UserProfileItem> getResults(String query) {
-        return db.query(String.format("select * from users where username like '%%%s%%' or email like '%%%s%%@%%.%%'",query,query), UserProfileItem.rowMapper);
+
+    public List<UserProfileItem> getResults(String query, Long userId) {
+        List<UserProfileItem> usersList = db.query(String.format("select * from users where username like '%%%s%%' or email like '%%%s%%@%%.%%'",
+                query,query), UserProfileItem.rowMapper);
+        for (UserProfileItem user : usersList) {
+            user.setFollowing(db.queryForInt(String.format("select count(*) from following where user_id = %d and following_id = %d", userId, user.getId())) > 0);
+        }
+
+        return usersList;
     }
 }

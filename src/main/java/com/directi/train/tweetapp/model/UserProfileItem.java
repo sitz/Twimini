@@ -18,6 +18,7 @@ public class UserProfileItem {
     private String username;
     private String email;
     private String profilePicURL;
+    private boolean isFollowing;
 
     public static final RowMapper<UserProfileItem> rowMapper = new RowMapper<UserProfileItem>() {
         @Override
@@ -31,6 +32,7 @@ public class UserProfileItem {
         username = resultSet.getString("username");
         email = resultSet.getString("email");
         profilePicURL = new Gravatar().setSize(30).getUrl(email);
+        isFollowing = false;
     }
     public int getId() {
         return user_id;
@@ -49,4 +51,13 @@ public class UserProfileItem {
     public void setProfilePicURL(String profilePicURL) {
         this.profilePicURL = profilePicURL;
     }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
+    }
+
 }

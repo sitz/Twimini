@@ -39,8 +39,8 @@ public class UserProfileController {
 
     @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)
     @ResponseBody
-    public List<FeedItem> jsonProfile(@PathVariable("userName") String userName) {
-        return userStore.tweetList(userName);
+    public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpSession session) {
+        return userStore.tweetList(userName, (Long) session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "following/{username}/json", method = RequestMethod.GET)

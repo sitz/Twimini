@@ -58,7 +58,7 @@ public class UserStore {
 
     public String registerUser(String email,String userName,String password) {
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
-                                  userName,email), UserItem.rowMapper);
+                userName, email), UserItem.rowMapper);
         UserItem userItem;
         try {
             userItem = userData.get(0);
@@ -171,11 +171,10 @@ public class UserStore {
         }
     }
 
-    public List<FeedItem> tweetList(String userName) {
-        long userId = getUserId(userName);
+    public List<FeedItem> tweetList(String userName, Long loggedUserId) {
         String conditionalSQL = "feeds.user_id = %d and feeds.user_id = feeds.receiver_id and feeds.id > %d";
         String orderingSQL = "desc limit %d";
-        return FeedStore.feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
+        return FeedStore.feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {

@@ -70,28 +70,28 @@ public class FeedStore  {
     public List<FeedItem> feed(Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
         String orderingSQL = "desc limit %d";
-        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, UserStore.getMinFeedId(), UserStore.getFeedLimit());
+        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, UserStore.getMinFeedId(), UserStore.getFeedLimit());
     }
 
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
         String orderingSQL = "asc limit %d";
-        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, feedId, UserStore.getMaxFeedLimit());
+        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, UserStore.getMaxFeedLimit());
     }
 
     public List<FeedItem> oldFeedsList(Long feedId, Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id < %d";
         String orderingSQL = "desc limit %d";
-        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, feedId, UserStore.getFeedLimit());
+        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, UserStore.getFeedLimit());
     }
 
-    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
+    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
         List<FeedItem> feedItems = db.query(String.format(UserStore.getPreSQL() + conditionalSQL + UserStore.getPostSQL() + orderingSQL,
                 userId, feedId, feedLimit), FeedItem.rowMapper);
 
         for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), feedItem.getUserId()));
+            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
         }
         return feedItems;
     }

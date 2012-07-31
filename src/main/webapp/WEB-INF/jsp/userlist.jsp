@@ -19,6 +19,24 @@
                         $('#userList').append(ejs(data[i]));
                     }
                 });
+                $(".followButton").live("click",function(){
+                    var el = $(this);
+                    function sendFollowTypeReq(action,callback) {
+                        $.get("/user/" + action + "/" + el.attr("id"),callback);
+                    }
+                    if (el.attr("following") == "true") {
+                        sendFollowTypeReq("unfollow",function() {
+                            el.html("Follow").removeClass("btn-danger").addClass("btn-info");
+                            el.attr("follow","false");
+                        });
+                    }
+                    else {
+                        sendFollowTypeReq("follow",function() {
+                            el.html("Unfollow").removeClass("btn-info").addClass("btn-danger");
+                            el.attr("follow","true");
+                        });
+                    }
+                });
             });
         </script>
 <jsp:include page="tail.jsp"/>

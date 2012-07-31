@@ -173,7 +173,7 @@ public class UserStore {
 
     public List<FeedItem> tweetList(String userName) {
         long userId = getUserId(userName);
-        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String conditionalSQL = "feeds.user_id = %d and feeds.user_id = feeds.receiver_id and feeds.id > %d";
         String orderingSQL = "desc limit %d";
         return FeedStore.feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
     }

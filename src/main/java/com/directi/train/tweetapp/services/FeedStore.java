@@ -129,8 +129,8 @@ public class FeedStore  {
 
         FeedItem feedItem = new FeedItem();
         feedItem.setTweetId(tweetId);
-        String tweet = db.queryForObject(String.format("select tweet from feeds where tweet_id = %d and user_id = creator_id and user_id = receiver_id",
-                tweetId), new RowMapper<String>() {
+        String tweet = db.queryForObject(String.format("select tweet from feeds where tweet_id = %d and creator_id = %d and user_id = creator_id and user_id = receiver_id",
+                tweetId, creatorId), new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet resultSet, int i) throws SQLException {
                     return resultSet.getString("tweet");

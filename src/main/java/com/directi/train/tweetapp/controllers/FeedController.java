@@ -42,6 +42,7 @@ public class FeedController {
         modelAndView.addObject("noTweets",userStore.noOfTweets(userName));
         modelAndView.addObject("noFollow",userStore.noOfFollowers(userName));
         modelAndView.addObject("noFollowing",userStore.noOfFollowing(userName));
+        modelAndView.addObject("userProfileItem", userStore.getUserPofileItem(userName));
         return modelAndView;
     }
 

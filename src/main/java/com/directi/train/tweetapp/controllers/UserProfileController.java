@@ -69,14 +69,14 @@ public class UserProfileController {
 
     @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public void followUser(@PathVariable ("username") String userName,HttpSession session) {
-        userStore.followUser(userName, (Long) session.getAttribute("userID"));
+    public int followUser(@PathVariable ("username") String userName,HttpSession session) {
+        return userStore.followUser(userName, (Long) session.getAttribute("userID"));
     }
 
     @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public void unFollowUser(@PathVariable("username") String userName,HttpSession session) {
-        userStore.unFollowUser(userName, (Long) session.getAttribute("userID"));
+    public int unFollowUser(@PathVariable("username") String userName,HttpSession session) {
+        return userStore.unFollowUser(userName, (Long) session.getAttribute("userID"));
     }
 
 }

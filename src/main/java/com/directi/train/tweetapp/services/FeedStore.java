@@ -20,14 +20,14 @@ import java.util.List;
  */
 
 @Service
-public class FeedStore {
-    private SimpleJdbcTemplate db;
-    private UserStore userStore;
+public class FeedStore  {
+    private static SimpleJdbcTemplate db;
+    private UserStore localUserStore;
 
     @Autowired
-    public FeedStore(SimpleJdbcTemplate simpleJdbcTemplate, UserStore userStore) {
-        this.db = simpleJdbcTemplate;
-        this.userStore = userStore;
+    public FeedStore(SimpleJdbcTemplate template, UserStore localUserStore) {
+        this.db = template;
+        this.localUserStore = localUserStore;
     }
 
     public FeedItem add(FeedItem feedItem,Long userId) {
@@ -53,65 +53,67 @@ public class FeedStore {
             creatorId = userId;
         System.out.println("creatorId: " + creatorId);
 
-        List<UserProfileItem> followerIdList = userStore.followerList(userName);
+        List<UserProfileItem> followerIdList = localUserStore.followerList(userName);
         for (UserProfileItem userProfileItem : followerIdList) {
             Integer i = (Integer)userProfileItem.getId();
             System.out.println("followerId: " + i);
-            db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
-                    userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId);
+            db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
+                    userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         }
-        db.update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
-                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId);
+        db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
+                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
 
-        return db.queryForObject(String.format(userStore.preConditionSQL + "feeds.id = %d" + userStore.postConditionSQL + "desc", id), FeedItem.rowMapper);
+        return db.queryForObject(String.format(UserStore.getPreSQL() + "feeds.id = %d" + UserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
     }
 
-    public List<FeedItem> feed(Long userId) {
-        List<FeedItem> feedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d" + userStore.postConditionSQL + "desc limit %d",
-                                   userId, userStore.feedItemLimit), FeedItem.rowMapper);
+    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = db.query(String.format(UserStore.getPreSQL() + conditionalSQL + UserStore.getPostSQL() + orderingSQL,
+                userId, feedId, feedLimit), FeedItem.rowMapper);
+
         for (FeedItem feedItem : feedItems) {
-                feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
-                                     feedItem.getTweetId(), feedItem.getUserId())) > 0);
+            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), feedItem.getUserId()));
         }
         return feedItems;
     }
 
+    public List<FeedItem> feed(Long userId) {
+        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String orderingSQL = "desc limit %d";
+        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, UserStore.getMinFeedId(), UserStore.getFeedLimit());
+    }
+
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
-        List<FeedItem> newFeedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d and feeds.id > %d" + userStore.postConditionSQL,
-                                      userId, feedId), FeedItem.rowMapper);
-        for (FeedItem newFeedItem : newFeedItems) {
-            newFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
-                                    newFeedItem.getTweetId(), newFeedItem.getUserId())) > 0);
-        }
-        return newFeedItems;
+        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String orderingSQL = "asc limit %d";
+        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, feedId, UserStore.getMaxFeedLimit());
     }
 
     public List<FeedItem> oldFeedsList(Long feedId, Long userId) {
-        List<FeedItem> oldFeedItems = db.query(String.format(userStore.preConditionSQL + "feeds.receiver_id = %d and feeds.id < %d" + userStore.postConditionSQL + "desc limit %d",
-                                      userId, feedId, userStore.feedItemLimit), FeedItem.rowMapper);
-        for (FeedItem oldFeedItem : oldFeedItems) {
-            oldFeedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
-                                    oldFeedItem.getTweetId(), oldFeedItem.getUserId())) > 0);
-        }
-        return oldFeedItems;
+        String conditionalSQL = "feeds.receiver_id = %d and feeds.id < %d";
+        String orderingSQL = "desc limit %d";
+        return feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, feedId, UserStore.getFeedLimit());
     }
 
-    public boolean isFavorited(Long tweetId, Long userId) {
-        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d", tweetId, userId)) > 0;
+    public static boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
+        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {
-        if (isFavorited(tweetId, userId))
-            return false;
-        return db.update(String.format("insert into favorites (tweet_id, user_id) values (%d, %d)", tweetId, userId)) > 0;
+        if (isFavorited(creatorId, tweetId, userId))
+            return true;
+        return db.update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
     }
 
     public boolean unFavoriteTweet(Long creatorId, Long tweetId, Long userId) {
-        if (isFavorited(tweetId, userId))
-            return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d", tweetId, userId)) > 0;
-        return false;
+        if (isFavorited(creatorId, tweetId, userId))
+            return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
+        return true;
+    }
+
+    private boolean isRetweeted(Long creatorId, Long tweetId, long userId) {
+        return db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 
     public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
@@ -119,11 +121,11 @@ public class FeedStore {
             System.out.println("User #" + userId + " can't retweet its own!");
             return null;
         }
-        if (db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d", tweetId, userId)) > 0) {
+        if (isRetweeted(creatorId, tweetId, userId)) {
             System.out.println("User #" + userId + " can't retweet same twice!");
             return null;
         }
-        db.update("insert into retweets (tweet_id, user_id) values (?, ?)", tweetId, userId);
+        db.update(String.format("insert into retweets (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId));
 
         FeedItem feedItem = new FeedItem();
         feedItem.setTweetId(tweetId);
@@ -136,7 +138,7 @@ public class FeedStore {
         });
         feedItem.setTweet(tweet);
         feedItem.setCreatorId(creatorId);
-        return add(feedItem,userId);
+        return add(feedItem, userId);
     }
 
     public void unReTweet(Long creatorId, Long tweetId, Long userId) {
@@ -144,11 +146,15 @@ public class FeedStore {
             System.out.println("User #" + userId + " can't unretweet its own!");
             return;
         }
+        if (!isRetweeted(creatorId, tweetId, userId)) {
+            System.out.println("User #" + userId + " cam't unretweet without retweeting, right?");
+            return;
+        }
         db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userId));
     }
 
-    public List<Long> favoritedUsers(Long tweetId) {
-        return db.query(String.format("select user_id from favorites where tweet_id = %d", tweetId), new RowMapper<Long>() {
+    public List<Long> favoritedUsers(Long creatorId, Long tweetId) {
+        return db.query(String.format("select user_id from favorites where tweet_id = %d and creator_id = %d", tweetId, creatorId), new RowMapper<Long>() {
             @Override
             public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getLong("user_id");
@@ -156,8 +162,8 @@ public class FeedStore {
         });
     }
 
-    public List<Long> reTweetedUsers(Long tweetId) {
-        return db.query(String.format("select user_id from retweets where tweet_id = %d", tweetId), new RowMapper<Long>() {
+    public List<Long> reTweetedUsers(Long creatorId, Long tweetId) {
+        return db.query(String.format("select user_id from retweets where tweet_id = %d and creator_id = %d", tweetId, creatorId), new RowMapper<Long>() {
             @Override
             public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getLong("user_id");

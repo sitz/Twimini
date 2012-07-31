@@ -8,7 +8,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,22 +20,14 @@ import java.util.List;
  * Time: 12:44 AM
  * To change this template use File | Settings | File Templates.
  */
+
 @Service
 public class UserStore {
     private SimpleJdbcTemplate db;
-    protected static final long feedItemLimit = 20;
-    protected static final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
-            "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
-            "from feeds inner join users " +
-            "on users.id = feeds.user_id " +
-            "where ";
-    protected static final String postConditionSQL = " ) something inner join users " +
-            "on something.creator_id = users.id " +
-            "order by something.id ";
 
     @Autowired
     public UserStore(SimpleJdbcTemplate template) {
-        db = template;
+        this.db = template;
     }
 
     public long getUserId(String userName) {
@@ -89,14 +80,13 @@ public class UserStore {
         return userData;
     }
 
-    public int followUser(String userName, Long userId) {
+    public int followUser(String userName, Long loggedUserId) {
         try {
-            long loggedUserId = userId;
             System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
             System.out.println(otherUserId);
 
-            if (loggedUserId == otherUserId) {
+            if (loggedUserId.equals(otherUserId)) {
                 System.err.println("User #" + loggedUserId + " can't follow itself!");
                 return 1;
             }
@@ -116,20 +106,19 @@ public class UserStore {
         }
     }
 
-    public int unFollowUser(String userName, Long userId) {
+    public int unFollowUser(String userName, Long loggedUserId) {
         try {
-            long loggedUserId = userId;
             System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
             System.out.println(otherUserId);
 
-            if (loggedUserId == otherUserId) {
+            if (loggedUserId.equals(otherUserId)) {
                 System.out.println("User #" + loggedUserId + " can't unFollow itself!");
                 return 1;
             }
 
-            db.update(String.format("delete from following where following_id = %d and user_id = %d", loggedUserId, otherUserId));
-            db.update(String.format("delete from followers where follower_id = %d and user_id = %d", otherUserId, loggedUserId));
+            db.update(String.format("delete from following where user_id = %d and following_id = %d", loggedUserId, otherUserId));
+            db.update(String.format("delete from followers where user_id = %d and follower_id = %d", otherUserId, loggedUserId));
             return 0;
         }
         catch (IndexOutOfBoundsException E) {
@@ -145,13 +134,9 @@ public class UserStore {
 
     public List<FeedItem> tweetList(String userName) {
         long userId = getUserId(userName);
-        List<FeedItem> feedItems = db.query(String.format(preConditionSQL + "feeds.receiver_id = %d" + postConditionSQL + "desc limit %d",
-                                   userId, feedItemLimit), FeedItem.rowMapper);
-        for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id =  %d",
-                                 feedItem.getTweetId(), feedItem.getUserId())) > 0);
-        }
-        return feedItems;
+        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String orderingSQL = "desc limit %d";
+        return FeedStore.feedQueryAndFavoriteStatus(userId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
@@ -190,4 +175,35 @@ public class UserStore {
     public int noOfTweets(String userName) {
         return db.queryForInt(String.format("select count(*) from feeds where user_id = receiver_id and user_id='%d'",getUserId(userName)));
     }
+
+    public static String getPostSQL() {
+        final String postConditionSQL = " ) something inner join users " +
+                "on something.creator_id = users.id " +
+                "order by something.id ";
+
+        return postConditionSQL;
+    }
+
+    public static String getPreSQL() {
+        final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
+                "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+                "from feeds inner join users " +
+                "on users.id = feeds.user_id " +
+                "where ";
+
+        return preConditionSQL;
+    }
+
+    public static Long getMaxFeedLimit() {
+        return 10000L;
+    }
+
+    public static Long getFeedLimit() {
+        return 20L;
+    }
+
+    public static Long getMinFeedId() {
+        return 0L;
+    }
+
 }

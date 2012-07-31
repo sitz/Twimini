@@ -93,15 +93,15 @@ public class FeedController {
         feedStore.unReTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
     }
 
-    @RequestMapping(value = "favorites/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoFavorited(@PathVariable("tweetId") Long tweetId) {
-        return feedStore.favoritedUsers(tweetId);
+    public List<Long> getUsersWhoFavorited(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+        return feedStore.favoritedUsers(creatorId, tweetId);
     }
 
-    @RequestMapping(value = "retweets/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweets/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoReTweeted(@PathVariable("tweetId") Long tweetId) {
-        return feedStore.reTweetedUsers(tweetId);
+    public List<Long> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+        return feedStore.reTweetedUsers(creatorId, tweetId);
     }
 }

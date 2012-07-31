@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import java.io.Console;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 /**
  * Created with IntelliJ IDEA.
  * User: elricl
@@ -58,16 +61,43 @@ public class UserStore {
             }
         }
         catch (IndexOutOfBoundsException e) {
+            password = SHA(password);
             db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
         }
         return "0";
+    }
+
+    private String SHA(String password) {
+        MessageDigest md = null;
+        byte [] passwordBytes = password.getBytes();
+        try {
+            md = MessageDigest.getInstance("SHA1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md.update(passwordBytes,0,passwordBytes.length);
+        byte[] encodedPassword = md.digest();
+        return toHexString(encodedPassword);
+    }
+
+    public static String toHexString(byte[] buf) {
+        char[] hexChar = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'A', 'B', 'C', 'D', 'E', 'F' };
+
+        StringBuffer strBuf = new StringBuffer(buf.length * 2);
+        for (int i = 0; i < buf.length; i++) {
+            strBuf.append(hexChar[(buf[i] & 0xf0) >>> 4]);
+            strBuf.append(':');
+            strBuf.append(hexChar[buf[i] & 0x0f]);
+        }
+        return strBuf.toString();
     }
 
     public UserItem checkLogin(String userName,String password) throws Exception{
         UserItem userData;
         try {
             userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
-            if (userData.getPassword().equals(password)) {
+            if (userData.getPassword().equals(SHA(password))) {
                 userData.getId();
             } else {
                 System.out.println(userData.getPassword());

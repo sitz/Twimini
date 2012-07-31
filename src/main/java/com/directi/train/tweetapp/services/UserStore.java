@@ -37,6 +37,11 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s'", userName));
     }
 
+    public UserProfileItem getUserPofileItem(String userName) {
+        long userId = getUserId(userName);
+        return (UserProfileItem) db.queryForObject(String.format("select username, id, email from users where id = %d", userId), UserProfileItem.rowMapper);
+    }
+
     public List<UserProfileItem> followingList(String userName) {
         long userId = getUserId(userName);
         List<UserProfileItem> users = db.query(String.format("select username, id, email from users inner join following on following.following_id = users.id where user_id =%d", userId), UserProfileItem.rowMapper);

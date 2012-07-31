@@ -34,6 +34,7 @@ public class UserProfileController {
         modelAndView.addObject("noFollow", userStore.noOfFollowers(userName));
         modelAndView.addObject("noFollowing", userStore.noOfFollowing(userName));
         modelAndView.addObject("followStatus", userStore.checkFollowingStatus((String) session.getAttribute("userName"), userName));
+        modelAndView.addObject("userProfileItem", userStore.getUserPofileItem(userName));
         return modelAndView;
     }
 

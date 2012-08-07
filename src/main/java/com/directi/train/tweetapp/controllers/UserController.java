@@ -52,6 +52,12 @@ public class UserController {
         return "0";
     }
 
+    @RequestMapping(value = "forgot/{userName}", method = RequestMethod.GET)
+    @ResponseBody
+    public void forgotPassword(@PathVariable("userName") String userName) {
+        userStore.forgotPassword(userName);
+    }
+
     @RequestMapping(value = "logout")
     public String logout(HttpSession session) {
         session.invalidate();

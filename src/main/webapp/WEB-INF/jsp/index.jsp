@@ -1,18 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="head.jsp"/>
-<c:if test="${not empty sessionScope.userName}">
+<% if (null != request.getAttribute("userName")) { %>
     <script type="text/javascript">
         window.location = "/tweet"
     </script>
-</c:if>
-
-<c:if test="${not empty message}">
-    ${message}</br>
-</c:if>
+<% } %>
 <div class="container">
     <div class="row">
-        <div class="span6 offset3"/ >
+        <div class="span6 offset3" />
             <form class="form-horizontal well" id="form">
                 <fieldset>
                     <legend>Login</legend>
@@ -48,8 +44,10 @@
                 alert("Login Failed");
             }
             else {
+                alert(data);
                 window.location = "/tweet"
             }
+            alert(data);
         });
         return false;
     }

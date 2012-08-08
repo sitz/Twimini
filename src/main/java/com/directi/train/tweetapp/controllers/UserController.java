@@ -1,5 +1,7 @@
 package com.directi.train.tweetapp.controllers;
 
+import com.directi.train.tweetapp.services.AuthStore;
+import com.directi.train.tweetapp.services.RandomStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -7,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/auth")
@@ -39,17 +43,23 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestParam("username") String userName,
-                              @RequestParam("password") String password, HttpSession session) {
+                              @RequestParam("password") String password, HttpServletResponse response) {
         long userID;
-        System.out.println(userName+password);
+        String accessToken =  RandomStore.getAccessToken();
+        System.out.println(userName + password);
         try {
             userID = userStore.checkLogin(userName,password).getId();
-            session.setAttribute("userName", userName);
-            session.setAttribute("userID", userID);
+            AuthStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
             return "1";
         }
-        return "0";
+        Cookie cookie = new Cookie("accesstoken", accessToken);
+        cookie.setMaxAge(-1);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return accessToken;
     }
 
     @RequestMapping(value = "forgot/{userName}", method = RequestMethod.GET)
@@ -59,8 +69,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout(HttpServletRequest request) {
+        AuthStore.remove(request.getAttribute("accesstoken"));
+         Cookie cookies[] = request.getCookies();
+        for (Cookie cookie : cookies) {
+            cookie.setMaxAge(0);
+        }
+
         return "redirect:/";
     }
 }

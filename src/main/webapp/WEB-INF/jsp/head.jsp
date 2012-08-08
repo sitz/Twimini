@@ -30,10 +30,10 @@
                             <!-- <button style="display:none;" /> -->
                         </form>
                     </li>
-                    <% if (null != session.getAttribute("userName")) { %>
+                    <% if (null != request.getAttribute("userName")) { %>
                     <li>
                         <a rel="tooltip" href="/user/"  data-original-title="Customize your settings">
-                            Hello, <%= session.getAttribute("userName") %>
+                            Hello, <%= request.getAttribute("userName") %>
                         </a>
                     </li>
                     <li><a rel="tooltip" href="/auth/logout"  data-original-title="Logout">Logout</a></li>

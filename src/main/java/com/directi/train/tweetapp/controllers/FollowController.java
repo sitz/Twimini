@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class FollowController {
+
     @RequestMapping(value = "/user/following/{username}", method = RequestMethod.GET)
     public ModelAndView getFollowing(@PathVariable("username") String userName) {
         ModelAndView modelAndView = new ModelAndView("userlist");
@@ -30,6 +31,7 @@ public class FollowController {
         modelAndView.addObject("head","List of Followers");
         return modelAndView;
     }
+
     @RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
     public ModelAndView getSearchResults(@PathVariable("query") String query) {
         ModelAndView modelAndView = new ModelAndView("userlist");

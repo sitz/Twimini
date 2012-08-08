@@ -18,8 +18,8 @@
                 <br />
                 <div class="row-fluid">
                     <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
-                    <a href="/user/followers/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
-                    <a href="/user/following/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
+                    <a href="/user/followers/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
+                    <a href="/user/following/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
                 </div>
                 <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
                 <div id="hidden2">${followStatus}</div>
@@ -87,7 +87,7 @@
         $('#tweetList').append(data);
     }
     function ejs(data) {
-        data.currentUser = "<%= session.getAttribute("userName") %>";
+        data.currentUser = "<%= request.getAttribute("userName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function addItem2(element) {

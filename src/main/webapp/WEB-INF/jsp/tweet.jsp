@@ -92,7 +92,7 @@
     }
     function addItem2(element) {
         var form = $("#tweetform");
-        $.post('/tweet/new.json', $(form).serialize(),function(data) {
+        $.post('/tweet/new.json',{"tweet" : $("#tweet").val()} ,function(data) {
                 refresh();
         });
         $("#tweet").val("");

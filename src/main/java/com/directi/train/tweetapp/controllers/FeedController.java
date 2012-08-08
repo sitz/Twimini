@@ -9,17 +9,15 @@ package com.directi.train.tweetapp.controllers;
  */
 
 import com.directi.train.tweetapp.model.FeedItem;
+import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.FeedStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -35,8 +33,8 @@ public class FeedController {
     }
 
     @RequestMapping
-    public ModelAndView feed(HttpSession session) {
-        String userName = (String)session.getAttribute("userName");
+    public ModelAndView feed(HttpServletRequest request) {
+        String userName = (AuthStore.getUserName(request.getAttribute("accesstoken")));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userName", userName);
         modelAndView.addObject("noTweets",userStore.noOfTweets(userName));
@@ -48,50 +46,50 @@ public class FeedController {
 
     @RequestMapping(value = "new", method = RequestMethod.POST)
     @ResponseBody
-    public FeedItem create(FeedItem feedItem,HttpSession httpSession) {
-        return feedStore.add(feedItem,(Long)httpSession.getAttribute("userID"));
+    public FeedItem create(FeedItem feedItem,HttpServletRequest request) {
+        return feedStore.add(feedItem,AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "feed", method = RequestMethod.POST)
     @ResponseBody
-    public List<FeedItem> feedList(HttpSession httpSession) {
-        return feedStore.feed((Long) httpSession.getAttribute("userID"));
+    public List<FeedItem> feedList(HttpServletRequest request) {
+        return feedStore.feed(AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "feed/new/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId, HttpSession httpSession) {
-        return feedStore.newFeedsList(feedId, (Long) httpSession.getAttribute("userID"));
+    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
+        return feedStore.newFeedsList(feedId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "feed/old/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId, HttpSession httpSession) {
-        return feedStore.oldFeedsList(feedId, (Long) httpSession.getAttribute("userID"));
+    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
+        return feedStore.oldFeedsList(feedId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public boolean favoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
-        return feedStore.favoriteTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
+    public boolean favoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        return feedStore.favoriteTweet(creatorId, tweetId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "unfavorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public boolean unFavoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
-        return feedStore.unFavoriteTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
+    public boolean unFavoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        return feedStore.unFavoriteTweet(creatorId, tweetId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "retweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public FeedItem reTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
-        return feedStore.reTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
+    public FeedItem reTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        return feedStore.reTweet(creatorId, tweetId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "unretweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public void unReTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpSession httpSession) {
-        feedStore.unReTweet(creatorId, tweetId, (Long) httpSession.getAttribute("userID"));
+    public void unReTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        feedStore.unReTweet(creatorId, tweetId, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)

@@ -1,17 +1,14 @@
 package com.directi.train.tweetapp.controllers;
 
 import com.directi.train.tweetapp.model.UserProfileItem;
+import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.SearchStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,8 +29,8 @@ public class SearchController {
 
     @RequestMapping(value = "search/{query}/json", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> favoriteTweet(@PathVariable("query") String query, HttpSession httpSession) {
-        return searchStore.getResults(query, (Long) httpSession.getAttribute("userID"));
+    public List<UserProfileItem> favoriteTweet(@PathVariable("query") String query, HttpServletRequest request) {
+        return searchStore.getResults(query, AuthStore.getUserId(request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "search",method = RequestMethod.GET)

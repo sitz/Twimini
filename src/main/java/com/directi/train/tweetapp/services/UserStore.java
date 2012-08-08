@@ -82,6 +82,8 @@ public class UserStore {
         UserItem userData;
         try {
             userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
+            System.out.println(PasswordStore.SHA(password));
+            System.out.println(userData.getPassword());
             if (userData.getPassword().equals(PasswordStore.SHA(password))) {
                 userData.getId();
             } else {
@@ -110,9 +112,8 @@ public class UserStore {
             System.out.println("User doesn't exist in db");
         }
         System.out.println(eMail);
-
-        String pwd = "qwerty";
-        db.update(String.format("update users set password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
+        String pwd = RandomStore.getPassword();
+        db.update(String.format("update users insert password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
         PasswordStore.sendPassword(eMail, pwd);
     }
 

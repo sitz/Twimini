@@ -17,8 +17,8 @@
             <br />
             <div class="row-fluid">
                 <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
-                <a href="/user/followers/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
-                <a href="/user/following/<%= session.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
+                <a href="/user/followers/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
+                <a href="/user/following/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
             </div>
             <div class="buttonHolder">
                 <button class="btn btn-info" id="followStatus" style="z-index:100;width:100px">Follow</button>
@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
     function ejs(data) {
-        data.currentUser = "<%= session.getAttribute("userName") %>";
+        data.currentUser = "<%= request.getAttribute("userName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function retweet(tweetid,userid) {
@@ -52,7 +52,7 @@
         });
     }
     $(document).ready(function () {
-        <% if( ((String)session.getAttribute("userName")).equals((String)(request.getAttribute("userName"))) ) { %>
+        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("userName"))) ) { %>
         $("#StatusDiv").hide();
         $("#followStatus").hide();  <%}%>
         $("#hidden2").hide();

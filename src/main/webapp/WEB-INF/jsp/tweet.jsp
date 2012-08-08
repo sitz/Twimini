@@ -3,7 +3,7 @@
 <jsp:include page="head.jsp"/>
 <div class="container">
     <div class="span4 ">
-        <form class="form-horizontal fill">
+        <form class="form-horizontal fill" id="#tweetform">
             <div class="well">
                 <a href="/user/${userProfileItem.username}">
                     <div class="row-fluid">
@@ -91,7 +91,7 @@
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function addItem2(element) {
-        var form = $(element).parent().parent();
+        var form = $("#tweetform");
         $.post('/tweet/new.json', $(form).serialize(),function(data) {
                 refresh();
         });

@@ -21,8 +21,8 @@ import java.util.List;
 
 @Service
 public class FeedStore  {
-    private static SimpleJdbcTemplate db;
-    private UserStore localUserStore;
+    private SimpleJdbcTemplate db;
+    UserStore localUserStore;
 
     @Autowired
     public FeedStore(SimpleJdbcTemplate template, UserStore localUserStore) {
@@ -58,50 +58,36 @@ public class FeedStore  {
                 userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
 
-        return db.queryForObject(String.format(UserStore.getPreSQL() + "feeds.id = %d" + UserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
+        return db.queryForObject(String.format(localUserStore.getPreSQL() + "feeds.id = %d" + localUserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
     }
 
     public List<FeedItem> feed(Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
         String orderingSQL = "desc limit %d";
-        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, UserStore.getMinFeedId(), UserStore.getFeedLimit());
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, localUserStore.getMinFeedId(), localUserStore.getFeedLimit());
     }
 
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
         String orderingSQL = "asc limit %d";
-        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, UserStore.getMaxFeedLimit());
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, localUserStore.getMaxFeedLimit());
     }
 
     public List<FeedItem> oldFeedsList(Long feedId, Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id < %d";
         String orderingSQL = "desc limit %d";
-        return feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, UserStore.getFeedLimit());
-    }
-
-    public static List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = db.query(String.format(UserStore.getPreSQL() + conditionalSQL + UserStore.getPostSQL() + orderingSQL,
-                userId, feedId, feedLimit), FeedItem.rowMapper);
-
-        for (FeedItem feedItem : feedItems) {
-            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
-        }
-        return feedItems;
-    }
-
-    public static boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
-        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, localUserStore.getFeedLimit());
     }
 
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {
-        if (isFavorited(creatorId, tweetId, userId))
+        if (localUserStore.isFavorited(creatorId, tweetId, userId))
             return false;
         return db.update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
     }
 
     public boolean unFavoriteTweet(Long creatorId, Long tweetId, Long userId) {
-        if (isFavorited(creatorId, tweetId, userId))
+        if (localUserStore.isFavorited(creatorId, tweetId, userId))
             return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
         return false;
     }

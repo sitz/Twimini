@@ -156,7 +156,7 @@ public class UserStore {
     public List<FeedItem> tweetList(String userName, Long loggedUserId) {
         String conditionalSQL = "feeds.user_id = %d and feeds.user_id = feeds.receiver_id and feeds.id > %d";
         String orderingSQL = "desc limit %d";
-        return FeedStore.feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
+        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
@@ -196,7 +196,7 @@ public class UserStore {
         return db.queryForInt(String.format("select count(*) from feeds where user_id = receiver_id and user_id='%d'",getUserId(userName)));
     }
 
-    public static String getPostSQL() {
+    public String getPostSQL() {
         final String postConditionSQL = " ) something inner join users " +
                 "on something.creator_id = users.id " +
                 "order by something.id ";
@@ -204,7 +204,7 @@ public class UserStore {
         return postConditionSQL;
     }
 
-    public static String getPreSQL() {
+    public String getPreSQL() {
         final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
                 "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
@@ -214,15 +214,29 @@ public class UserStore {
         return preConditionSQL;
     }
 
-    public static Long getMaxFeedLimit() {
+    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = db.query(String.format(getPreSQL() + conditionalSQL + getPostSQL() + orderingSQL,
+                userId, feedId, feedLimit), FeedItem.rowMapper);
+
+        for (FeedItem feedItem : feedItems) {
+            feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
+        }
+        return feedItems;
+    }
+
+    public boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
+        return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
+    }
+
+    public Long getMaxFeedLimit() {
         return 10000L;
     }
 
-    public static Long getFeedLimit() {
+    public Long getFeedLimit() {
         return 20L;
     }
 
-    public static Long getMinFeedId() {
+    public Long getMinFeedId() {
         return 0L;
     }
 

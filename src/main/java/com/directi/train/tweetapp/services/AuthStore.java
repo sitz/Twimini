@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class AuthStore {
-    private static SimpleJdbcTemplate db;
+    private SimpleJdbcTemplate db;
 
     @Autowired
     public AuthStore(SimpleJdbcTemplate template) {

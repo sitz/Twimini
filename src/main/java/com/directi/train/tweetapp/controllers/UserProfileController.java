@@ -5,9 +5,11 @@ import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +18,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-    private final SimpleJdbcTemplate db;
     private final UserStore userStore;
     private final AuthStore authStore;
 
     @Autowired
-    public UserProfileController(SimpleJdbcTemplate db, UserStore userStore, AuthStore authStore) {
-        this.db = db;
+    public UserProfileController(UserStore userStore, AuthStore authStore) {
         this.userStore = userStore;
         this.authStore = authStore;
     }
@@ -44,7 +44,7 @@ public class UserProfileController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)
+    @RequestMapping(value = "{userName}/json", method = RequestMethod.GET)
     @ResponseBody
     public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpServletRequest request) {
         return userStore.tweetList(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
@@ -74,13 +74,13 @@ public class UserProfileController {
         return userStore.getReTweetsOfAUser(userName);
     }
 
-    @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "follow/{username}", method = RequestMethod.POST)
     @ResponseBody
     public int followUser(@PathVariable ("username") String userName,HttpServletRequest request) {
         return userStore.followUser(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "unfollow/{username}", method = RequestMethod.POST)
     @ResponseBody
     public int unFollowUser(@PathVariable("username") String userName,HttpServletRequest request) {
         return userStore.unFollowUser(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));

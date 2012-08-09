@@ -4,7 +4,6 @@ import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.RandomStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,13 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/auth")
 public class UserController {
-    private final SimpleJdbcTemplate db;
     private final UserStore userStore;
     private final AuthStore authStore;
 
     @Autowired
-    public UserController(SimpleJdbcTemplate db, UserStore userStore, AuthStore authStore) {
-        this.db = db;
+    public UserController(UserStore userStore, AuthStore authStore) {
         this.userStore = userStore;
         this.authStore = authStore;
     }
@@ -71,7 +68,7 @@ public class UserController {
         return accessToken;
     }
 
-    @RequestMapping(value = "forgot/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "forgot/{userName}", method = RequestMethod.POST)
     @ResponseBody
     public void forgotPassword(@PathVariable("userName") String userName) {
         userStore.forgotPassword(userName);

@@ -10,7 +10,7 @@
             <div class="buttonHolder">
                 <button type="submit" class="btn" href="#">
                     Search!
-                </a>
+                </button>
             </div>
         </form>
     </div>

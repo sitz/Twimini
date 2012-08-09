@@ -16,11 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/auth")
 public class UserController {
-    public final SimpleJdbcTemplate db;
+    private final SimpleJdbcTemplate db;
     private final UserStore userStore;
+    private final AuthStore authStore;
 
     @Autowired
-    public UserController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
+    public UserController(SimpleJdbcTemplate db, UserStore userStore, AuthStore authStore) {
+        this.db = db;
+        this.userStore = userStore;
+        this.authStore = authStore;
+    }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginForm() {
@@ -43,19 +48,26 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestParam("username") String userName,
-                              @RequestParam("password") String password, HttpServletResponse response) {
+                              @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
+        String cookieName = "accesstoken";
+
+        if (request.getAttribute(cookieName) != null) {
+            return (String) request.getAttribute(cookieName);
+        }
+
         long userID;
         String accessToken =  RandomStore.getAccessToken();
         System.out.println(userName + password);
         try {
             userID = userStore.checkLogin(userName,password).getId();
-            AuthStore.insert(userName, userID, accessToken);
+            authStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
             return "1";
         }
-        Cookie cookie = new Cookie("accesstoken", accessToken);
+
+        Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setMaxAge(-1);
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -70,7 +82,7 @@ public class UserController {
 
     @RequestMapping(value = "logout")
     public String logout(HttpServletRequest request) {
-        AuthStore.remove(request.getAttribute("accesstoken"));
+        authStore.remove((String) request.getAttribute("accesstoken"));
          Cookie cookies[] = request.getCookies();
         for (Cookie cookie : cookies) {
             cookie.setMaxAge(0);

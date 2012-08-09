@@ -22,26 +22,26 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
 
         String cookieName = "accesstoken";
-        System.out.println("Crap!");
-        if (request.getAttribute(cookieName) != null) {
-            String accessToken = (String) request.getParameter(cookieName);
+        System.out.println(request);
+        System.out.println("Hello");
+
+        if (request.getParameter(cookieName) != null) {
+            String accessToken = request.getParameter(cookieName);
             request.setAttribute(cookieName, accessToken);
 
+            System.out.println("~~~");
+            System.out.println(accessToken);
+
             Boolean flag = authStore.isValid(accessToken);
-
-            System.out.println(request.getAttribute(accessToken) + " " + flag + "....");
-
             if (flag) return flag;
         }
 
+        System.out.println("!!!");
         Cookie[] cookies = request.getCookies();
-        System.out.println(cookies.length + "~~~");
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
                 String accessToken = cookie.getValue();
                 request.setAttribute(cookieName, accessToken);
-
-                System.out.println(request.getAttribute(cookieName) + "!!!");
 
                 Boolean flag = authStore.isValid(accessToken);
                 if (flag) return flag;

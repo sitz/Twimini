@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="head.jsp"/>
-<% if (null != request.getAttribute("userName")) { %>
+<% if (null != request.getAttribute("curUserName")) { %>
     <script type="text/javascript">
         window.location = "/tweet"
     </script>

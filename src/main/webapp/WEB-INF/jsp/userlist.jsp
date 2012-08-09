@@ -17,7 +17,7 @@
                 $.get("${url}",function(data) {
                     for(var i in data) {
                         console.log(data[i]);
-                        if (data[i]["username"] != '<%= request.getAttribute("userName") %>')
+                        if (data[i]["username"] != '<%= request.getAttribute("curUserName") %>')
 
                         $('#userList').append(ejs(data[i]));
                     }
@@ -25,7 +25,7 @@
                 $(".followButton").live("click",function(){
                     var el = $(this);
                     function sendFollowTypeReq(action,callback) {
-                        $.get("/user/" + action + "/" + el.attr("id"),callback);
+                        $.post("/user/" + action + "/" + el.attr("id"),callback);
                     }
                     if (el.attr("following") == "true") {
                         sendFollowTypeReq("unfollow",function() {

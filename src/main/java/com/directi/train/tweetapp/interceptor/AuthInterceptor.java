@@ -29,7 +29,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute(cookieName, accessToken);
             Boolean flag = authStore.isValid(accessToken);
             if (flag) {
-                request.setAttribute("userName",authStore.getUserName(accessToken));
+                request.setAttribute("curUserName",authStore.getUserName(accessToken));
                 return flag;
             }
         }
@@ -42,7 +42,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                     request.setAttribute(cookieName, accessToken);
                     Boolean flag = authStore.isValid(accessToken);
                     if (flag) {
-                        request.setAttribute("userName",authStore.getUserName(accessToken));
+                        request.setAttribute("curUserName",authStore.getUserName(accessToken));
                         return flag;
                     }
                 }

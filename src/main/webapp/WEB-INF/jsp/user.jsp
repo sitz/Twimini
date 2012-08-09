@@ -42,12 +42,12 @@
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function retweet(tweetid,userid) {
-        $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
+        $.post('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
             alert("Re-Tweeted");
         });
     }
     function favorite(tweetid,userid,element) {
-        $.get('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
+        $.post('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
             $(element).parent().html('<i class="icon-star"></i>Liked</a>').hide().fadeIn();
         });
     }
@@ -79,17 +79,17 @@
             var following = $("#hidden2").html();
             var t = $("#followStatus");
             if(following == "1") {
-                $.get('/user/unfollow/${userName}',function(data) {
+                $.post('/user/unfollow/${userName}',function(data) {
                     setStatusNotFollowing();
                 });
             }
             else {
-                $.get('/user/follow/${userName}',function(data) {
+                $.post('/user/follow/${userName}',function(data) {
                     setStatusFollowing();
                 });
             }
         });
-        $.post('/user/${userName}/json',function(data) {
+        $.get('/user/${userName}/json',function(data) {
             for(var i in data) {
                 var tweetItemLI = ejs(data[i]);
                 $('#tweetList').append(tweetItemLI);

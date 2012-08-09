@@ -52,7 +52,7 @@ public class FeedController {
         return feedStore.add(feedItem,authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "feed", method = RequestMethod.POST)
+    @RequestMapping(value = "feed", method = RequestMethod.GET)
     @ResponseBody
     public List<FeedItem> feedList(HttpServletRequest request) {
         return feedStore.feed(authStore.getUserId((String) request.getAttribute("accesstoken")));
@@ -70,25 +70,25 @@ public class FeedController {
         return feedStore.oldFeedsList(feedId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.POST)
     @ResponseBody
     public boolean favoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
         return feedStore.favoriteTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "unfavorite/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "unfavorite/{creatorId}/{tweetId}", method = RequestMethod.POST)
     @ResponseBody
     public boolean unFavoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
         return feedStore.unFavoriteTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "retweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "retweet/{creatorId}/{tweetId}", method = RequestMethod.POST)
     @ResponseBody
     public FeedItem reTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
         return feedStore.reTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "unretweet/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "unretweet/{creatorId}/{tweetId}", method = RequestMethod.POST)
     @ResponseBody
     public void unReTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
         feedStore.unReTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));

@@ -99,19 +99,19 @@
 
     }
     function retweet(tweetid,userid) {
-        $.get('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
+        $.post('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
                 refresh();
         });
     }
     function favorite(tweetid,userid,element) {
-        $.get('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
+        $.post('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
             $(element).parent().html('<i class="icon-star"></i>Liked</a>').hide().fadeIn();
         });
     }
     $(document).ready(function () {
         $("#extraTweetList").hide();
         window.setInterval("refresh()",5000);
-        $.post('/tweet/feed.json',function(data) {
+        $.get('/tweet/feed.json',function(data) {
             for(var i in data) {
                 appenD(data[i]);
             }

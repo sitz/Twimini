@@ -26,7 +26,7 @@ public class RandomStore {
 
     public static String getPassword() {
         String alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        int randomInt = getRandomInt(1, alpha.length());
+        int randomInt = getRandomInt(1, 16);
 
         String pwd = "";
         while (randomInt-- > 0) {

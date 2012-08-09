@@ -57,13 +57,10 @@ public class UserController {
 
         long userID;
         String accessToken =  RandomStore.getAccessToken();
-        System.out.println(userName + password);
         try {
             userID = userStore.checkLogin(userName,password).getId();
             authStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
             return "1";
         }
 

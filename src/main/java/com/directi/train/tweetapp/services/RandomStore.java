@@ -29,13 +29,13 @@ public class RandomStore {
         int randomInt = getRandomInt(1, alpha.length());
 
         String pwd = "";
-        while (--randomInt > 0) {
+        while (randomInt-- > 0) {
             pwd += alpha.charAt(getRandomInt(1, alpha.length()) - 1);
         }
         return pwd;
     }
 
     private static int getRandomInt(int lo, int hi) {
-        return (int) ( lo + Math.ceil(Math.random() * (hi - lo + 1)));
+        return (int) (lo + Math.ceil(Math.random() * (hi - lo)));
     }
 }

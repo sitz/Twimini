@@ -82,12 +82,9 @@ public class UserStore {
         UserItem userData;
         try {
             userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
-            System.out.println(PasswordStore.SHA(password));
-            System.out.println(userData.getPassword());
             if (userData.getPassword().equals(PasswordStore.SHA(password))) {
                 userData.getId();
             } else {
-                System.out.println(userData.getPassword());
                 throw new Exception("Invalid Password");
             }
         }
@@ -98,7 +95,6 @@ public class UserStore {
     }
 
     public void forgotPassword(String userName) {
-        System.out.println(userName);
         String eMail = null;
         try {
             eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
@@ -109,22 +105,17 @@ public class UserStore {
             }).get(0);
         }  catch (Exception E) {
             E.printStackTrace();
-            System.out.println("User doesn't exist in db");
         }
-        System.out.println(eMail);
         String pwd = RandomStore.getPassword();
-        db.update(String.format("update users insert password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
+        db.update(String.format("update users set password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
         PasswordStore.sendPassword(eMail, pwd);
     }
 
     public int followUser(String userName, Long loggedUserId) {
         try {
-            System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
-            System.out.println(otherUserId);
 
             if (loggedUserId.equals(otherUserId)) {
-                System.err.println("User #" + loggedUserId + " can't follow itself!");
                 return 1;
             }
 
@@ -133,11 +124,9 @@ public class UserStore {
             return 0;
         }
         catch (IndexOutOfBoundsException E) {
-            System.out.println("User " + userName + "doesn't exist !");
             return 1;
         }
         catch (Exception E) {
-            System.out.println("Follow operation unsuccessful !");
             E.printStackTrace();
             return 1;
         }
@@ -145,12 +134,9 @@ public class UserStore {
 
     public int unFollowUser(String userName, Long loggedUserId) {
         try {
-            System.out.println(loggedUserId);
             long otherUserId = getUserId(userName);
-            System.out.println(otherUserId);
 
             if (loggedUserId.equals(otherUserId)) {
-                System.out.println("User #" + loggedUserId + " can't unFollow itself!");
                 return 1;
             }
 
@@ -159,11 +145,9 @@ public class UserStore {
             return 0;
         }
         catch (IndexOutOfBoundsException E) {
-            System.out.println("User " + userName + "doesn't exist !");
             return 1;
         }
         catch (Exception E) {
-            System.out.println("unFollow operation unsuccessful !");
             E.printStackTrace();
             return 1;
         }

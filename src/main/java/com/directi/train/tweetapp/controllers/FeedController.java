@@ -61,7 +61,6 @@ public class FeedController {
     @RequestMapping(value = "feed/new/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
-        System.out.println(request.getAttribute("accesstoken"));
         return feedStore.newFeedsList(feedId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 

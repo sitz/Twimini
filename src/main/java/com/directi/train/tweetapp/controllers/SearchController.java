@@ -35,9 +35,6 @@ public class SearchController {
         return searchStore.getResults(query, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "search",method = RequestMethod.GET)
-    public ModelAndView search() {
-        return new ModelAndView();
-    }
+
 
 }

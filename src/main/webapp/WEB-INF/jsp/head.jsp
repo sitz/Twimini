@@ -5,7 +5,7 @@
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="/static/css/custom.css" rel="stylesheet" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
+    <title>TwiMini</title>
 </head>
 <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="50" style="padding: 100px;">
 <script type="text/javascript" src="/static/js/ejs_production.js"></script>

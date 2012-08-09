@@ -47,6 +47,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    document.title = "TwiMini: Register";
     function userAlert(data) {
         alert(data);
     }

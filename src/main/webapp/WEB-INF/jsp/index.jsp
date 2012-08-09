@@ -38,9 +38,11 @@
     </div>
 </div>
 <script type="text/javascript">
+    document.title = "TwiMini: Login";
     function sub(){
         $.post("/auth/login",$("#form").serialize(),function(data){
-            if(data==1) {
+            alert(data);
+            if(data=="Error1") {
                 alert("Login Failed");
             }
             else {

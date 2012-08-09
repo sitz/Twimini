@@ -20,17 +20,19 @@ import java.util.List;
  */
 @Controller
 public class SearchController {
-    private SearchStore searchStore;
+    private final SearchStore searchStore;
+    private final AuthStore authStore;
 
     @Autowired
-    public SearchController(SearchStore searchStore) {
+    public SearchController(SearchStore searchStore, AuthStore authStore) {
         this.searchStore = searchStore;
+        this.authStore = authStore;
     }
 
     @RequestMapping(value = "search/{query}/json", method = RequestMethod.GET)
     @ResponseBody
     public List<UserProfileItem> favoriteTweet(@PathVariable("query") String query, HttpServletRequest request) {
-        return searchStore.getResults(query, AuthStore.getUserId(request.getAttribute("accesstoken")));
+        return searchStore.getResults(query, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "search",method = RequestMethod.GET)

@@ -16,15 +16,20 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-    public final SimpleJdbcTemplate db;
+    private final SimpleJdbcTemplate db;
     private final UserStore userStore;
+    private final AuthStore authStore;
 
     @Autowired
-    public UserProfileController(SimpleJdbcTemplate db,UserStore userStore) {this.db = db;this.userStore = userStore;}
+    public UserProfileController(SimpleJdbcTemplate db, UserStore userStore, AuthStore authStore) {
+        this.db = db;
+        this.userStore = userStore;
+        this.authStore = authStore;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView curProfile(HttpServletRequest request) {
-        return profile(AuthStore.getUserName(request.getAttribute("accesstoken")), request);
+        return profile(authStore.getUserName((String) request.getAttribute("accesstoken")), request);
     }
 
     @RequestMapping(value = "{userName}", method = RequestMethod.GET)
@@ -34,7 +39,7 @@ public class UserProfileController {
         modelAndView.addObject("noTweets", userStore.noOfTweets(userName));
         modelAndView.addObject("noFollow", userStore.noOfFollowers(userName));
         modelAndView.addObject("noFollowing", userStore.noOfFollowing(userName));
-        modelAndView.addObject("followStatus", userStore.checkFollowingStatus(AuthStore.getUserName(request.getAttribute("accesstoken")), userName));
+        modelAndView.addObject("followStatus", userStore.checkFollowingStatus(authStore.getUserName((String) request.getAttribute("accesstoken")), userName));
         modelAndView.addObject("userProfileItem", userStore.getUserPofileItem(userName));
         return modelAndView;
     }
@@ -42,7 +47,7 @@ public class UserProfileController {
     @RequestMapping(value = "{userName}/json", method = RequestMethod.POST)
     @ResponseBody
     public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpServletRequest request) {
-        return userStore.tweetList(userName, AuthStore.getUserId(request.getAttribute("accesstoken")));
+        return userStore.tweetList(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "following/{username}/json", method = RequestMethod.GET)
@@ -72,13 +77,13 @@ public class UserProfileController {
     @RequestMapping(value = "follow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public int followUser(@PathVariable ("username") String userName,HttpServletRequest request) {
-        return userStore.followUser(userName, AuthStore.getUserId(request.getAttribute("accesstoken")));
+        return userStore.followUser(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
     @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
     @ResponseBody
     public int unFollowUser(@PathVariable("username") String userName,HttpServletRequest request) {
-        return userStore.unFollowUser(userName, AuthStore.getUserId(request.getAttribute("accesstoken")));
+        return userStore.unFollowUser(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
 }

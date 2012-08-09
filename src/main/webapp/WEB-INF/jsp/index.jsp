@@ -41,7 +41,6 @@
     document.title = "TwiMini: Login";
     function sub(){
         $.post("/auth/login",$("#form").serialize(),function(data){
-            alert(data);
             if(data=="Error1") {
                 alert("Login Failed");
             }

@@ -52,7 +52,7 @@
         });
     }
     $(document).ready(function () {
-        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("CurUserName"))) ) { %>
+        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("curUserName"))) ) { %>
         $("#StatusDiv").hide();
         $("#followStatus").hide();  <%}%>
         $("#hidden2").hide();

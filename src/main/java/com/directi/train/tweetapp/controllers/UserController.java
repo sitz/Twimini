@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     private final UserStore userStore;
     private final AuthStore authStore;
+    private final String cookieName = "accesstoken";
 
     @Autowired
     public UserController(UserStore userStore, AuthStore authStore) {
@@ -46,7 +47,6 @@ public class UserController {
     @ResponseBody
     public String login(@RequestParam("username") String userName,
                               @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
-        String cookieName = "accesstoken";
 
         if (request.getAttribute(cookieName) != null) {
             return (String) request.getAttribute(cookieName);
@@ -58,7 +58,7 @@ public class UserController {
             userID = userStore.checkLogin(userName,password).getId();
             authStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
-            return "1";
+            return "Error1";
         }
 
         Cookie cookie = new Cookie(cookieName, accessToken);
@@ -76,10 +76,11 @@ public class UserController {
 
     @RequestMapping(value = "logout")
     public String logout(HttpServletRequest request) {
-        authStore.remove((String) request.getAttribute("accesstoken"));
          Cookie cookies[] = request.getCookies();
         for (Cookie cookie : cookies) {
             cookie.setMaxAge(0);
+            System.out.println(cookie.getName() + cookie.getValue() + "~~");
+            authStore.remove(cookie.getValue());
         }
 
         return "redirect:/";

@@ -48,6 +48,7 @@
 </div>
 
 <script type="text/javascript">
+    document.title = "TwiMini: Home";
     var maxId = 0;
     var minId = undefined;
     var stacK = [];

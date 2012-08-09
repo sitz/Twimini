@@ -37,6 +37,7 @@
 
 
 <script type="text/javascript">
+    document.title = 'TwiMini: <%= request.getAttribute("userName") %>';
     function ejs(data) {
         data.currentUser = "<%= request.getAttribute("curUserName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
@@ -52,7 +53,7 @@
         });
     }
     $(document).ready(function () {
-        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("curUserName"))) ) { %>
+        <% if( (request.getAttribute("userName")).equals((request.getAttribute("curUserName"))) ) { %>
         $("#StatusDiv").hide();
         $("#followStatus").hide();  <%}%>
         $("#hidden2").hide();

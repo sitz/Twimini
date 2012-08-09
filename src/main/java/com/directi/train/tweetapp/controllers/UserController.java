@@ -79,7 +79,6 @@ public class UserController {
          Cookie cookies[] = request.getCookies();
         for (Cookie cookie : cookies) {
             cookie.setMaxAge(0);
-            System.out.println(cookie.getName() + cookie.getValue() + "~~");
             authStore.remove(cookie.getValue());
         }
 

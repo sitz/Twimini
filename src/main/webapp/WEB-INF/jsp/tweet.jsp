@@ -18,8 +18,8 @@
                 <br />
                 <div class="row-fluid">
                     <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
-                    <a href="/user/followers/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a> 
-                    <a href="/user/following/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
+                    <a href="/user/followers/<%= request.getAttribute("CurUserName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a>
+                    <a href="/user/following/<%= request.getAttribute("CurUserName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a>
                 </div>
                 <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
                 <div id="hidden2">${followStatus}</div>
@@ -37,7 +37,7 @@
     <div class="span6">
         <div class = "tweetContainer fill"  >
             <div class = "tweetContainerTitle">Tweet Feed</div>
-            <button class="btn" onclick="refresh();expandtweets();" id="extraTweetList" style="width:100%">
+            <button class="btn" onclick="refresh();expandTweets();" id="extraTweetList" style="width:100%">
                 <span id="newTweetNumber">0</span> new tweets 
             </button>
             <table id="tweetList" class="table ">
@@ -51,7 +51,7 @@
     var maxId = 0;
     var minId = undefined;
     var stacK = [];
-    function expandtweets() {
+    function expandTweets() {
         for(var i in stacK) {
             $("#tweetList").prepend(stacK[i]);
         }
@@ -87,7 +87,7 @@
         $('#tweetList').append(data);
     }
     function ejs(data) {
-        data.currentUser = "<%= request.getAttribute("userName") %>";
+        data.currentUser = "<%= request.getAttribute("curUserName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function addItem2(element) {

@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
     function ejs(data) {
-        data.currentUser = "<%= request.getAttribute("userName") %>";
+        data.currentUser = "<%= request.getAttribute("CurUserName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function retweet(tweetid,userid) {
@@ -52,7 +52,7 @@
         });
     }
     $(document).ready(function () {
-        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("userName"))) ) { %>
+        <% if( ((String)request.getAttribute("userName")).equals((String)(request.getAttribute("CurUserName"))) ) { %>
         $("#StatusDiv").hide();
         $("#followStatus").hide();  <%}%>
         $("#hidden2").hide();

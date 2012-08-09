@@ -24,13 +24,13 @@
             </ul>
                 <ul class="nav pull-right" id="main-menu-right">
                     <!-- <li><a rel="tooltip" href="/search/"  data-original-title="Search for a user">Search</a></li> -->
+                    <% if (null != request.getAttribute("userName")) { %>
                     <li>
                         <form onsubmit="window.location = '/search/' + $('#query').val();return false;">
                             <input type="text" class="navbar-search" style="border-color:#CCC;" id="query" placeholder="Search"/>
                             <!-- <button style="display:none;" /> -->
                         </form>
                     </li>
-                    <% if (null != request.getAttribute("userName")) { %>
                     <li>
                         <a rel="tooltip" href="/user/"  data-original-title="Customize your settings">
                             Hello, <%= request.getAttribute("userName") %>

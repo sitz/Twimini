@@ -16,6 +16,9 @@
             $(document).ready(function () {
                 $.get("${url}",function(data) {
                     for(var i in data) {
+                        console.log(data[i]);
+                        if (data[i]["username"] != '<%= request.getAttribute("userName") %>')
+
                         $('#userList').append(ejs(data[i]));
                     }
                 });

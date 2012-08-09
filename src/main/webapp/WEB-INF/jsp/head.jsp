@@ -4,6 +4,7 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="/static/css/custom.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="http://www.favicon.cc/favicon/996/398/favicon.png" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <title>TwiMini</title>
 </head>

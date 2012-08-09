@@ -32,7 +32,6 @@ public class AuthStore {
                 return resultSet.getLong("user_id");
             }
         });
-        System.out.println(userIds.size());
         return userIds.get(0);
     }
 
@@ -43,7 +42,6 @@ public class AuthStore {
                 return resultSet.getString("user_name");
             }
         });
-        System.out.println(userNames.size());
         return userNames.get(0);
     }
 

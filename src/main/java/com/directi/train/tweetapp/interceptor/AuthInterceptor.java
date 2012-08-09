@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.controllers;
+package com.directi.train.tweetapp.interceptor;
 
 import com.directi.train.tweetapp.services.AuthStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +22,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
 
         String cookieName = "accesstoken";
-        System.out.println(request);
-        System.out.println("Hello");
 
         if (request.getParameter(cookieName) != null) {
             String accessToken = request.getParameter(cookieName);
             request.setAttribute(cookieName, accessToken);
 
-            System.out.println("~~~");
-            System.out.println(accessToken);
-
             Boolean flag = authStore.isValid(accessToken);
             if (flag) return flag;
         }
 
-        System.out.println("!!!");
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {

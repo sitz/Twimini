@@ -31,8 +31,6 @@ public class FeedStore  {
     }
 
     public FeedItem add(FeedItem feedItem,Long userId) {
-        System.out.println("userId: " + userId);
-        System.out.println("tweet: " + feedItem.getTweet());
 
         String userName = (String)db.query(String.format("select username from users where id = %d", userId),new RowMapper<Object>() {
             @Override
@@ -40,23 +38,19 @@ public class FeedStore  {
                 return resultSet.getString("username");
             }
         }).get(0);
-        System.out.println("userName: " + userName);
 
         Long nextUniqueTweetId = feedItem.getTweetId();
         if (nextUniqueTweetId == null)
             nextUniqueTweetId = 1 + db.queryForLong(String.format("SELECT MAX(tweet_id) from (SELECT tweet_id from feeds where creator_id = %d) tweetidtable",
                                                     userId));
-        System.out.println("nextUniqueTweetId: " + nextUniqueTweetId);
 
         Long creatorId = feedItem.getCreatorId();
         if (creatorId == null)
             creatorId = userId;
-        System.out.println("creatorId: " + creatorId);
 
         List<UserProfileItem> followerIdList = localUserStore.followerList(userName);
         for (UserProfileItem userProfileItem : followerIdList) {
             Integer i = (Integer)userProfileItem.getId();
-            System.out.println("followerId: " + i);
             db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
                     userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         }
@@ -118,11 +112,9 @@ public class FeedStore  {
 
     public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
         if (creatorId.equals(userId)) {
-            System.out.println("User #" + userId + " can't retweet its own!");
             return null;
         }
         if (isRetweeted(creatorId, tweetId, userId)) {
-            System.out.println("User #" + userId + " can't retweet same twice!");
             return null;
         }
         db.update(String.format("insert into retweets (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId));
@@ -143,11 +135,9 @@ public class FeedStore  {
 
     public void unReTweet(Long creatorId, Long tweetId, Long userId) {
         if (creatorId.equals(userId)) {
-            System.out.println("User #" + userId + " can't unretweet its own!");
             return;
         }
         if (!isRetweeted(creatorId, tweetId, userId)) {
-            System.out.println("User #" + userId + " cam't unretweet without retweeting, right?");
             return;
         }
         db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userId));

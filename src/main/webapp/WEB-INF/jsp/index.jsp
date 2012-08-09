@@ -44,10 +44,8 @@
                 alert("Login Failed");
             }
             else {
-                alert(data);
                 window.location = "/tweet"
             }
-            alert(data);
         });
         return false;
     }

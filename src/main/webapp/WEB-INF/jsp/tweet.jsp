@@ -18,8 +18,8 @@
                 <br />
                 <div class="row-fluid">
                     <a href="/user/${userName}"><div class="offset1 span4"><div><strong>${noTweets}</strong></div> Tweets</div> </a> 
-                    <a href="/user/followers/<%= request.getAttribute("CurUserName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a>
-                    <a href="/user/following/<%= request.getAttribute("CurUserName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a>
+                    <a href="/user/followers/<%= request.getAttribute("curUserName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a>
+                    <a href="/user/following/<%= request.getAttribute("curUserName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a>
                 </div>
                 <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
                 <div id="hidden2">${followStatus}</div>

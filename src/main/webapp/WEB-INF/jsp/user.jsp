@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
     function ejs(data) {
-        data.currentUser = "<%= request.getAttribute("CurUserName") %>";
+        data.currentUser = "<%= request.getAttribute("curUserName") %>";
         return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
     }
     function retweet(tweetid,userid) {

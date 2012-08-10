@@ -220,8 +220,18 @@ public class UserStore {
 
         for (FeedItem feedItem : feedItems) {
             feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
+            feedItem.setFavoriteCount(favoriteCount(feedItem.getCreatorId(), feedItem.getTweetId()));
+            feedItem.setRetweetCount(retweetCount(feedItem.getCreatorId(), feedItem.getTweetId()));
         }
         return feedItems;
+    }
+
+    private Long retweetCount(Long creatorId, Long tweetId) {
+        return db.queryForLong(String.format("select count(*) from retweets where creator_id = %d and tweet_id = %d", creatorId, tweetId));
+    }
+
+    private Long favoriteCount(Long creatorId, Long tweetId) {
+        return db.queryForLong(String.format("select count(*) from favorites where creator_id = %d and tweet_id = %d", creatorId, tweetId));
     }
 
     public boolean isFavorited(Long creatorId, Long tweetId, Long userId) {

@@ -129,22 +129,12 @@ public class FeedStore  {
         db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userId));
     }
 
-    public List<Long> favoritedUsers(Long creatorId, Long tweetId) {
-        return db.query(String.format("select user_id from favorites where tweet_id = %d and creator_id = %d", tweetId, creatorId), new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getLong("user_id");
-            }
-        });
+    public List<UserProfileItem> favoritedUsers(Long creatorId, Long tweetId) {
+        return db.query(String.format("select id, username, email from (users inner join favorites on users.id = favorites.user_id) where creator_id = %d and  tweet_id = %d", creatorId, tweetId), UserProfileItem.rowMapper);
     }
 
-    public List<Long> reTweetedUsers(Long creatorId, Long tweetId) {
-        return db.query(String.format("select user_id from retweets where tweet_id = %d and creator_id = %d", tweetId, creatorId), new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getLong("user_id");
-            }
-        });
+    public List<UserProfileItem> reTweetedUsers(Long creatorId, Long tweetId) {
+        return db.query(String.format("select id, username, email from (users inner join retweets on users.id = retweets.user_id) where creator_id = %d and  tweet_id = %d", creatorId, tweetId), UserProfileItem.rowMapper);
     }
 
 }

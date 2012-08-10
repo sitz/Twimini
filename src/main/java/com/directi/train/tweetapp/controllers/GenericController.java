@@ -1,7 +1,11 @@
 package com.directi.train.tweetapp.controllers;
 
+import com.directi.train.tweetapp.services.AuthStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,8 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class GenericController {
+    private AuthStore authStore;
+
+    @Autowired
+    public GenericController(AuthStore authStore) {
+        this.authStore = authStore;
+    }
+
     @RequestMapping("/")
-    public String index() {
+    public String index(HttpServletRequest request) {
+        if (authStore.isValid((String) request.getAttribute("accesstoken"))) {
+            return "tweet";
+        }
         return "index";
     }
 }

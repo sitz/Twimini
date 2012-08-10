@@ -20,11 +20,6 @@
                 <a href="/user/followers/<%= request.getAttribute("curUserName")%>"><div class="span4"><div><strong>${noFollow}</strong></div>Followers</div> </a>
                 <a href="/user/following/<%= request.getAttribute("curUserName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a>
             </div>
-            <div class="buttonHolder">
-                <button class="btn btn-info" id="followStatus" style="z-index:100;width:100px">Follow</button>
-            </div>
-            <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
-            <div id="hidden2">${followStatus}</div>
         </div>
     </div>
 

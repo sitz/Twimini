@@ -12,20 +12,22 @@
             Email: <%= email %>
         </div>
         <div>
-            <button class="followButton btn
-                <% if (following == true) {%>
-                btn-danger
-                <% }else{%>
-                btn-info
-                <%}%>
+            <% if (curUserName!= username) {%>
+                <button class="followButton btn
+                    <% if (following == true) {%>
+                    btn-danger
+                    <% }else{%>
+                    btn-info
+                    <%}%>
 
-                " id="<%=username%>" following="<%=following%>">
-                <% if (following == true) {%>
-                    Unfollow
-                <% }else{%>
-                    Follow
-                <%}%>
-            </button>
+                    " id="<%=username%>" following="<%=following%>">
+                    <% if (following == true) {%>
+                        Unfollow
+                    <% }else{%>
+                        Follow
+                    <%}%>
+                </button>
+            <%}%>
         </div>
     </div>
     </section>

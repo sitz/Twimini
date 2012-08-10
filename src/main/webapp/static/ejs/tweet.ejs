@@ -33,9 +33,16 @@ padding-left: 10px;
         <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"><i class="icon-refresh"></i> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
     </div>
     <div style="padding-top:10px;font-size:12px;">
-        <%if (favoriteCount != "0") {%>
-        <i class="icon-thumbs-up"></i> 
-        <%= favoriteCount %> Like<%}%><%if (favoriteCount>1){%>s<%}%>
+        <a href="tweet/favorites/<%=creatorId%>/<%=tweetId%>">
+            <%if (favoriteCount != "0") {%>
+            <i class="icon-thumbs-up"></i> 
+            <%= favoriteCount %> Like<%}%><%if (favoriteCount>1){%>s<%}%>
+        </a> 
+        <a href="tweet/retweets/<%=creatorId%>/<%=tweetId%>" style="padding:5px;">
+            <%if (retweetCount!= "0") {%>
+            <i class="icon-retweet"></i> 
+            <%= retweetCount %> Retweet<%}%><%if (retweetCount>1){%>s<%}%>
+        </a>
   </div>
 </div>
 </td></tr>

@@ -1,27 +1,13 @@
-var maxId = 0;
-var minId = undefined;
-function refresh() {
-    $.get('/tweet/feed/new/' + maxId,function(data) {
-        for(var i in data) {
-            prepenD(data[i]);
-        }
-    });
+function user_ejs(data) {
+    return (new EJS({url: '/static/ejs/user.ejs'}).render(data));
 }
-function more() {
-    $.get('/tweet/feed/old/' + minId,function(data) {
-        for(var i in data) {
-            appenD(data[i]);
-        }
-    });
-}
-function prepenD(data) {
-    maxId = data.id;
-    data = ejs(data);
-    $('#tweetList').prepend(data);
-}
-function appenD(data) {
-    if(minId == undefined) maxId = data.id;
-    minId = data.id;
-    data = ejs(data);
-    $('#tweetList').append(data);
+function feed_ejs(data) {
+    var tweet = data.tweet.split(" ");
+    data.tweet = tweet.map(function(b){
+        if(b[0]!="@") 
+            return b;
+        b = b.replace("@",""); 
+        return '<a href="/user/' + b + '">' + '@' + b +'</a>';
+    }).join(" ");
+    return (new EJS({url: '/static/ejs/tweet.ejs'}).render(data));
 }

@@ -33,7 +33,7 @@
         <script type="text/javascript">
             document.title = "Twimini : ${title}"
             function ejs(data) {
-                return (new EJS({url: '/static/ejs/user.ejs'}).render(data));
+                return 
             }
             $(document).ready(function () {
                 $.get("${url}",function(data) {

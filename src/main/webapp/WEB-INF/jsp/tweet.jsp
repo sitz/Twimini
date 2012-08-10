@@ -89,7 +89,7 @@
     }
     function ejs(data) {
         data.currentUser = "<%= request.getAttribute("curUserName") %>";
-        return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+        return feed_ejs(data);
     }
     function addItem2(element) {
         var form = $("#tweetform");

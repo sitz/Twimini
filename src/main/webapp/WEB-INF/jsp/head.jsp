@@ -6,6 +6,7 @@
     <link href="/static/css/custom.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="http://www.favicon.cc/favicon/996/398/favicon.png" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/custom.js"></script>
     <title>TwiMini</title>
 </head>
 <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="50" style="padding: 100px;">

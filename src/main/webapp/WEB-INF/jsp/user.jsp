@@ -40,7 +40,7 @@
     document.title = 'TwiMini: <%= request.getAttribute("userName") %>';
     function ejs(data) {
         data.currentUser = "<%= request.getAttribute("curUserName") %>";
-        return $(new EJS({url: '/static/ejs/tweet.ejs'}).render(data)).data("tweetID", data.id);
+        return feed_ejs(data);
     }
     function retweet(tweetid,userid) {
         $.post('/tweet/retweet/' + userid + '/' + tweetid,function(data) {

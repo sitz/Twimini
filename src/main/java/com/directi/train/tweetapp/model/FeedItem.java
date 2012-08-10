@@ -1,6 +1,5 @@
 package com.directi.train.tweetapp.model;
 
-import com.directi.train.tweetapp.services.UserStore;
 import de.bripkens.gravatar.Gravatar;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -24,6 +23,8 @@ public class FeedItem {
     private String creatorName;
     private boolean isRetweet;
     private boolean isFavorite;
+    private Long favoriteCount;
+    private Long retweetCount;
     private String profilePicURL;
 
     public static final RowMapper<FeedItem> rowMapper = new RowMapper<FeedItem>() {
@@ -44,6 +45,8 @@ public class FeedItem {
         this.creatorName = resultSet.getString("creatorname");
         this.isRetweet = !creatorId.equals(userId);
         this.isFavorite = false;
+        this.favoriteCount = 0L;
+        this.retweetCount = 0L;
         this.profilePicURL = new Gravatar().getUrl( resultSet.getString("creatoremail") );
     }
 
@@ -125,5 +128,21 @@ public class FeedItem {
 
     public void setProfilePicURL(String profilePicURL) {
         this.profilePicURL = profilePicURL;
+    }
+
+    public Long getFavoriteCount() {
+        return favoriteCount;
+    }
+
+    public void setFavoriteCount(Long favoriteCount) {
+        this.favoriteCount = favoriteCount;
+    }
+
+    public Long getRetweetCount() {
+        return retweetCount;
+    }
+
+    public void setRetweetCount(Long retweetCount) {
+        this.retweetCount = retweetCount;
     }
 }

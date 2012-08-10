@@ -86,4 +86,15 @@ public class UserProfileController {
         return userStore.unFollowUser(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
+    @RequestMapping(value = "change/{password}", method = RequestMethod.POST)
+    @ResponseBody
+    public void changePassword(@PathVariable("password") String password, HttpServletRequest request) {
+        System.out.println(request.getAttribute("accesstoken"));
+        try {
+            userStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
+    }
+
 }

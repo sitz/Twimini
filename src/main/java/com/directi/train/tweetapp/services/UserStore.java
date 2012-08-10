@@ -94,6 +94,10 @@ public class UserStore {
         return userData;
     }
 
+    public void changePassword(String password, String userName) {
+        db.update(String.format("update users set password = '%s' where username = '%s'", PasswordStore.SHA(password), userName));
+    }
+
     public void forgotPassword(String userName) {
         String eMail = null;
         try {

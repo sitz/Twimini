@@ -9,6 +9,7 @@ package com.directi.train.tweetapp.controllers;
  */
 
 import com.directi.train.tweetapp.model.FeedItem;
+import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.FeedStore;
 import com.directi.train.tweetapp.services.UserStore;
@@ -96,13 +97,13 @@ public class FeedController {
 
     @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoFavorited(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+    public List<UserProfileItem> getUsersWhoFavorited(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
         return feedStore.favoritedUsers(creatorId, tweetId);
     }
 
     @RequestMapping(value = "retweets/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Long> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+    public List<UserProfileItem> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
         return feedStore.reTweetedUsers(creatorId, tweetId);
     }
 }

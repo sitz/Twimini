@@ -24,9 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/tweet")
 public class FeedController {
-    private final FeedStore feedStore;
-    private final UserStore userStore;
-    private final AuthStore authStore;
+    private FeedStore feedStore;
+    private UserStore userStore;
+    private AuthStore authStore;
 
     @Autowired
     public FeedController(FeedStore feedStore,UserStore userStore, AuthStore authStore) {
@@ -95,15 +95,44 @@ public class FeedController {
         feedStore.unReTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    @RequestMapping(value = "favorites/{creatorId}/{tweetId}/json", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> getUsersWhoFavorited(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+    public List<UserProfileItem> getUsersWhoFavoritedJson(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
         return feedStore.favoritedUsers(creatorId, tweetId);
+    }
+    public void addUserData(ModelAndView modelAndView,String userName) {
+        modelAndView.addObject("userName", userName);
+        modelAndView.addObject("noTweets",userStore.noOfTweets(userName));
+        modelAndView.addObject("noFollow",userStore.noOfFollowers(userName));
+        modelAndView.addObject("noFollowing",userStore.noOfFollowing(userName));
+        modelAndView.addObject("userProfileItem", userStore.getUserPofileItem(userName));
+    }
+
+    @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)
+    public ModelAndView getUsersWhoFavorited(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId,HttpServletRequest request) {
+        String userName = (String) request.getAttribute("curUserName");
+        ModelAndView modelAndView = new ModelAndView("userlist");
+        modelAndView.addObject("url","/tweet/favorites/"+ creatorId +"/" + tweetId + "/json");
+        modelAndView.addObject("head","Users Who Have Liked the tweet");
+        modelAndView.addObject("title","Likes");
+        addUserData(modelAndView,userName);
+        return  modelAndView;
+    }
+
+    @RequestMapping(value = "retweets/{creatorId}/{tweetId}/json", method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserProfileItem> getUsersWhoReTweetedJson(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
+        return feedStore.reTweetedUsers(creatorId, tweetId);
     }
 
     @RequestMapping(value = "retweets/{creatorId}/{tweetId}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<UserProfileItem> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
-        return feedStore.reTweetedUsers(creatorId, tweetId);
+    public ModelAndView getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId,HttpServletRequest request) {
+        String userName = (String) request.getAttribute("curUserName");
+        ModelAndView modelAndView = new ModelAndView("userlist");
+        modelAndView.addObject("url","/tweet/retweets/"+ creatorId +"/" + tweetId + "/json");
+        modelAndView.addObject("head","Users Who Have RTed the tweet");
+        modelAndView.addObject("title","RTs");
+        addUserData(modelAndView,userName);
+        return  modelAndView;
     }
 }

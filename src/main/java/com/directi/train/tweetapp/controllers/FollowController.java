@@ -19,13 +19,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class FollowController {
-    private UserStore userStore;
-    @Autowired
-    public  FollowController (UserStore userStore){
-        this.userStore = userStore;
-    }
-
-    private void addUserData(ModelAndView modelAndView,String userName) {
+    @Autowired private UserStore userStore;
+    public void addUserData(ModelAndView modelAndView,String userName) {
         modelAndView.addObject("userName", userName);
         modelAndView.addObject("noTweets",userStore.noOfTweets(userName));
         modelAndView.addObject("noFollow",userStore.noOfFollowers(userName));

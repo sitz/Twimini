@@ -33,14 +33,12 @@
         <script type="text/javascript">
             document.title = "Twimini : ${title}"
             function ejs(data) {
-                return 
+                data.curUserName = '<%= request.getAttribute("curUserName") %>';
+                return user_ejs(data);;
             }
             $(document).ready(function () {
                 $.get("${url}",function(data) {
                     for(var i in data) {
-                        console.log(data[i]);
-                        if (data[i]["username"] != '<%= request.getAttribute("curUserName") %>')
-
                         $('#userList').append(ejs(data[i]));
                     }
                 });

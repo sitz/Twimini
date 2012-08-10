@@ -49,7 +49,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        response.sendRedirect("/");
+        response.sendRedirect("/auth/login");
         return false;
     }
 }

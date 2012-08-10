@@ -6,7 +6,7 @@ padding-bottom: 10px;
 padding-left: 10px;
 ">
 <div><a style="text-decoration:none;color:black"  href="/user/<%=creatorName%>"><%=creatorName%></a></div>
-    <div id="itemName<%=tweet%>" style="
+    <div id="itemName<%=tweetId%>" style="
     padding-top:5px;
     padding-left:0px;
     color:grey;
@@ -22,6 +22,7 @@ padding-left: 10px;
             <i class="icon-star"></i> Liked</a>
         <%}%>
         </span>
+ 
         <span style="padding-left:10px;z-index:10;">
             <%if (creatorName != currentUser && userName!=currentUser) {%>
             <a href="#" style="text-decoration:none;" onclick="retweet(<%= tweetId %>,<%= creatorId %>);return false;">
@@ -30,6 +31,11 @@ padding-left: 10px;
             <%}%>
         </span>
         <%if (retweet==true) {%> <span style="padding-left:10px;z-index:10;"><i class="icon-refresh"></i> Retweeted By <a href="user/<%= userName %>"><%= userName %></a></span><%}%>
+    </div>
+    <div style="padding-top:10px;font-size:12px;">
+        <%if (favoriteCount != "0") {%>
+        <i class="icon-thumbs-up"></i> 
+        <%= favoriteCount %> Like<%}%><%if (favoriteCount>1){%>s<%}%>
   </div>
 </div>
 </td></tr>

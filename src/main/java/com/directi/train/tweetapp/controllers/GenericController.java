@@ -26,7 +26,7 @@ public class GenericController {
     @RequestMapping("/")
     public String index(HttpServletRequest request) {
         if (authStore.isValid((String) request.getAttribute("accesstoken"))) {
-            return "tweet";
+            return "redirect:/tweet";
         }
         return "index";
     }

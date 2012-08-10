@@ -58,6 +58,7 @@ public class UserController {
             userID = userStore.checkLogin(userName,password).getId();
             authStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
+            e.printStackTrace();
             return "Error1";
         }
 

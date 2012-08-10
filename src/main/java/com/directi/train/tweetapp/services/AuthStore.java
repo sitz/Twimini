@@ -46,7 +46,7 @@ public class AuthStore {
     }
 
     public void insert(String userName, long userId, String accessToken) {
-        db.update(String.format("insert into auth (user_name, user_id, access_token) values ('%s', '%s', '%s')", userName, userId, accessToken));
+        db.update(String.format("insert into auth (user_name, user_id, access_token) values ('%s', %d, '%s')", userName, userId, accessToken));
     }
 
     public void remove(String accessToken) {

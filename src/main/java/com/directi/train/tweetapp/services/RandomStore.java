@@ -21,7 +21,7 @@ public class RandomStore {
     }
 
     public static String getAccessToken() {
-        return  new Integer(db.queryForInt("select count(*) from auth") + 1).toString();
+        return  new Integer(db.queryForInt("select max(access_token) from auth") + 1).toString();
     }
 
     public static String getPassword() {

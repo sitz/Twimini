@@ -81,7 +81,7 @@ public class UserStore {
     public UserItem checkLogin(String userName,String password) throws Exception{
         UserItem userData;
         try {
-            userData = db.query("select * from users where username='"+ userName +"'", UserItem.rowMapper).get(0);
+            userData = db.query(String.format("select * from users where username = '%s'", userName), UserItem.rowMapper).get(0);
             if (userData.getPassword().equals(PasswordStore.SHA(password))) {
                 userData.getId();
             } else {
@@ -130,8 +130,8 @@ public class UserStore {
                 return 1;
             }
 
-            db.update("insert into following (user_id, following_id) values (? ,?)", loggedUserId, otherUserId);
-            db.update("insert into followers (user_id, follower_id) values  (?, ?)", otherUserId, loggedUserId);
+            db.update(String.format("insert into following (user_id, following_id) values (%d ,%d)", loggedUserId, otherUserId));
+            db.update(String.format("insert into followers (user_id, follower_id) values  (%d, %d)", otherUserId, loggedUserId));
             return 0;
         }
         catch (IndexOutOfBoundsException E) {

@@ -73,7 +73,7 @@ public class UserStore {
         }
         catch (IndexOutOfBoundsException e) {
             password = PasswordStore.SHA(password);
-            db.update("insert into users (email, username, password) values(?, ?, ?)",email, userName, password);
+            db.update(String.format("insert into users (email, username, password) values(?, ?, ?)",email, userName, password));
         }
         return "0";
     }

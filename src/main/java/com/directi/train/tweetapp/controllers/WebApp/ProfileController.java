@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.controllers.WebApp;
 
+import com.directi.train.tweetapp.controllers.WebApp.Helpers.UserListModelAndView;
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.AuthStore;
@@ -15,14 +16,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class ProfileController {
-    private final UserStore userStore;
-    private final AuthStore authStore;
-
-    @Autowired
-    public ProfileController(UserStore userStore, AuthStore authStore) {
-        this.userStore = userStore;
-        this.authStore = authStore;
-    }
+    @Autowired private UserStore userStore;
+    @Autowired private AuthStore authStore;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView curProfile(HttpServletRequest request) {
@@ -31,24 +26,14 @@ public class ProfileController {
 
     @RequestMapping(value = "{userName}", method = RequestMethod.GET)
     public ModelAndView profile(@PathVariable("userName") String userName, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("user");
-        modelAndView.addObject("userName", userName);
-        modelAndView.addObject("noTweets", userStore.noOfTweets(userName));
-        modelAndView.addObject("noFollow", userStore.noOfFollowers(userName));
-        modelAndView.addObject("noFollowing", userStore.noOfFollowing(userName));
-        modelAndView.addObject("followStatus", userStore.checkFollowingStatus(authStore.getUserName((String) request.getAttribute("accesstoken")), userName));
+        UserListModelAndView modelAndView = new UserListModelAndView("user");
         modelAndView.addObject("userProfileItem", userStore.getUserPofileItem(userName));
+        Integer i =userStore.checkFollowingStatus(authStore.getUserName((String) request.getAttribute("accesstoken")),userName);
+        Boolean followStatus;
+        if(i==0) followStatus = Boolean.FALSE;
+        else followStatus = Boolean.TRUE;
+        modelAndView.addObject("followStatus", followStatus);
+        modelAndView.addUserData(userName);
         return modelAndView;
-    }
-
-    @RequestMapping(value = "change/{password}", method = RequestMethod.POST)
-    @ResponseBody
-    public void changePassword(@PathVariable("password") String password, HttpServletRequest request) {
-        System.out.println(request.getAttribute("accesstoken"));
-        try {
-            userStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
-        } catch (Exception E) {
-            E.printStackTrace();
-        }
     }
 }

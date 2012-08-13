@@ -23,8 +23,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/api/status")
-public class StatusController {
+@RequestMapping("/api/tweet")
+public class TweetController {
     @Autowired private FeedStore feedStore;
     @Autowired private AuthStore authStore;
 

@@ -4,6 +4,7 @@ import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.FeedStore;
+import com.directi.train.tweetapp.services.LoginStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import java.util.List;
 public class UserController {
     @Autowired private UserStore userStore;
     @Autowired private AuthStore authStore;
+    @Autowired private LoginStore loginStore;
 
     @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
     @ResponseBody
@@ -45,7 +47,7 @@ public class UserController {
     public void changePassword(@PathVariable("password") String password, HttpServletRequest request) {
         System.out.println(request.getAttribute("accesstoken"));
         try {
-            userStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
+            loginStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
         } catch (Exception E) {
             E.printStackTrace();
         }

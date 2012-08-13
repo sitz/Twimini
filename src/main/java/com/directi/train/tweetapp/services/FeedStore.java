@@ -21,14 +21,9 @@ import java.util.List;
 
 @Service
 public class FeedStore  {
-    private SimpleJdbcTemplate db;
-    UserStore localUserStore;
+    @Autowired private SimpleJdbcTemplate db;
+    @Autowired private UserStore localUserStore;
 
-    @Autowired
-    public FeedStore(SimpleJdbcTemplate template, UserStore localUserStore) {
-        this.db = template;
-        this.localUserStore = localUserStore;
-    }
 
     public FeedItem add(FeedItem feedItem,Long userId) {
 
@@ -67,7 +62,6 @@ public class FeedStore  {
         String orderingSQL = "desc limit %d";
         return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, localUserStore.getMinFeedId(), localUserStore.getFeedLimit());
     }
-
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
         String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";

@@ -34,7 +34,7 @@ public class UserStore {
         return db.queryForInt(String.format("select id from users where username='%s'", userName));
     }
 
-    public UserProfileItem getUserPofileItem(String userName) {
+    public UserProfileItem getUserProfileItem(String userName) {
         long userId = getUserId(userName);
         return (UserProfileItem) db.queryForObject(String.format("select username, id, email from users where id = %d", userId), UserProfileItem.rowMapper);
     }
@@ -56,70 +56,6 @@ public class UserStore {
             user.setFollowing(db.queryForInt(String.format("select count(*) from following where user_id = %d and following_id = %d", userId, user.getId())) > 0);
         }
         return users;
-    }
-
-    public String registerUser(String email,String userName,String password) {
-        List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
-                userName, email), UserItem.rowMapper);
-        UserItem userItem;
-        try {
-            userItem = userData.get(0);
-            if(userItem.getEmail().equals(email) ){
-                return "1";
-            }
-            if(userItem.getUsername().equals(userName)){
-                return "2";
-            }
-        }
-        catch (IndexOutOfBoundsException e) {
-            password = PasswordStore.SHA(password);
-            db.update(String.format("insert into users (email, username, password) values(?, ?, ?)",email, userName, password));
-        }
-        return "0";
-    }
-
-    public UserItem checkLogin(String userName,String password) throws Exception{
-        UserItem userData;
-        try {
-            userData = db.query(String.format("select * from users where username = '%s'", userName), UserItem.rowMapper).get(0);
-            if (userData.getPassword().equals(PasswordStore.SHA(password))) {
-                userData.getId();
-            } else {
-                throw new Exception("Invalid Password");
-            }
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new Exception("User does not exist.Please Register");
-        }
-        return userData;
-    }
-
-    public void changePassword(String password, String userName) {
-        db.update(String.format("update users set password = '%s' where username = '%s'", PasswordStore.SHA(password), userName));
-        String eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getString("email");
-            }
-        }).get(0);
-        PasswordStore.sendPassword(eMail, password);
-    }
-
-    public void forgotPassword(String userName) {
-        String eMail = null;
-        try {
-            eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
-                @Override
-                public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                    return resultSet.getString("email");
-                }
-            }).get(0);
-        }  catch (Exception E) {
-            E.printStackTrace();
-        }
-        String pwd = RandomStore.getPassword();
-        db.update(String.format("update users set password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
-        PasswordStore.sendPassword(eMail, pwd);
     }
 
     public int followUser(String userName, Long loggedUserId) {
@@ -232,12 +168,12 @@ public class UserStore {
         for (FeedItem feedItem : feedItems) {
             feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
             feedItem.setFavoriteCount(favoriteCount(feedItem.getCreatorId(), feedItem.getTweetId()));
-            feedItem.setRetweetCount(retweetCount(feedItem.getCreatorId(), feedItem.getTweetId()));
+            feedItem.setRetweetCount(reTweetCount(feedItem.getCreatorId(), feedItem.getTweetId()));
         }
         return feedItems;
     }
 
-    private Long retweetCount(Long creatorId, Long tweetId) {
+    private Long reTweetCount(Long creatorId, Long tweetId) {
         return db.queryForLong(String.format("select count(*) from retweets where creator_id = %d and tweet_id = %d", creatorId, tweetId));
     }
 

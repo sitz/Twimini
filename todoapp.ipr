@@ -324,6 +324,7 @@
       <words>
         <w>jdbc</w>
         <w>postgresql</w>
+        <w>retweets</w>
         <w>tweeet</w>
       </words>
     </dictionary>

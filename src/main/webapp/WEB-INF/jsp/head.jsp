@@ -25,12 +25,10 @@
             <div class="nav-collapse" id="main-menu"><ul class="nav" id="main-menu-left">
             </ul>
                 <ul class="nav pull-right" id="main-menu-right">
-                    <!-- <li><a rel="tooltip" href="/search/"  data-original-title="Search for a user">Search</a></li> -->
                     <% if (null != request.getAttribute("curUserName")) { %>
                     <li>
                         <form onsubmit="window.location = '/search/' + $('#query').val();return false;">
                             <input type="text" class="navbar-search" style="border-color:#CCC;" id="query" placeholder="Search"/>
-                            <!-- <button style="display:none;" /> -->
                         </form>
                     </li>
                     <li>
@@ -39,9 +37,20 @@
                         </a>
                     </li>
                     <li><a rel="tooltip" href="/auth/logout"  data-original-title="Logout">Logout</a></li>
+                    <%} else {%>
+                    <li>
+                        <form class="form-inline" id="formLogin">
+                            <input type="text" name="username" id="username" placeholder="Email" class="input-small" />
+                            <input type="password" name="password" id="password" placeholder="Password" class="input-small" />
+                            <button class="btn" onclick="return sub();">Login</button>
+                            <a class="btn" data-toggle="modal" href="#myModal" >Forgot Password</a>
+                        </form>
+                    </li>
+                    <li>
+                    </li>
                     <%}%>
                 </ul>
             </div>
         </div>
    </div>
- </div>
+</div>

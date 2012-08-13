@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.controllers;
+package com.directi.train.tweetapp.controllers.WebApp;
 
 import com.directi.train.tweetapp.services.AuthStore;
 import org.springframework.beans.factory.annotation.Autowired;

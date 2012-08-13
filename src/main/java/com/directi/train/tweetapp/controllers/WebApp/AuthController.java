@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.controllers;
+package com.directi.train.tweetapp.controllers.WebApp;
 
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.RandomStore;
@@ -14,13 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/auth")
-public class UserController {
+public class AuthController {
     private final UserStore userStore;
     private final AuthStore authStore;
-    private final String cookieName = "accesstoken";
 
     @Autowired
-    public UserController(UserStore userStore, AuthStore authStore) {
+    public AuthController(UserStore userStore, AuthStore authStore) {
         this.userStore = userStore;
         this.authStore = authStore;
     }
@@ -48,6 +47,7 @@ public class UserController {
     public String login(@RequestParam("username") String userName,
                               @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
 
+        String cookieName = "accesstoken";
         if (request.getAttribute(cookieName) != null) {
             return (String) request.getAttribute(cookieName);
         }

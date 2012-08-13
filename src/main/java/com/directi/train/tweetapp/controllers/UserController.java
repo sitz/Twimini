@@ -69,6 +69,7 @@ public class UserController {
         return accessToken;
     }
 
+
     @RequestMapping(value = "forgot/{userName}", method = RequestMethod.POST)
     @ResponseBody
     public void forgotPassword(@PathVariable("userName") String userName) {

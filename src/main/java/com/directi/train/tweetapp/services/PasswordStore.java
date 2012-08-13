@@ -39,8 +39,8 @@ public class PasswordStore {
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
-            message.setSubject("Twimini: Recover Password");
-            message.setText("Howdy!,\n\n" + "Password: " + pwd);
+            message.setSubject("Twimini: Password Update");
+            message.setText("Howdy!,\n\n" + "Your Password: " + pwd);
 
             Transport.send(message);
 

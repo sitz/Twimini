@@ -1,6 +1,7 @@
 package com.directi.train.tweetapp.controllers.API;
 
 import com.directi.train.tweetapp.services.AuthStore;
+import com.directi.train.tweetapp.services.LoginStore;
 import com.directi.train.tweetapp.services.RandomStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,12 @@ import javax.servlet.http.HttpServletResponse;
 public class ApiAuthController {
     @Autowired private UserStore userStore;
     @Autowired private AuthStore authStore;
+    @Autowired private LoginStore loginStore;
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
     public String register(@RequestParam("username") String userName, @RequestParam("password") String password, @RequestParam("email") String email) {
-        return userStore.registerUser(email,userName,password);
+        return loginStore.registerUser(email,userName,password);
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -41,7 +43,7 @@ public class ApiAuthController {
         long userID;
         String accessToken =  RandomStore.getAccessToken();
         try {
-            userID = userStore.checkLogin(userName,password).getId();
+            userID = loginStore.checkLogin(userName,password).getId();
             authStore.insert(userName, userID, accessToken);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +60,7 @@ public class ApiAuthController {
     @RequestMapping(value = "forgot/{userName}", method = RequestMethod.POST)
     @ResponseBody
     public void forgotPassword(@PathVariable("userName") String userName) {
-        userStore.forgotPassword(userName);
+        loginStore.forgotPassword(userName);
     }
 
     @RequestMapping(value = "logout",method = RequestMethod.POST)

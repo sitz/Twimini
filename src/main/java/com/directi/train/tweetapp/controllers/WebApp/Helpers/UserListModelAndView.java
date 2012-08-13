@@ -1,7 +1,6 @@
 package com.directi.train.tweetapp.controllers.WebApp.Helpers;
 
 import com.directi.train.tweetapp.services.UserStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -24,7 +23,7 @@ public class UserListModelAndView extends ModelAndView{
         this.addObject("noTweets", userStore.noOfTweets(userName));
         this.addObject("noFollow", userStore.noOfFollowers(userName));
         this.addObject("noFollowing", userStore.noOfFollowing(userName));
-        this.addObject("userProfileItem", userStore.getUserPofileItem(userName));
+        this.addObject("userProfileItem", userStore.getUserProfileItem(userName));
     }
 
     public void addPageData(String url,String head,String title) {

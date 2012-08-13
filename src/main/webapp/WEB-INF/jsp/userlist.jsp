@@ -45,7 +45,7 @@
                 $(".followButton").live("click",function(){
                     var el = $(this);
                     function sendFollowTypeReq(action,callback) {
-                        $.post("/user/" + action + "/" + el.attr("id"),callback);
+                        $.post("/api/user/" + action + "/" + el.attr("id"),callback);
                     }
                     if (el.attr("following") == "true") {
                         sendFollowTypeReq("unfollow",function() {

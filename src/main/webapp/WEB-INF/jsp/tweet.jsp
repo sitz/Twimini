@@ -60,7 +60,7 @@
         $("#extraTweetList").hide();
     }
     function refresh() {
-        $.get('/tweet/feed/new/' + maxId,function(data) {
+        $.get('/api/feed/new/' + maxId,function(data) {
             for(var i in data) {
                 console.log("SOmething happend");
                 prepenD(data[i]);
@@ -68,7 +68,7 @@
         });
     }
     function more() {
-        $.get('/tweet/feed/old/' + minId,function(data) {
+        $.get('/api/feed/old/' + minId,function(data) {
             for(var i in data) {
                 appenD(data[i]);
             }
@@ -93,26 +93,26 @@
     }
     function addItem2(element) {
         var form = $("#tweetform");
-        $.post('/tweet/new.json',{"tweet" : $("#tweet").val()} ,function(data) {
+        $.post('/api/tweet/new',{"tweet" : $("#tweet").val()} ,function(data) {
                 refresh();
         });
         $("#tweet").val("");
 
     }
     function retweet(tweetid,userid) {
-        $.post('/tweet/retweet/' + userid + '/' + tweetid,function(data) {
+        $.post('/api/tweet/retweet/' + userid + '/' + tweetid,function(data) {
                 refresh();
         });
     }
     function favorite(tweetid,userid,element) {
-        $.post('/tweet/favorite/' + userid + '/' + tweetid,function(data) {
+        $.post('/api/tweet/favorite/' + userid + '/' + tweetid,function(data) {
             $(element).parent().html('<i class="icon-star"></i>Liked</a>').hide().fadeIn();
         });
     }
     $(document).ready(function () {
         $("#extraTweetList").hide();
         window.setInterval("refresh()",5000);
-        $.get('/tweet/feed.json',function(data) {
+        $.get('/api/tweet/feed.json',function(data) {
             for(var i in data) {
                 appenD(data[i]);
             }

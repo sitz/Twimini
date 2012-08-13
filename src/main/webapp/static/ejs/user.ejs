@@ -13,14 +13,7 @@
         </div>
         <div>
             <% if (curUserName!= username) {%>
-                <button class="followButton btn
-                    <% if (following == true) {%>
-                    btn-danger
-                    <% }else{%>
-                    btn-info
-                    <%}%>
-
-                    " id="<%=username%>" following="<%=following%>">
+                <button class="followButton btn <% if (following == true) {%> btn-danger <% }else{%> btn-info <%}%> " id="<%=username%>" following="<%=following%>">
                     <% if (following == true) {%>
                         Unfollow
                     <% }else{%>

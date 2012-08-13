@@ -21,10 +21,12 @@
                 <a href="/user/following/<%= request.getAttribute("userName")%>"><div class="span4"><div><strong>${noFollowing}</strong> </div>Following </div> </a> 
             </div>
             <div class="buttonHolder">
-                <button class="btn btn-info" id="followStatus" style="z-index:100;width:100px">Follow</button>
+                <button style="z-index:100;width:100px"
+                    class="chumba followButton btn <% if (request.getAttribute("followStatus").equals(Boolean.TRUE) ) {%> btn-danger <% }else{%> btn-info <%}%> "
+                    id="<%= request.getAttribute("curUserName")%>" following="${followStatus}>">
+                    <% if ( request.getAttribute("followStatus").equals(Boolean.TRUE) ) {%>Unfollow<% }else{%>Follow<%}%>
+                </button>
             </div>
-            <div id="StatusDiv" style="display:none;"> Status:<span id="status">Following</span></div>
-            <div id="hidden2">${followStatus}</div>
         </div>
     </div>
     <div class="span6 right">
@@ -54,43 +56,27 @@
     }
     $(document).ready(function () {
         <% if( (request.getAttribute("userName")).equals((request.getAttribute("curUserName"))) ) { %>
-        $("#StatusDiv").hide();
-        $("#followStatus").hide();  <%}%>
-        $("#hidden2").hide();
-        if($("#hidden2").html() =="1") {
-            setStatusFollowing();
-        }
-        else {
-            setStatusNotFollowing();
-        }
-        function setStatusNotFollowing() {
-            $("#status").html("Not Following");
-            $("#hidden2").html("0");
-            $("#followStatus").html("Follow");
-            $("#followStatus").removeClass("btn-danger").addClass("btn-info")
-
-        }
-        function setStatusFollowing() {
-            $("#status").html("Following");
-            $("#hidden2").html("1");
-            $("#followStatus").html("UnFollow");
-            $("#followStatus").removeClass("btn-info").addClass("btn-danger")
-        }
-        $("#followStatus").click(function(){
-            var following = $("#hidden2").html();
-            var t = $("#followStatus");
-            if(following == "1") {
-                $.post('/user/unfollow/${userName}',function(data) {
-                    setStatusNotFollowing();
+            $(".chumba").html("");
+        <%}%>
+        $(".followButton").live("click",function(){
+            var el = $(this);
+            function sendFollowTypeReq(action,callback) {
+                $.post("/api/user/" + action + "/" + el.attr("id"),callback);
+            }
+            if (el.attr("following") == "true") {
+                sendFollowTypeReq("unfollow",function() {
+                    el.html("Follow").removeClass("btn-danger").addClass("btn-info");
+                    el.attr("follow","false");
                 });
             }
             else {
-                $.post('/user/follow/${userName}',function(data) {
-                    setStatusFollowing();
+                sendFollowTypeReq("follow",function() {
+                    el.html("Unfollow").removeClass("btn-info").addClass("btn-danger");
+                    el.attr("follow","true");
                 });
             }
         });
-        $.get('/user/${userName}/json',function(data) {
+        $.get('/api/user/${userName}',function(data) {
             for(var i in data) {
                 var tweetItemLI = ejs(data[i]);
                 $('#tweetList').append(tweetItemLI);

@@ -42,7 +42,7 @@
                         <form class="form-inline" id="formLogin">
                             <input type="text" name="username" id="username" placeholder="Email" class="input-small" />
                             <input type="password" name="password" id="password" placeholder="Password" class="input-small" />
-                            <button class="btn" onclick="return sub();">Login</button>
+                            <button class="btn" onclick="return login();">Login</button>
                             <a class="btn" data-toggle="modal" href="#myModal" >Forgot Password</a>
                         </form>
                     </li>

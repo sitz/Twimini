@@ -56,8 +56,8 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
 <script type="text/javascript">
     document.title = "TwiMini";
 
-    function sub(){
-        $.post("/auth/login",$("#formLogin").serialize(),function(data){
+    function login(){
+        $.post("/api/auth/login",$("#formLogin").serialize(),function(data){
             if(data=="Error1") {
                 alert("Login Failed");
             }
@@ -71,7 +71,7 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
         alert(data);
     }
     function register() {
-        $.post("/auth/register",$("#formRegister").serialize(),function(data){
+        $.post("/api/auth/register",$("#formRegister").serialize(),function(data){
             if(data==0) {
                 alert("Successfully registerd");
                 window.location = "/auth/login"
@@ -87,7 +87,7 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
     }
     function forgot() {
         alert("ER");
-        $.post('/auth/forgot/' + $('#forgotPassword').val(),function(data) {
+        $.post('/api/auth/forgot/' + $('#forgotPassword').val(),function(data) {
                 alert("DF");
                 });
         alert("ER");

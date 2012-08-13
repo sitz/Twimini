@@ -27,7 +27,6 @@ import java.util.List;
 public class UserController {
     @Autowired private UserStore userStore;
     @Autowired private AuthStore authStore;
-    @Autowired private FeedStore feedStore;
 
     @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
     @ResponseBody
@@ -41,31 +40,18 @@ public class UserController {
         return userStore.followerList(userName);
     }
 
-    @RequestMapping(value = "feed/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "change/{password}", method = RequestMethod.POST)
     @ResponseBody
-    public List<FeedItem> feedList(@PathVariable("userId") String userName) {
-        return feedStore.feed(userStore.getUserId(userName));
+    public void changePassword(@PathVariable("password") String password, HttpServletRequest request) {
+        System.out.println(request.getAttribute("accesstoken"));
+        try {
+            userStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
     }
 
-    @RequestMapping(value = "feed/new/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> newFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
-        return feedStore.newFeedsList(feedId, authStore.getUserId((String) request.getAttribute("accesstoken")));
-    }
-
-    @RequestMapping(value = "feed/old/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
-        return feedStore.oldFeedsList(feedId, authStore.getUserId((String) request.getAttribute("accesstoken")));
-    }
-
-    @RequestMapping(value = "feed", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> feedList(HttpServletRequest request) {
-        return feedList(authStore.getUserName((String) request.getAttribute("accesstoken")));
-    }
-
-    @RequestMapping(value = "{userName}/json", method = RequestMethod.GET)
+    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
     @ResponseBody
     public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpServletRequest request) {
         return userStore.tweetList(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));

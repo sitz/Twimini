@@ -97,7 +97,6 @@
                 refresh();
         });
         $("#tweet").val("");
-
     }
     function retweet(tweetid,userid) {
         $.post('/api/tweet/retweet/' + userid + '/' + tweetid,function(data) {
@@ -112,7 +111,7 @@
     $(document).ready(function () {
         $("#extraTweetList").hide();
         window.setInterval("refresh()",5000);
-        $.get('/api/tweet/feed.json',function(data) {
+        $.get('/api/feed',function(data) {
             for(var i in data) {
                 appenD(data[i]);
             }

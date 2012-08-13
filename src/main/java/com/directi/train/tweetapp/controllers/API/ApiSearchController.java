@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/api/search")
-public class SearchController {
+public class ApiSearchController {
     @Autowired private SearchStore searchStore;
     @Autowired private AuthStore authStore;
 

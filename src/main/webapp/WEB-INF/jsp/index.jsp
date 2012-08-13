@@ -55,44 +55,5 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
 </div>
 <script type="text/javascript">
     document.title = "TwiMini";
-
-    function login(){
-        $.post("/api/auth/login",$("#formLogin").serialize(),function(data){
-            if(data=="Error1") {
-                alert("Login Failed");
-            }
-            else {
-                window.location = "/tweet"
-            }
-        });
-        return false;
-    }
-    function userAlert(data) {
-        alert(data);
-    }
-    function register() {
-        $.post("/api/auth/register",$("#formRegister").serialize(),function(data){
-            if(data==0) {
-                alert("Successfully registerd");
-                window.location = "/auth/login"
-            }
-            if(data==1) {
-                userAlert("Email already exists");
-            }
-            if(data==2) {
-                userAlert("Username already exists");
-            }
-        });
-        return false;
-    }
-    function forgot() {
-        alert("ER");
-        $.post('/api/auth/forgot/' + $('#forgotPassword').val(),function(data) {
-                alert("DF");
-                });
-        alert("ER");
-        $("#myModal").modal('hide');
-        return false;
-    }
 </script>
 <jsp:include page="tail.jsp"/>

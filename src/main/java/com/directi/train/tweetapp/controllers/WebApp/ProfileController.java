@@ -33,7 +33,7 @@ public class ProfileController {
         if(i==0) followStatus = Boolean.FALSE;
         else followStatus = Boolean.TRUE;
         modelAndView.addObject("followStatus", followStatus);
-        modelAndView.addUserData(userName);
+        modelAndView.addUserData(userName,userStore);
         return modelAndView;
     }
 }

@@ -17,6 +17,10 @@
             <mvc:mapping path="/tweet/**"/>
             <mvc:mapping path="/user/**"/>
             <mvc:mapping path="/search/**"/>
+            <mvc:mapping path="/api/search/**"/>
+            <mvc:mapping path="/api/feed/**"/>
+            <mvc:mapping path="/api/user/**"/>
+            <mvc:mapping path="/api/tweet/**"/>
             <mvc:mapping path="/" />
             <bean class="com.directi.train.tweetapp.interceptor.AuthInterceptor"/>
         </mvc:interceptor>

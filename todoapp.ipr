@@ -50,6 +50,9 @@
             <element id="library" level="project" name="Maven: junit:junit:4.8.1" />
             <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.2-alpha1" />
             <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.2-alpha2" />
+            <element id="library" level="project" name="Maven: org.javalite:activejdbc:1.4.1" />
+            <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.4" />
+            <element id="library" level="project" name="Maven: org.javalite:javalite-common:1.4.1" />
           </element>
         </element>
       </root>
@@ -600,6 +603,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/hsqldb/hsqldb/2.0.0/hsqldb-2.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.javalite:activejdbc:1.4.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/activejdbc/1.4.1/activejdbc-1.4.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/activejdbc/1.4.1/activejdbc-1.4.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/activejdbc/1.4.1/activejdbc-1.4.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.javalite:javalite-common:1.4.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/javalite-common/1.4.1/javalite-common-1.4.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/javalite-common/1.4.1/javalite-common-1.4.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/javalite/javalite-common/1.4.1/javalite-common-1.4.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.6.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.springframework:spring-aop:3.0.5.RELEASE">

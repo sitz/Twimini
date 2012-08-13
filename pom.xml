@@ -84,10 +84,28 @@
             <artifactId>httpclient</artifactId>
             <version>4.2-alpha1</version>
         </dependency>
+        <dependency>
+            <groupId>org.javalite</groupId>
+            <artifactId>activejdbc</artifactId>
+            <version>1.4.1</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>todoapp</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.javalite</groupId>
+                <artifactId>activejdbc-instrumentation</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>instrument</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>

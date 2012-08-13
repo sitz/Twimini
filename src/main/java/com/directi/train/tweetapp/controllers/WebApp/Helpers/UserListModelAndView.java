@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
  * To change this template use File | Settings | File Templates.
  */
 public class UserListModelAndView extends ModelAndView{
-    @Autowired private UserStore userStore;
     public UserListModelAndView() {
         super("userlist");
     }
@@ -20,7 +19,7 @@ public class UserListModelAndView extends ModelAndView{
     public UserListModelAndView(String string) {
         super(string);
     }
-    public void addUserData(String userName) {
+    public void addUserData(String userName,UserStore userStore) {
         this.addObject("userName", userName);
         this.addObject("noTweets", userStore.noOfTweets(userName));
         this.addObject("noFollow", userStore.noOfFollowers(userName));

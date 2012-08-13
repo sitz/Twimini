@@ -26,38 +26,20 @@
     <div class = "span7">
         <div class = "tweetContainer fill"  >
             <div class = "tweetContainerTitle">${head}</div>
-            <table id="userList" class="table ">
+            <table id="itemList" class="table ">
             </table>
         </div>
     </div>
         <script type="text/javascript">
             document.title = "Twimini : ${title}"
-            function ejs(data) {
+            function uEjs(data) {
                 data.curUserName = '<%= request.getAttribute("curUserName") %>';
                 return user_ejs(data);;
             }
             $(document).ready(function () {
                 $.get("${url}",function(data) {
                     for(var i in data) {
-                        $('#userList').append(ejs(data[i]));
-                    }
-                });
-                $(".followButton").live("click",function(){
-                    var el = $(this);
-                    function sendFollowTypeReq(action,callback) {
-                        $.post("/api/user/" + action + "/" + el.attr("id"),callback);
-                    }
-                    if (el.attr("following") == "true") {
-                        sendFollowTypeReq("unfollow",function() {
-                            el.html("Follow").removeClass("btn-danger").addClass("btn-info");
-                            el.attr("follow","false");
-                        });
-                    }
-                    else {
-                        sendFollowTypeReq("follow",function() {
-                            el.html("Unfollow").removeClass("btn-info").addClass("btn-danger");
-                            el.attr("follow","true");
-                        });
+                        $('#itemList').append(uEjs(data[i]));
                     }
                 });
             });

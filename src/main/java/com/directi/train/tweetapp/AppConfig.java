@@ -17,8 +17,12 @@ public class AppConfig {
         return new SimpleJdbcTemplate(basicDataSource);
     }
 
-    @Bean
-    public ThreadLocal<Long> userID() {
-        return new ThreadLocal<Long>();
+    @Bean BasicDataSource dataSource() {
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
+        basicDataSource.setDriverClassName("org.postgresql.Driver");
+        basicDataSource.setUsername("postgres");
+        basicDataSource.setPassword("qwerty");
+        return  basicDataSource;
     }
 }

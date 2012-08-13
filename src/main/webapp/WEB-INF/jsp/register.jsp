@@ -36,10 +36,9 @@
                             <input type="password" name="password" id="password"></br>
                         </div>
                     </div>
-                        <div class="form-actions">
-                            <button class="btn" onclick="return register();">Submit</button>
-                            <a class="btn" href="/auth/login" id="back">Back to Login Page</a>
-                        </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="return register();">Submit</button>
+                        <a class="btn" href="/auth/login" id="back">Back to Login Page</a>
                     </div>
                 </fieldset>
             </form>

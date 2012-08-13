@@ -217,7 +217,7 @@ public class UserStore {
 
     public String getPreSQL() {
         final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
-                "from ( select feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+                "from ( select distinct on (tweet_id, creator_id) feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
                 "where ";

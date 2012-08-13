@@ -48,15 +48,16 @@ public class FeedStore  {
         if (creatorId == null)
             creatorId = userId;
 
+        db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
+                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
+        int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
+
         List<UserProfileItem> followerIdList = localUserStore.followerList(userName);
         for (UserProfileItem userProfileItem : followerIdList) {
             Integer i = (Integer)userProfileItem.getId();
             db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
                     userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         }
-        db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
-                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
-        int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
 
         return db.queryForObject(String.format(localUserStore.getPreSQL() + "feeds.id = %d" + localUserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
     }

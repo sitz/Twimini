@@ -96,6 +96,13 @@ public class UserStore {
 
     public void changePassword(String password, String userName) {
         db.update(String.format("update users set password = '%s' where username = '%s'", PasswordStore.SHA(password), userName));
+        String eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getString("email");
+            }
+        }).get(0);
+        PasswordStore.sendPassword(eMail, password);
     }
 
     public void forgotPassword(String userName) {

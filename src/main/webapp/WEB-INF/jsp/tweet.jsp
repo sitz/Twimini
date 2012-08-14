@@ -25,10 +25,11 @@
                 <div id="hidden2">${followStatus}</div>
                 <div class="page-header">
                     <div>
-                        <textarea rows="5" name="tweet" id="tweet" class="input-xlarge tweetarea" style="padding-bottom: 10px"></textarea>
+                        <textarea rows="5" name="tweet" id="tweet" class="input-xlarge tweetarea tweettextarea" style="padding-bottom: 10px"></textarea>
+                        <div id="charLeftRemaining">140</div>
                     </div>
                     <div class="buttonHolder">
-                        <a class="btn" href="#" onclick="addItem2(this); return false;">Tweet!</a>
+                        <button class="btn btn-primary" href="#" id="tweetButton" onclick="addItem2(this); return false;" >Tweet!</button >
                     </div>
                 </div>
             </div>

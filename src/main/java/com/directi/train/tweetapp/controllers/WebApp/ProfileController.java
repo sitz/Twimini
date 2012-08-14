@@ -21,6 +21,11 @@ public class ProfileController {
         return profile(authStore.getUserName((String) request.getAttribute("accesstoken")), request);
     }
 
+    @RequestMapping(value = "/profile/edit",method = RequestMethod.GET)
+    public String editProfile() {
+        return "profile";
+    }
+
     @RequestMapping(value = "{userName}", method = RequestMethod.GET)
     public ModelAndView profile(@PathVariable("userName") String userName, HttpServletRequest request) {
         UserListModelAndView modelAndView = new UserListModelAndView("user");

@@ -36,6 +36,7 @@
                             Hello, <%= request.getAttribute("curUserName") %>
                         </a>
                     </li>
+                    <li><a rel="tooltip" href="/user/profile/edit"  data-original-title="Settings">Settings</a></li>
                     <li><a rel="tooltip" href="/auth/logout"  data-original-title="Logout">Logout</a></li>
                     <%} else {%>
                     <li>

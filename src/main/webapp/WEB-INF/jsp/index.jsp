@@ -53,6 +53,18 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
         <button class="btn btn-primary" onclick='return forgot();'>Save changes</button>
   </div>
 </div>
+<div class="modal hide fade well" id="modalError">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>An Error Occured</h3>
+  </div>
+  <div class="modal-body" id="modalErrorBody">
+  </div>
+  <div class="modal-footer">
+    <button type="button btn-primary" class="close" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
 <script type="text/javascript">
     document.title = "TwiMini";
 </script>

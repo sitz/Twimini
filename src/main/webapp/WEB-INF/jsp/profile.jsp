@@ -44,22 +44,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function resetPassword(form) {
-        var a = $("#input01").val();
-        var b = $("#input02").val();
-        if(a==b) {
-            $.post("/api/user/change/"+a,function(data) {
-                $(".alert-success").alert();
-                $(".alert-success").fadeIn('fast');
-                $(".alert-success").addClass("in");
-            });
-        }
-        else {
-            $(".alert-error").alert();
-            $(".alert-error").fadeIn('fast');
-            $(".alert-error").addClass("in");
-        }
-    }
-</script>
 <jsp:include page="tail.jsp"/>

@@ -105,3 +105,11 @@ $('#myTab a').click(function (e) {
   e.preventDefault();
   $(this).tab('show');
 })
+$('.tweettextarea').live("keyup",function(data){
+    var charDiff = 140 - $(this).val().length;
+    $("#charLeftRemaining").html(charDiff);
+    if(charDiff<0)
+        $("#tweetButton").attr('disabled','disabled');
+    else 
+        $("#tweetButton").removeAttr('disabled')
+});

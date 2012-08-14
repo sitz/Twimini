@@ -1,6 +1,7 @@
 package com.directi.train.tweetapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RandomStore {
     @Autowired
-    private static SimpleJdbcTemplate db;
+    @Qualifier("simpleJdbcTemplate1")
+    private SimpleJdbcTemplate db;
 
-    public static String getAccessToken() {
-        return  new Integer(db.queryForInt(String.format("select max(access_token) from auth")) + 1).toString();
+    public String getAccessToken() {
+        return Integer.toString(db.queryForInt(String.format("select max(access_token) from auth")) + 1);
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         String alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         int randomInt = getRandomInt(1, 16);
 
@@ -31,7 +33,7 @@ public class RandomStore {
         return pwd;
     }
 
-    private static int getRandomInt(int lo, int hi) {
+    private int getRandomInt(int lo, int hi) {
         return (int) (lo + Math.ceil(Math.random() * (hi - lo)));
     }
 }

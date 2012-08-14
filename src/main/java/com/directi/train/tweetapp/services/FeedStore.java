@@ -3,6 +3,7 @@ package com.directi.train.tweetapp.services;
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 public class FeedStore  {
     @Autowired
+    @Qualifier("simpleJdbcTemplate1")
     private SimpleJdbcTemplate db;
 
     @Autowired
@@ -84,12 +86,6 @@ public class FeedStore  {
         return db.update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
     }
 
-    public boolean unFavoriteTweet(Long creatorId, Long tweetId, Long userId) {
-        if (localUserStore.isFavorited(creatorId, tweetId, userId))
-            return db.update(String.format("delete from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
-        return false;
-    }
-
     private boolean isRetweeted(Long creatorId, Long tweetId, long userId) {
         return db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
@@ -115,16 +111,6 @@ public class FeedStore  {
         feedItem.setTweet(tweet);
         feedItem.setCreatorId(creatorId);
         return add(feedItem, userId);
-    }
-
-    public void unReTweet(Long creatorId, Long tweetId, Long userId) {
-        if (creatorId.equals(userId)) {
-            return;
-        }
-        if (!isRetweeted(creatorId, tweetId, userId)) {
-            return;
-        }
-        db.update(String.format("delete from retweets where tweet_id = %d and user_id = %d", tweetId, userId));
     }
 
     public List<UserProfileItem> favoritedUsers(Long creatorId, Long tweetId) {

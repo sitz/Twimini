@@ -3,7 +3,6 @@ package com.directi.train.tweetapp.controllers.API;
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.AuthStore;
-import com.directi.train.tweetapp.services.FeedStore;
 import com.directi.train.tweetapp.services.LoginStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +29,17 @@ public class UserController {
     @Autowired private AuthStore authStore;
     @Autowired private LoginStore loginStore;
 
-    @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> getFollowing(@PathVariable("username") String userName) {
-        return userStore.followingList(userName);
-    }
-
-    @RequestMapping(value = "followers/{username}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<UserProfileItem> getFollowers(@PathVariable("username") String userName) {
-        return userStore.followerList(userName);
+    public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpServletRequest request) {
+        Long loggedUserId;
+        if (request.getAttribute("accesstoken").equals("-1")) {
+            loggedUserId = userStore.getUserId(userName);
+        }
+        else {
+            loggedUserId = authStore.getUserId((String) request.getAttribute("accesstoken"));
+        }
+        return userStore.tweetList(userName, loggedUserId);
     }
 
     @RequestMapping(value = "change/{password}", method = RequestMethod.POST)
@@ -53,10 +53,16 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "following/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> jsonProfile(@PathVariable("userName") String userName, HttpServletRequest request) {
-        return userStore.tweetList(userName, authStore.getUserId((String) request.getAttribute("accesstoken")));
+    public List<UserProfileItem> getFollowing(@PathVariable("username") String userName) {
+        return userStore.followingList(userName);
+    }
+
+    @RequestMapping(value = "followers/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserProfileItem> getFollowers(@PathVariable("username") String userName) {
+        return userStore.followerList(userName);
     }
 
     @RequestMapping(value = "favorites/{username}", method = RequestMethod.GET)

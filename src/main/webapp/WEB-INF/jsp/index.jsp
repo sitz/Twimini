@@ -19,7 +19,7 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
     </div>
     <div class="offset1 span3">
         <div class="row">
-            <div class=""/ >
+            <div class="" >
                 <form class="form-horizontal well" id="formRegister">
                     <fieldset>
                         <legend>Register</legend>
@@ -30,7 +30,7 @@ Twitter Inc. is based in San Francisco, with additional servers and offices in N
                         <label> Password </label>
                         <input type="password" name="password" id="password">
                         <div class="form-actions">
-                            <button class="btn" onclick="return register();"></button>
+                            <button class="btn" onclick="return register();">Register</button>
                         </div>
                     </fieldset>
                 </form>

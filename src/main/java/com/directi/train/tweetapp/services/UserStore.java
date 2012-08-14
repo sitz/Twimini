@@ -3,6 +3,7 @@ package com.directi.train.tweetapp.services;
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 public class UserStore {
     @Autowired
+    @Qualifier("simpleJdbcTemplate1")
     private SimpleJdbcTemplate db;
 
     public long getUserId(String userName) {
@@ -63,11 +65,9 @@ public class UserStore {
             db.update(String.format("insert into following (user_id, following_id) values (%d ,%d)", loggedUserId, otherUserId));
             db.update(String.format("insert into followers (user_id, follower_id) values  (%d, %d)", otherUserId, loggedUserId));
             return 0;
-        }
-        catch (IndexOutOfBoundsException E) {
+        } catch (IndexOutOfBoundsException E) {
             return 1;
-        }
-        catch (Exception E) {
+        } catch (Exception E) {
             E.printStackTrace();
             return 1;
         }
@@ -84,11 +84,9 @@ public class UserStore {
             db.update(String.format("delete from following where user_id = %d and following_id = %d", loggedUserId, otherUserId));
             db.update(String.format("delete from followers where user_id = %d and follower_id = %d", otherUserId, loggedUserId));
             return 0;
-        }
-        catch (IndexOutOfBoundsException E) {
+        } catch (IndexOutOfBoundsException E) {
             return 1;
-        }
-        catch (Exception E) {
+        } catch (Exception E) {
             E.printStackTrace();
             return 1;
         }

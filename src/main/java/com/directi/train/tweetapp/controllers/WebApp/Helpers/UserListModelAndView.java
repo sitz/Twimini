@@ -10,7 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
  * Time: 10:14 PM
  * To change this template use File | Settings | File Templates.
  */
-public class UserListModelAndView extends ModelAndView{
+public class UserListModelAndView extends ModelAndView {
+
     public UserListModelAndView() {
         super("userlist");
     }

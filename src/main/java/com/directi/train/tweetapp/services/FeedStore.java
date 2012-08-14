@@ -29,9 +29,17 @@ public class FeedStore  {
     @Autowired
     private UserStore localUserStore;
 
-    private final int tweetCharLimit = 140;
+    private final int minTweetLength = 1;
+    private final int maxTweetLength = 140;
 
     public FeedItem add(FeedItem feedItem,Long userId) {
+
+        if (feedItem.getTweet().length() < minTweetLength) {
+            return null;
+        }
+        if (feedItem.getTweet().length() > maxTweetLength) {
+            feedItem.setTweet(feedItem.getTweet().substring(0, maxTweetLength));
+        }
 
         String userName = (String)db.query(String.format("select username from users where id = %d", userId),new RowMapper<Object>() {
             @Override
@@ -48,10 +56,6 @@ public class FeedStore  {
         Long creatorId = feedItem.getCreatorId();
         if (creatorId == null)
             creatorId = userId;
-
-        if (feedItem.getTweet().length() > tweetCharLimit) {
-            feedItem.setTweet(feedItem.getTweet().substring(0, tweetCharLimit));
-        }
 
         db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
                 userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));

@@ -22,13 +22,32 @@ import java.util.List;
 @Service
 public class LoginStore {
     @Autowired
-    @Qualifier("simpleJdbcTemplate1") private SimpleJdbcTemplate db;
-    @Autowired private RandomStore randomStore;
+    @Qualifier("simpleJdbcTemplate1")
+    private SimpleJdbcTemplate db;
+
+    @Autowired
+    private RandomStore randomStore;
+
+    private final int minUserLength = 1;
+    private final int maxUserLength = 16;
+    private final int minPasswordLength = 1;
+    private final int maxPasswordLength = 16;
 
     public String registerUser(String email,String userName,String password) {
+        if (!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+            return "3";
+        }
+        if (!userName.matches("[A-Za-z0-9_]*") || userName.length() < minUserLength || userName.length() > maxUserLength) {
+            return "4";
+        }
+        if (password.length() < minPasswordLength || password.length() > maxPasswordLength) {
+            return "5";
+        }
+
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
                 userName, email), UserItem.rowMapper);
         UserItem userItem;
+
         try {
             userItem = userData.get(0);
             if(userItem.getEmail().equals(email) ){

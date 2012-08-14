@@ -22,8 +22,8 @@ import java.util.List;
 @Service
 public class LoginStore {
     @Autowired
-    @Qualifier("simpleJdbcTemplate1")
-    private SimpleJdbcTemplate db;
+    @Qualifier("simpleJdbcTemplate1") private SimpleJdbcTemplate db;
+    @Autowired private RandomStore randomStore;
 
     public String registerUser(String email,String userName,String password) {
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
@@ -84,7 +84,7 @@ public class LoginStore {
         }  catch (Exception E) {
             E.printStackTrace();
         }
-        String pwd = RandomStore.getPassword();
+        String pwd = randomStore.getPassword();
         db.update(String.format("update users set password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
         PasswordStore.sendPassword(eMail, pwd);
     }}

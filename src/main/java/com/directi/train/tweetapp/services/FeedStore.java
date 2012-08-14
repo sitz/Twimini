@@ -29,6 +29,7 @@ public class FeedStore  {
     @Autowired
     private UserStore localUserStore;
 
+    private final int tweetCharLimit = 140;
 
     public FeedItem add(FeedItem feedItem,Long userId) {
 
@@ -47,6 +48,10 @@ public class FeedStore  {
         Long creatorId = feedItem.getCreatorId();
         if (creatorId == null)
             creatorId = userId;
+
+        if (feedItem.getTweet().length() > tweetCharLimit) {
+            feedItem.setTweet(feedItem.getTweet().substring(0, tweetCharLimit));
+        }
 
         db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
                 userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
@@ -89,15 +94,11 @@ public class FeedStore  {
         return db.update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
     }
 
-    private boolean isRetweeted(Long creatorId, Long tweetId, long userId) {
-        return db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
-    }
-
     public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
         if (creatorId.equals(userId)) {
             return null;
         }
-        if (isRetweeted(creatorId, tweetId, userId)) {
+        if (localUserStore.isRetweeted(creatorId, tweetId, userId, this)) {
             return null;
         }
         db.update(String.format("insert into retweets (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId));

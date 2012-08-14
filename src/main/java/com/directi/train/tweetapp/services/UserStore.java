@@ -140,7 +140,7 @@ public class UserStore {
         return preOrderSQL;
     }
 
-        public String getPostSQL() {
+    public String getPostSQL() {
         final String postConditionSQL = " ) something inner join users " +
                 "on something.creator_id = users.id " +
                 "where ";
@@ -182,7 +182,7 @@ public class UserStore {
         return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 
-    private boolean isRetweeted(Long creatorId, Long tweetId, Long userId) {
+    public boolean isRetweeted(Long creatorId, Long tweetId, long userId, FeedStore feedStore) {
         return db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 

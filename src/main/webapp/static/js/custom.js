@@ -23,7 +23,8 @@ function login(){
     return false;
 }
 function userAlert(data) {
-    alert(data);
+    $("#modalErrorBody").html(data);
+    $("#modalError").modal();
 }
 function register() {
     $.post("/api/auth/register",$("#formRegister").serialize(),function(data){
@@ -37,15 +38,22 @@ function register() {
         if(data==2) {
             userAlert("Username already exists");
         }
+        if(data==3) {
+            userAlert("Invalid Email");
+        }
+        if(data==4) {
+            userAlert("Invalid Username");
+        }
+        if(data==5) {
+            userAlert("Invalid Password");
+        }
     });
     return false;
 }
 function forgot() {
-    alert("ER");
     $.post('/api/auth/forgot/' + $('#forgotPassword').val(),function(data) {
         alert("DF");
     });
-    alert("ER");
     $("#myModal").modal('hide');
     return false;
 }
@@ -58,6 +66,22 @@ function favorite(tweetid,userid,element) {
     $.post('/api/tweet/favorite/' + userid + '/' + tweetid,function(data) {
         $(element).parent().html('<i class="icon-star"></i>Liked</a>').hide().fadeIn();
     });
+}
+function resetPassword(form) {
+    var a = $("#input01").val();
+    var b = $("#input02").val();
+    if(a==b) {
+        $.post("/api/user/change/"+a,function(data) {
+            $(".alert-success").alert();
+            $(".alert-success").fadeIn('fast');
+            $(".alert-success").addClass("in");
+        });
+    }
+    else {
+        $(".alert-error").alert();
+        $(".alert-error").fadeIn('fast');
+        $(".alert-error").addClass("in");
+    }
 }
 $(".followButton").live("click",function(){
     var el = $(this);

@@ -136,7 +136,6 @@ public class UserStore {
 
     public String getPreOrderSQL() {
         final String preOrderSQL = " order by something.id ";
-
         return preOrderSQL;
     }
 
@@ -144,7 +143,6 @@ public class UserStore {
         final String postConditionSQL = " ) something inner join users " +
                 "on something.creator_id = users.id " +
                 "where ";
-
         return postConditionSQL;
     }
 
@@ -154,7 +152,6 @@ public class UserStore {
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
                 "where ";
-
         return preConditionSQL;
     }
 

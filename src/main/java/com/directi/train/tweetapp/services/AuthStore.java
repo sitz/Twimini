@@ -52,7 +52,6 @@ public class AuthStore {
     }
 
     public boolean isValid(String accessToken) {
-        int accessTokenCount = db.queryForInt(String.format("select count (*) from auth where access_token = '%s'", accessToken));
-        return accessTokenCount == 1;
+        return db.queryForInt(String.format("select count (*) from auth where access_token = '%s'", accessToken)) == 1;
     }
 }

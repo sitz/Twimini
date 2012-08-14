@@ -64,7 +64,7 @@ public class LoginStore {
         return "0";
     }
 
-    public UserItem checkLogin(String userName,String password) throws Exception{
+    public UserItem checkLogin(String userName,String password) throws Exception {
         UserItem userData;
         try {
             userData = db.query(String.format("select * from users where username = '%s'", userName), UserItem.rowMapper).get(0);

@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 @Configuration
 public class AppConfig {
     @Bean
-    public SimpleJdbcTemplate simpleJdbcTemplate() {
+    public SimpleJdbcTemplate simpleJdbcTemplate1() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
@@ -17,12 +17,23 @@ public class AppConfig {
         return new SimpleJdbcTemplate(basicDataSource);
     }
 
-    @Bean BasicDataSource dataSource() {
+    @Bean
+    public SimpleJdbcTemplate simpleJdbcTemplate2() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("qwerty");
-        return  basicDataSource;
+        return new SimpleJdbcTemplate(basicDataSource);
+    }
+
+    @Bean
+    public SimpleJdbcTemplate shardTemplate() {
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
+        basicDataSource.setDriverClassName("org.postgresql.Driver");
+        basicDataSource.setUsername("postgres");
+        basicDataSource.setPassword("qwerty");
+        return new SimpleJdbcTemplate(basicDataSource);
     }
 }

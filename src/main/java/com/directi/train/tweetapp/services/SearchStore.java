@@ -9,12 +9,8 @@ import java.util.List;
 
 @Service
 public class SearchStore {
-    private SimpleJdbcTemplate db;
-
     @Autowired
-    public SearchStore(SimpleJdbcTemplate template) {
-        this.db = template;
-    }
+    private SimpleJdbcTemplate db;
 
     public List<UserProfileItem> getResults(String query, Long userId) {
         List<UserProfileItem> usersList = db.query(String.format("select * from users where username like '%%%s%%' or email like '%%%s%%@%%.%%'",

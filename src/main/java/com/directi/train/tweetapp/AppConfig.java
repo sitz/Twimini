@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 @Configuration
 public class AppConfig {
+
     @Bean
     public SimpleJdbcTemplate simpleJdbcTemplate1() {
         BasicDataSource basicDataSource = new BasicDataSource();

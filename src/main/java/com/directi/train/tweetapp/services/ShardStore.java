@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 @Service
 public class ShardStore {
@@ -17,12 +16,13 @@ public class ShardStore {
     private SimpleJdbcTemplate db1;
 
     @Autowired
-    @Qualifier("ShardTemplate")
+    @Qualifier("shardTemplate")
     private SimpleJdbcTemplate shardDB;
 
-    public SimpleJdbcTemplate getShardById(Long userId) {
+    public SimpleJdbcTemplate getShardByUserId(Long userId) {
         return db1;
     }
+
     public SimpleJdbcTemplate getShardByUserName(String userName) {
         return db1;
     }

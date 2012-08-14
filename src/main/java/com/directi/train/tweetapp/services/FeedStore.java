@@ -21,8 +21,11 @@ import java.util.List;
 
 @Service
 public class FeedStore  {
-    @Autowired private SimpleJdbcTemplate db;
-    @Autowired private UserStore localUserStore;
+    @Autowired
+    private SimpleJdbcTemplate db;
+
+    @Autowired
+    private UserStore localUserStore;
 
 
     public FeedItem add(FeedItem feedItem,Long userId) {

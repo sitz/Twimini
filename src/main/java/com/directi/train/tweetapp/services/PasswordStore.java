@@ -35,7 +35,6 @@ public class PasswordStore {
                 });
 
         try {
-
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));

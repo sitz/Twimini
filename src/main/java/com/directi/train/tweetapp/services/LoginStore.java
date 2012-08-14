@@ -20,7 +20,8 @@ import java.util.List;
  */
 @Service
 public class LoginStore {
-    @Autowired SimpleJdbcTemplate db;
+    @Autowired
+    private SimpleJdbcTemplate db;
 
     public String registerUser(String email,String userName,String password) {
         List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",

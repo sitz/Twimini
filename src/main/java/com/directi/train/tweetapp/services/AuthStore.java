@@ -1,6 +1,7 @@
 package com.directi.train.tweetapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 public class AuthStore {
     @Autowired
+    @Qualifier("simpleJdbcTemplate1")
     private SimpleJdbcTemplate db;
 
     public Long getUserId(String accessToken) {
@@ -50,6 +52,7 @@ public class AuthStore {
     }
 
     public boolean isValid(String accessToken) {
-        return db.queryForInt(String.format("select count (*) from auth where access_token = '%s'", accessToken)) == 1;
+        int accessTokenCount = db.queryForInt(String.format("select count (*) from auth where access_token = '%s'", accessToken));
+        return accessTokenCount == 1;
     }
 }

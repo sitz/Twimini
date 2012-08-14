@@ -2,6 +2,7 @@ package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.UserItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 public class LoginStore {
     @Autowired
+    @Qualifier("simpleJdbcTemplate1")
     private SimpleJdbcTemplate db;
 
     public String registerUser(String email,String userName,String password) {
@@ -38,7 +40,7 @@ public class LoginStore {
         }
         catch (IndexOutOfBoundsException e) {
             password = PasswordStore.SHA(password);
-            db.update(String.format("insert into users (email, username, password) values(?, ?, ?)",email, userName, password));
+            db.update(String.format("insert into users (email, username, password) values('%s', '%s', '%s')", email, userName, password));
         }
         return "0";
     }

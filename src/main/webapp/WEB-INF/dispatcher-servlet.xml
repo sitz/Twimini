@@ -14,15 +14,29 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
+            <mvc:mapping path="/api/user"/>
+            <mvc:mapping path="/api/user/change"/>
+            <mvc:mapping path="/api/user/follow"/>
+            <mvc:mapping path="/api/user/unfollow"/>
+            <mvc:mapping path="/api/tweet/new"/>
+            <mvc:mapping path="/api/tweet/favorite"/>
+            <mvc:mapping path="/api/tweet/retweet"/>
+            <mvc:mapping path="/api/feed"/>
+            <mvc:mapping path="/api/feed/new"/>
+            <mvc:mapping path="/api/feed/old"/>
+            <mvc:mapping path="/api/search/**"/>
+            <mvc:mapping path="/search/**"/>
             <mvc:mapping path="/tweet/**"/>
             <mvc:mapping path="/user/**"/>
-            <mvc:mapping path="/search/**"/>
-            <mvc:mapping path="/api/search/**"/>
-            <mvc:mapping path="/api/feed/**"/>
-            <mvc:mapping path="/api/user/**"/>
-            <mvc:mapping path="/api/tweet/**"/>
             <mvc:mapping path="/" />
             <bean class="com.directi.train.tweetapp.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/api/user/**"/>
+            <mvc:mapping path="/api/tweet/**"/>
+            <mvc:mapping path="/api/feed/**"/>
+            <bean class="com.directi.train.tweetapp.interceptor.AuthAPIInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 

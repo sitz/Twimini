@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -52,22 +51,10 @@ public class TweetController {
         return feedStore.favoriteTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
-    @RequestMapping(value = "unfavorite/{creatorId}/{tweetId}", method = RequestMethod.POST)
-    @ResponseBody
-    public boolean unFavoriteTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
-        return feedStore.unFavoriteTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
-    }
-
     @RequestMapping(value = "retweet/{creatorId}/{tweetId}", method = RequestMethod.POST)
     @ResponseBody
     public FeedItem reTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
         return feedStore.reTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
-    }
-
-    @RequestMapping(value = "unretweet/{creatorId}/{tweetId}", method = RequestMethod.POST)
-    @ResponseBody
-    public void unReTweet(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
-        feedStore.unReTweet(creatorId, tweetId, authStore.getUserId((String) request.getAttribute("accesstoken")));
     }
 
 }

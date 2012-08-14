@@ -1,6 +1,5 @@
 package com.directi.train.tweetapp.controllers.API;
 
-import com.directi.train.tweetapp.controllers.WebApp.AuthController;
 import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.FeedStore;
@@ -29,10 +28,22 @@ public class UserFeedController {
     @Autowired private UserStore userStore;
     @Autowired private AuthStore authStore;
 
-    @RequestMapping(value = "feed/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{username}", method = RequestMethod.GET)
     @ResponseBody
-    public List<FeedItem> feedList(@PathVariable("userId") String userName) {
+    public List<FeedItem> feedList(@PathVariable("username") String userName) {
         return feedStore.feed(userStore.getUserId(userName));
+    }
+
+    @RequestMapping(value = "{username}/old/{id}/", method = RequestMethod.GET)
+    @ResponseBody
+    public List<FeedItem> oldFeedsList(@PathVariable("username") String userName, @PathVariable("id") Long feedId) {
+        return feedStore.oldFeedsList(feedId,userStore.getUserId(userName));
+    }
+
+    @RequestMapping(value = "{username}/new/{id}/", method = RequestMethod.GET)
+    @ResponseBody
+    public List<FeedItem> newFeedsList(@PathVariable("username") String userName, @PathVariable("id") Long feedId) {
+        return feedStore.newFeedsList(feedId,userStore.getUserId(userName));
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -51,18 +62,6 @@ public class UserFeedController {
     @ResponseBody
     public List<FeedItem> oldFeedsList(@PathVariable("id") Long feedId, HttpServletRequest request) {
         return feedStore.oldFeedsList(feedId, authStore.getUserId((String) request.getAttribute("accesstoken")));
-    }
-
-    @RequestMapping(value = "{username}/old/{id}/", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> oldFeedsList(@PathVariable("username") String userName,@PathVariable("id") Long feedId) {
-        return feedStore.oldFeedsList(feedId,userStore.getUserId(userName));
-    }
-
-    @RequestMapping(value = "{username}/new/{id}/", method = RequestMethod.GET)
-    @ResponseBody
-    public List<FeedItem> newFeedsList(@PathVariable("username") String userName,@PathVariable("id") Long feedId) {
-        return feedStore.newFeedsList(feedId,userStore.getUserId(userName));
     }
 
 }

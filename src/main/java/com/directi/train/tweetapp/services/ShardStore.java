@@ -26,4 +26,8 @@ public class ShardStore {
     public SimpleJdbcTemplate getShardByUserName(String userName) {
         return db1;
     }
+
+    public SimpleJdbcTemplate getShardByUserEmail(String eMail) {
+        return db1;
+    }
 }

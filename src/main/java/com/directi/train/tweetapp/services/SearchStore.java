@@ -2,6 +2,7 @@ package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class SearchStore {
     @Autowired
+    @Qualifier("simpleJdbcTemplate1")
     private SimpleJdbcTemplate db;
 
     public List<UserProfileItem> getResults(String query, Long userId) {

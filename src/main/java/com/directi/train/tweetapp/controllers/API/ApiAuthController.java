@@ -3,7 +3,6 @@ package com.directi.train.tweetapp.controllers.API;
 import com.directi.train.tweetapp.services.AuthStore;
 import com.directi.train.tweetapp.services.LoginStore;
 import com.directi.train.tweetapp.services.RandomStore;
-import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/api/auth")
 public class ApiAuthController {
-    @Autowired private UserStore userStore;
     @Autowired private AuthStore authStore;
     @Autowired private LoginStore loginStore;
+    @Autowired private RandomStore randomStore;
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
@@ -41,7 +40,7 @@ public class ApiAuthController {
         }
 
         long userID;
-        String accessToken =  RandomStore.getAccessToken();
+        String accessToken =  randomStore.getAccessToken();
         try {
             userID = loginStore.checkLogin(userName,password).getId();
             authStore.insert(userName, userID, accessToken);
@@ -57,18 +56,19 @@ public class ApiAuthController {
         return accessToken;
     }
 
-    @RequestMapping(value = "forgot/{userName}", method = RequestMethod.POST)
-    @ResponseBody
-    public void forgotPassword(@PathVariable("userName") String userName) {
-        loginStore.forgotPassword(userName);
-    }
-
     @RequestMapping(value = "logout",method = RequestMethod.POST)
+    @ResponseBody
     public void logout(HttpServletRequest request) {
         Cookie cookies[] = request.getCookies();
         for (Cookie cookie : cookies) {
             cookie.setMaxAge(0);
             authStore.remove(cookie.getValue());
         }
+    }
+
+    @RequestMapping(value = "forgot/{userName}", method = RequestMethod.POST)
+    @ResponseBody
+    public void forgotPassword(@PathVariable("userName") String userName) {
+        loginStore.forgotPassword(userName);
     }
 }

@@ -46,7 +46,7 @@
     }
     $(document).ready(function () {
         <% if( (request.getAttribute("userName")).equals((request.getAttribute("curUserName"))) ) { %>
-            $(".chumba").html("");
+            $(".chumba").hide();
         <%}%>
         $.get('/api/user/${userName}',function(data) {
             for(var i in data) {

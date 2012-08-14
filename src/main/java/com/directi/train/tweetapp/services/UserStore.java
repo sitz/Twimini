@@ -57,7 +57,6 @@ public class UserStore {
     public int followUser(String userName, Long loggedUserId) {
         try {
             long otherUserId = getUserId(userName);
-
             if (loggedUserId.equals(otherUserId)) {
                 return 1;
             }
@@ -76,7 +75,6 @@ public class UserStore {
     public int unFollowUser(String userName, Long loggedUserId) {
         try {
             long otherUserId = getUserId(userName);
-
             if (loggedUserId.equals(otherUserId)) {
                 return 1;
             }
@@ -93,9 +91,10 @@ public class UserStore {
     }
 
     public List<FeedItem> tweetList(String userName, Long loggedUserId) {
-        String conditionalSQL = "feeds.user_id = %d and feeds.user_id = feeds.receiver_id and feeds.id > %d";
-        String orderingSQL = "desc limit %d";
-        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
+        String conditionalSQL = "feeds.user_id = %d and feeds.user_id = feeds.receiver_id ";
+        String orderingSQL = "desc limit %d ";
+        String otherCondition = "something.id > %d  ";
+        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, otherCondition, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
@@ -135,17 +134,23 @@ public class UserStore {
         return db.queryForInt(String.format("select count(*) from feeds where user_id = receiver_id and user_id='%d'",getUserId(userName)));
     }
 
-    public String getPostSQL() {
+    public String getPreOrderSQL() {
+        final String preOrderSQL = " order by something.id ";
+
+        return preOrderSQL;
+    }
+
+        public String getPostSQL() {
         final String postConditionSQL = " ) something inner join users " +
                 "on something.creator_id = users.id " +
-                "order by something.id ";
+                "where ";
 
         return postConditionSQL;
     }
 
     public String getPreSQL() {
-        final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname,users.email as creatoremail " +
-                "from ( select distinct on (tweet_id, creator_id) feeds.id, feeds.user_id , users.username, feeds.tweet_id, feeds.tweet, feeds.creator_id " +
+        final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname, users.email as creatoremail " +
+                "from ( select distinct on (tweet_id, creator_id) feeds.id, user_id , users.username, tweet_id, tweet, creator_id " +
                 "from feeds inner join users " +
                 "on users.id = feeds.user_id " +
                 "where ";
@@ -153,8 +158,8 @@ public class UserStore {
         return preConditionSQL;
     }
 
-    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = db.query(String.format(getPreSQL() + conditionalSQL + getPostSQL() + orderingSQL,
+    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String otherCondition, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = db.query(String.format(getPreSQL() + conditionalSQL + getPostSQL() + otherCondition + getPreOrderSQL() + orderingSQL,
                 userId, feedId, feedLimit), FeedItem.rowMapper);
 
         for (FeedItem feedItem : feedItems) {
@@ -175,6 +180,10 @@ public class UserStore {
 
     public boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
         return db.queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
+    }
+
+    private boolean isRetweeted(Long creatorId, Long tweetId, Long userId) {
+        return db.queryForInt(String.format("select count(*) from retweets where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
     }
 
     public Long getMaxFeedLimit() {

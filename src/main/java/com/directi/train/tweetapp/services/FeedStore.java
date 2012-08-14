@@ -63,21 +63,24 @@ public class FeedStore  {
     }
 
     public List<FeedItem> feed(Long userId) {
-        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String conditionalSQL = "feeds.receiver_id = %d";
         String orderingSQL = "desc limit %d";
-        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, localUserStore.getMinFeedId(), localUserStore.getFeedLimit());
+        String otherCondition = "something.id > %d";
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, otherCondition, orderingSQL, localUserStore.getMinFeedId(), localUserStore.getFeedLimit());
     }
 
     public List<FeedItem> newFeedsList(Long feedId, Long userId) {
-        String conditionalSQL = "feeds.receiver_id = %d and feeds.id > %d";
+        String conditionalSQL = "feeds.receiver_id = %d";
         String orderingSQL = "asc limit %d";
-        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, localUserStore.getMaxFeedLimit());
+        String otherCondition = "something.id > %d";
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, otherCondition, orderingSQL, feedId, localUserStore.getMaxFeedLimit());
     }
 
     public List<FeedItem> oldFeedsList(Long feedId, Long userId) {
-        String conditionalSQL = "feeds.receiver_id = %d and feeds.id < %d";
+        String conditionalSQL = "feeds.receiver_id = %d";
         String orderingSQL = "desc limit %d";
-        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, orderingSQL, feedId, localUserStore.getFeedLimit());
+        String otherCondition = "something.id < %d";
+        return localUserStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, otherCondition, orderingSQL, feedId, localUserStore.getFeedLimit());
     }
 
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {

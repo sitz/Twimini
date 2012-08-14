@@ -1,10 +1,8 @@
 package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.FeedItem;
-import com.directi.train.tweetapp.model.UserItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -23,12 +21,8 @@ import java.util.List;
 
 @Service
 public class UserStore {
-    private SimpleJdbcTemplate db;
-
     @Autowired
-    public UserStore(SimpleJdbcTemplate template) {
-        this.db = template;
-    }
+    private SimpleJdbcTemplate db;
 
     public long getUserId(String userName) {
         return db.queryForInt(String.format("select id from users where username='%s'", userName));

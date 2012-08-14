@@ -13,12 +13,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RandomStore {
-    private static SimpleJdbcTemplate db;
-
     @Autowired
-    public RandomStore(SimpleJdbcTemplate template) {
-        this.db = template;
-    }
+    private static SimpleJdbcTemplate db;
 
     public static String getAccessToken() {
         return  new Integer(db.queryForInt(String.format("select max(access_token) from auth")) + 1).toString();

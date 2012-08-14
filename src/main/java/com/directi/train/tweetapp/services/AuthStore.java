@@ -18,12 +18,8 @@ import java.util.List;
  */
 @Service
 public class AuthStore {
-    private SimpleJdbcTemplate db;
-
     @Autowired
-    public AuthStore(SimpleJdbcTemplate template) {
-        this.db = template;
-    }
+    private SimpleJdbcTemplate db;
 
     public Long getUserId(String accessToken) {
         List<Long> userIds = db.query(String.format("select user_id from auth where access_token = '%s'", accessToken), new RowMapper<Long>() {

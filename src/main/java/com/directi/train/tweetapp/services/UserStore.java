@@ -25,7 +25,7 @@ public class UserStore {
     @Autowired private ShardStore shardStore;
 
     public long getUserId(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select id from users where username=?", userName);
+        return shardStore.getShardByUserName(userName).queryForInt("select id from users where username= ?", userName);
     }
 
     public UserProfileItem getUserProfileItem(String userName) {
@@ -115,21 +115,22 @@ public class UserStore {
     }
 
     public List<FeedItem> tweetList(String userName, Long loggedUserId) {
-        String conditionalSQL = "user_id = ? and user_id = receiver_id and id > ?";
-        String orderingSQL = "desc limit ? ";
-        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
+        String conditionalSQL = "user_id = ? and user_id = receiver_id";
+        String orderingSQL = "desc limit ?";
+        String otherCondition = "id > ?";
+        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, otherCondition, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public int noOfTweets(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from feeds where user_id = receiver_id and user_id=?",getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from feeds where user_id = receiver_id and user_id = ?",getUserId(userName));
     }
 
     public Integer noOfFollowers(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from followers where user_id=?", getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from followers where user_id = ?", getUserId(userName));
     }
 
     public Integer noOfFollowing(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from following where user_id=?", getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from following where user_id = ?", getUserId(userName));
     }
 
     public List<Long> getFavoriteTweetsOfAUser(String userName) {
@@ -152,8 +153,8 @@ public class UserStore {
         }, userId);
     }
 
-    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(getPreSQL() + conditionalSQL + getPreOrderSQL() + orderingSQL,
+    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String otherCondition, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(getPreSQL() + conditionalSQL + getPostSQL() + otherCondition + getPreOrderSQL() + orderingSQL,
                 FeedItem.rowMapper, userId, feedId, feedLimit);
 
         for (FeedItem feedItem : feedItems) {
@@ -184,8 +185,12 @@ public class UserStore {
         return " select * from (select distinct on (tweet_id, creator_id) * from feeds where ";
     }
 
+    public String getPostSQL() {
+        return " )temp where ";
+    }
+
     public String getPreOrderSQL() {
-        return " )temp order by id ";
+        return " order by id ";
     }
 
     public Long getMaxFeedLimit() {

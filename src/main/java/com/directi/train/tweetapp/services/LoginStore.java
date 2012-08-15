@@ -45,7 +45,7 @@ public class LoginStore {
         }
 
         try {
-            List<UserItem> userData = shardStore.getShardByUserEmail(email).query("select * from users where email=?", UserItem.rowMapper, email);
+            List<UserItem> userData = shardStore.getShardByUserEmail(email).query("select * from users where email = ?", UserItem.rowMapper, email);
             UserItem userItem = userData.get(0);
             if(userItem.getEmail().equals(email) ){
                 return "1";

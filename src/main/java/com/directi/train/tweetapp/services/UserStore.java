@@ -65,8 +65,8 @@ public class UserStore {
     }
 
     public Integer checkFollowingStatus(String currentUser,String otherUser) {
-        return shardStore.getShardByUserName(currentUser).queryForInt("select count(*) from followers where user_id = ? and follower_id = ?",
-                getUserId(otherUser), getUserId(currentUser));
+        return shardStore.getShardByUserName(currentUser).queryForInt("select count(*) from following where user_id = ? and following_id = ?",
+                getUserId(currentUser), getUserId(otherUser));
     }
 
     public List<UserProfileItem> applyFollowing(long userId, List<UserProfileItem> users) {

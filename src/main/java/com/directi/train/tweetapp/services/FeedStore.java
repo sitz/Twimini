@@ -4,9 +4,7 @@ import com.directi.train.tweetapp.model.FeedItem;
 import com.directi.train.tweetapp.model.UserProfileItem;
 import com.directi.train.tweetapp.services.Auxillary.ShardStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
@@ -23,10 +21,6 @@ import java.util.List;
 
 @Service
 public class FeedStore  {
-    @Autowired
-    @Qualifier("simpleJdbcTemplate1")
-    private SimpleJdbcTemplate db;
-
     @Autowired private ShardStore shardStore;
     @Autowired private UserStore userStore;
 
@@ -42,40 +36,40 @@ public class FeedStore  {
             feedItem.setTweet(feedItem.getTweet().substring(0, maxTweetLength));
         }
 
-        String userName = (String)db.query(String.format("select username from users where id = %d", userId),new RowMapper<Object>() {
+        String userName = (String) shardStore.getShardByUserId(userId).query("select username from users where id = ?", new RowMapper<Object>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("username");
             }
-        }).get(0);
+        }, userId).get(0);
 
         Long nextUniqueTweetId = feedItem.getTweetId();
         if (nextUniqueTweetId == null)
-            nextUniqueTweetId = 1 + db.queryForLong(String.format("SELECT MAX(tweet_id) from (SELECT tweet_id from feeds where creator_id = %d) tweetidtable",
-                                                    userId));
+            nextUniqueTweetId = 1 + shardStore.getShardByUserId(userId).queryForLong("SELECT MAX(tweet_id) from (SELECT tweet_id from feeds where creator_id = ?) tweetidtable",
+                    userId);
 
         Long creatorId = feedItem.getCreatorId();
         if (creatorId == null)
             creatorId = userId;
 
-        db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
-                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId));
-        int id = db.queryForInt(String.format("select id from feeds where user_id =%d order by id desc limit 1", userId));
+        shardStore.getShardByUserId(userId).update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
+                userId, userId, feedItem.getTweet(), nextUniqueTweetId, creatorId);
+        int id = shardStore.getShardByUserId(userId).queryForInt("select id from feeds where user_id =? order by id desc limit 1", userId);
 
         List<UserProfileItem> followerIdList = userStore.followerList(userName);
         for (UserProfileItem userProfileItem : followerIdList) {
-            Integer i = (Integer)userProfileItem.getId();
-            db.update(String.format("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(%d, %d, '%s', %d, %d, now())",
-                    userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId));
+            Integer i = userProfileItem.getId();
+            shardStore.getShardByUserId(userId).update("insert into feeds (user_id, receiver_id, tweet, tweet_id, creator_id, timestamp) values(?, ?, ?, ?, ?, now())",
+                    userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId);
         }
 
-        return db.queryForObject(String.format(userStore.getPreSQL() + "feeds.id = %d" + userStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
+        return shardStore.getShardByUserId(userId).queryForObject(userStore.getPreSQL() + "feeds.id = ?" + userStore.getPostSQL() + "desc", FeedItem.rowMapper, id);
     }
 
     public List<FeedItem> feed(Long userId) {
-        String conditionalSQL = "feeds.receiver_id = %d";
-        String orderingSQL = "desc limit %d";
-        String otherCondition = "something.id > %d";
+        String conditionalSQL = "feeds.receiver_id = ?";
+        String orderingSQL = "desc limit ?";
+        String otherCondition = "something.id > ?";
         return userStore.feedQueryAndFavoriteStatus(userId, userId, conditionalSQL, otherCondition, orderingSQL, userStore.getMinFeedId(), userStore.getFeedLimit());
     }
 
@@ -96,7 +90,7 @@ public class FeedStore  {
     public boolean favoriteTweet(Long creatorId, Long tweetId, Long userId) {
         if (userStore.isFavorited(creatorId, tweetId, userId))
             return false;
-        return shardStore.getShardByUserId(creatorId).update(String.format("insert into favorites (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId)) > 0;
+        return shardStore.getShardByUserId(creatorId).update("insert into favorites (tweet_id, user_id, creator_id) values (?, ?, ?)", tweetId, userId, creatorId) > 0;
     }
 
     public FeedItem reTweet(Long creatorId, Long tweetId, Long userId) {
@@ -106,28 +100,28 @@ public class FeedStore  {
         if (userStore.isRetweeted(creatorId, tweetId, userId, this)) {
             return null;
         }
-        db.update(String.format("insert into retweets (tweet_id, user_id, creator_id) values (%d, %d, %d)", tweetId, userId, creatorId));
+        shardStore.getShardByUserId(creatorId).update("insert into retweets (tweet_id, user_id, creator_id) values (?, ?, ?)", tweetId, userId, creatorId);
 
         FeedItem feedItem = new FeedItem();
         feedItem.setTweetId(tweetId);
-        String tweet = shardStore.getShardByUserId(creatorId).queryForObject("select tweet from feeds where tweet_id = ? and creator_id = ? and user_id = creator_id and user_id = receiver_id"
-                , new RowMapper<String>() {
+        String tweet = shardStore.getShardByUserId(creatorId).queryForObject("select tweet from feeds where tweet_id = ? and creator_id = ? and user_id = creator_id and user_id = receiver_id",
+            new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet resultSet, int i) throws SQLException {
                     return resultSet.getString("tweet");
                 }
-        },tweetId,creatorId);
+            }, tweetId, creatorId);
         feedItem.setTweet(tweet);
         feedItem.setCreatorId(creatorId);
         return add(feedItem, userId);
     }
 
     public List<UserProfileItem> favoritedUsers(Long creatorId, Long tweetId) {
-        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join favorites on users.id = favorites.user_id) where creator_id = ? and  tweet_id = ?", UserProfileItem.rowMapper,creatorId, tweetId);
+        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join favorites on users.id = favorites.user_id) where creator_id = ? and  tweet_id = ?", UserProfileItem.rowMapper, creatorId, tweetId);
     }
 
     public List<UserProfileItem> reTweetedUsers(Long creatorId, Long tweetId) {
-        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join retweets on users.id = retweets.user_id) where creator_id = ? and  tweet_id = ?",  UserProfileItem.rowMapper,creatorId, tweetId);
+        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join retweets on users.id = retweets.user_id) where creator_id = ? and  tweet_id = ?", UserProfileItem.rowMapper, creatorId, tweetId);
     }
 
 }

@@ -69,7 +69,7 @@ public class UserStore {
                 getUserId(otherUser), getUserId(currentUser));
     }
 
-    private List<UserProfileItem> applyFollowing(long userId, List<UserProfileItem> users) {
+    public List<UserProfileItem> applyFollowing(long userId, List<UserProfileItem> users) {
         for (UserProfileItem user : users) {
             user.setFollowing(shardStore.getShardByUserId(userId).queryForInt("select count(*) from following where user_id = ? and following_id = ?", userId, user.getId())> 0);
         }

@@ -25,6 +25,7 @@ public class FeedItem {
     private boolean isFavorite;
     private Long favoriteCount;
     private Long retweetCount;
+    private String creatorEmail;
     private String profilePicURL;
 
     public static final RowMapper<FeedItem> rowMapper = new RowMapper<FeedItem>() {
@@ -42,12 +43,13 @@ public class FeedItem {
         this.tweetId = resultSet.getLong("tweet_id");
         this.tweet = resultSet.getString("tweet");
         this.creatorId = resultSet.getLong("creator_id");
-        this.creatorName = resultSet.getString("creatorname");
+        this.creatorName = resultSet.getString("creator_name");
         this.isRetweet = !creatorId.equals(userId);
         this.isFavorite = false;
         this.favoriteCount = 0L;
         this.retweetCount = 0L;
-        this.profilePicURL = new Gravatar().getUrl( resultSet.getString("creatoremail") );
+        this.creatorEmail = resultSet.getString("creator_email");
+        this.profilePicURL = new Gravatar().getUrl( this.creatorEmail);
     }
 
     public Long getUserId() {
@@ -144,5 +146,13 @@ public class FeedItem {
 
     public void setRetweetCount(Long retweetCount) {
         this.retweetCount = retweetCount;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String email) {
+        this.creatorEmail = email;
     }
 }

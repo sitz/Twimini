@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,15 +35,32 @@ public class UserStore {
 
     public List<UserProfileItem> followingList(String userName) {
         long userId = getUserId(userName);
-
-        List<UserProfileItem> users = shardStore.getShardByUserName(userName).query("select username, id, email from users inner join following on following.following_id = users.id where user_id = ?", UserProfileItem.rowMapper, userId );
-
+        List<Long> followingIds = shardStore.getShardByUserId(userId).query("select following_id from following where user_id = ?", new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("following_id");
+            }
+        }, userId);
+        List<UserProfileItem> users = new ArrayList<UserProfileItem>();
+        for (Long followingId : followingIds) {
+            users.add((UserProfileItem) shardStore.getShardByUserId(followingId).queryForObject("select username, id, email from users where id = ?", UserProfileItem.rowMapper, followingId));
+        }
         return applyFollowing(userId, users);
     }
 
     public List<UserProfileItem> followerList(String userName) {
         long userId = getUserId(userName);
-        List<UserProfileItem> users = shardStore.getShardByUserName(userName).query("select username, id, email from users inner join followers on followers.follower_id = users.id where user_id = ?" ,UserProfileItem.rowMapper, userId );
+        List<Long> followerIds = shardStore.getShardByUserId(userId).query("select follower_id from followers where user_id = ?", new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("follower_id");
+            }
+        }, userId);
+        List<UserProfileItem> users = new ArrayList<UserProfileItem>();
+        for (Long followerId : followerIds) {
+            UserProfileItem u = shardStore.getShardByUserId(followerId).queryForObject("select username, id, email from users where id = ?", UserProfileItem.rowMapper, followerId);
+            users.add(u);
+        }
         return applyFollowing(userId, users);
     }
 
@@ -64,9 +82,11 @@ public class UserStore {
             if (loggedUserId.equals(otherUserId)) {
                 return 1;
             }
-
-            shardStore.getShardByUserName(userName).update("insert into following (user_id, following_id) values (? ,?)", loggedUserId, otherUserId);
-            shardStore.getShardByUserName(userName).update("insert into followers (user_id, follower_id) values  (?, ?)", otherUserId, loggedUserId);
+            if (shardStore.getShardByUserId(loggedUserId).queryForInt("select count (*) from following where user_id = ? and following_id = ?", loggedUserId, otherUserId) > 0) {
+                return 1;
+            }
+            shardStore.getShardByUserId(loggedUserId).update("insert into following (user_id, following_id) values (? ,?)", loggedUserId, otherUserId);
+            shardStore.getShardByUserId(otherUserId).update("insert into followers (user_id, follower_id) values  (?, ?)", otherUserId, loggedUserId);
             return 0;
         } catch (IndexOutOfBoundsException E) {
             return 1;
@@ -83,8 +103,8 @@ public class UserStore {
                 return 1;
             }
 
-            shardStore.getShardByUserName(userName).update("delete from following where user_id = ? and following_id = ?", loggedUserId, otherUserId);
-            shardStore.getShardByUserName(userName).update("delete from followers where user_id = ? and follower_id = ?", otherUserId, loggedUserId);
+            shardStore.getShardByUserId(loggedUserId).update("delete from following where user_id = ? and following_id = ?", loggedUserId, otherUserId);
+            shardStore.getShardByUserId(otherUserId).update("delete from followers where user_id = ? and follower_id = ?", otherUserId, loggedUserId);
             return 0;
         } catch (IndexOutOfBoundsException E) {
             return 1;
@@ -95,10 +115,9 @@ public class UserStore {
     }
 
     public List<FeedItem> tweetList(String userName, Long loggedUserId) {
-        String conditionalSQL = "feeds.user_id = ? and feeds.user_id = feeds.receiver_id ";
+        String conditionalSQL = "user_id = ? and user_id = receiver_id and id > ?";
         String orderingSQL = "desc limit ? ";
-        String otherCondition = "something.id > ?  ";
-        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, otherCondition, orderingSQL, getMinFeedId(), getFeedLimit());
+        return feedQueryAndFavoriteStatus(getUserId(userName), loggedUserId, conditionalSQL, orderingSQL, getMinFeedId(), getFeedLimit());
     }
 
     public int noOfTweets(String userName) {
@@ -133,8 +152,8 @@ public class UserStore {
         }, userId);
     }
 
-    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String otherCondition, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(getPreSQL() + conditionalSQL + getPostSQL() + otherCondition + getPreOrderSQL() + orderingSQL,
+    public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String orderingSQL, Long feedId, Long feedLimit) {
+        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(getPreSQL() + conditionalSQL + getPreOrderSQL() + orderingSQL,
                 FeedItem.rowMapper, userId, feedId, feedLimit);
 
         for (FeedItem feedItem : feedItems) {
@@ -161,25 +180,12 @@ public class UserStore {
         return shardStore.getShardByUserId(creatorId).queryForInt("select count(*) from retweets where tweet_id = ? and user_id = ?  and creator_id = ?", tweetId, userId, creatorId) > 0;
     }
 
-    public String getPreOrderSQL() {
-        final String preOrderSQL = " order by something.id ";
-        return preOrderSQL;
-    }
-
-    public String getPostSQL() {
-        final String postConditionSQL = " ) something inner join users " +
-                "on something.creator_id = users.id " +
-                "where ";
-        return postConditionSQL;
-    }
-
     public String getPreSQL() {
-        final String preConditionSQL = " select something.id, user_id, something.username, tweet_id, tweet, creator_id, users.username as creatorname, users.email as creatoremail " +
-                "from ( select distinct on (tweet_id, creator_id) feeds.id, user_id , users.username, tweet_id, tweet, creator_id " +
-                "from feeds inner join users " +
-                "on users.id = feeds.user_id " +
-                "where ";
-        return preConditionSQL;
+        return " select * from (select distinct on (tweet_id, creator_id) * from feeds where ";
+    }
+
+    public String getPreOrderSQL() {
+        return " )temp order by id ";
     }
 
     public Long getMaxFeedLimit() {

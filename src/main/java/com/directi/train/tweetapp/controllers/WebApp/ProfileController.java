@@ -30,7 +30,7 @@ public class ProfileController {
     public ModelAndView profile(@PathVariable("userName") String userName, HttpServletRequest request) {
         UserListModelAndView modelAndView = new UserListModelAndView("user");
         modelAndView.addObject("userProfileItem", userStore.getUserProfileItem(userName));
-        Integer i =userStore.checkFollowingStatus(authStore.getUserName((String) request.getAttribute("accesstoken")), userName);
+        Integer i = userStore.checkFollowingStatus(authStore.getUserName((String) request.getAttribute("accesstoken")), userName);
         Boolean followStatus;
         if(i==0) followStatus = Boolean.FALSE;
         else followStatus = Boolean.TRUE;

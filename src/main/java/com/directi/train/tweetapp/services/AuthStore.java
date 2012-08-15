@@ -2,9 +2,7 @@ package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.services.Auxillary.ShardStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
@@ -46,4 +44,5 @@ public class AuthStore {
     public boolean isValid(String accessToken) {
         return shardStore.getAuthShard().queryForInt("select count (*) from auth where access_token = ?", accessToken) == 1;
     }
+
 }

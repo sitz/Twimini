@@ -45,7 +45,6 @@ public class UserController {
     @RequestMapping(value = "change/{password}", method = RequestMethod.POST)
     @ResponseBody
     public void changePassword(@PathVariable("password") String password, HttpServletRequest request) {
-        System.out.println(request.getAttribute("accesstoken"));
         try {
             loginStore.changePassword(password, authStore.getUserName((String) request.getAttribute("accesstoken")));
         } catch (Exception E) {

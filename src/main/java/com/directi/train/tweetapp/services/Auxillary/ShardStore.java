@@ -21,6 +21,10 @@ public class ShardStore {
     @Qualifier("shardTemplate")
     private SimpleJdbcTemplate shardDB;
 
+    public SimpleJdbcTemplate getShardDB() {
+        return shardDB;
+    }
+
     public SimpleJdbcTemplate getShardByUserId(Long userId) {
         return shardByIndex(shardDB.queryForInt("select shard from shards where userid = ?", userId));
     }

@@ -1,6 +1,9 @@
 package com.directi.train.tweetapp.services;
 
 import com.directi.train.tweetapp.model.UserItem;
+import com.directi.train.tweetapp.services.Auxillary.PasswordStore;
+import com.directi.train.tweetapp.services.Auxillary.RandomStore;
+import com.directi.train.tweetapp.services.Auxillary.ShardStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,11 +25,10 @@ import java.util.List;
 @Service
 public class LoginStore {
     @Autowired
-    @Qualifier("simpleJdbcTemplate1")
-    private SimpleJdbcTemplate db;
+    private RandomStore randomStore;
 
     @Autowired
-    private RandomStore randomStore;
+    private ShardStore shardStore;
 
     private final int minUserLength = 1;
     private final int maxUserLength = 16;
@@ -44,8 +46,7 @@ public class LoginStore {
             return "5";
         }
 
-        List<UserItem> userData = db.query(String.format("select * from users where username='%s' or email='%s'",
-                userName, email), UserItem.rowMapper);
+        List<UserItem> userData = shardStore.getShardByUserName(userName).query("select * from users where username= ? or email=?", UserItem.rowMapper,userName, email );
         UserItem userItem;
 
         try {
@@ -59,7 +60,7 @@ public class LoginStore {
         }
         catch (IndexOutOfBoundsException e) {
             password = PasswordStore.SHA(password);
-            db.update(String.format("insert into users (email, username, password) values('%s', '%s', '%s')", email, userName, password));
+            shardStore.getNewUserShard().update(String.format("insert into users (email, username, password) values('%s', '%s', '%s')", email, userName, password));
         }
         return "0";
     }
@@ -67,7 +68,7 @@ public class LoginStore {
     public UserItem checkLogin(String userName,String password) throws Exception {
         UserItem userData;
         try {
-            userData = db.query(String.format("select * from users where username = '%s'", userName), UserItem.rowMapper).get(0);
+            userData = shardStore.getShardByUserName(userName).query("select * from users where username = '%s'", UserItem.rowMapper, userName).get(0);
             if (userData.getPassword().equals(PasswordStore.SHA(password))) {
                 userData.getId();
             } else {
@@ -81,29 +82,31 @@ public class LoginStore {
     }
 
     public void changePassword(String password, String userName) {
-        db.update(String.format("update users set password = '%s' where username = '%s'", PasswordStore.SHA(password), userName));
-        String eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
+        shardStore.getShardByUserName(userName).update("update users set password = '?' where username = '?'", PasswordStore.SHA(password), userName);
+        String eMail = shardStore.getShardByUserName(userName).query("select email from users where username = '?'",  new RowMapper<String>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("email");
             }
-        }).get(0);
+        },userName).get(0);
         PasswordStore.sendPassword(eMail, password);
     }
 
     public void forgotPassword(String userName) {
         String eMail = null;
         try {
-            eMail = db.query(String.format("select email from users where username = '%s'", userName), new RowMapper<String>() {
+            eMail = shardStore.getShardByUserName(userName).query("select email from users where username = '%s'", new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet resultSet, int i) throws SQLException {
                     return resultSet.getString("email");
                 }
-            }).get(0);
+            },userName).get(0);
         }  catch (Exception E) {
             E.printStackTrace();
         }
         String pwd = randomStore.getPassword();
-        db.update(String.format("update users set password = '%s' where email = '%s'", PasswordStore.SHA(pwd), eMail));
+        shardStore.getShardByUserName(userName).update("update users set password = '%s' where email = ?", PasswordStore.SHA(pwd), eMail);
         PasswordStore.sendPassword(eMail, pwd);
-    }}
+    }
+
+}

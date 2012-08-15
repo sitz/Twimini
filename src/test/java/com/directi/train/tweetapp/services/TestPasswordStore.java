@@ -1,5 +1,6 @@
 package com.directi.train.tweetapp.services;
 
+import com.directi.train.tweetapp.services.Auxillary.PasswordStore;
 import org.junit.Test;
 
 /**
@@ -11,11 +12,12 @@ import org.junit.Test;
  */
 public class TestPasswordStore {
 
+
     @Test
     public void testSendPassword() {
         String to = "siteshshrivastava@gmail.com";
         String password = "bitch";
 
-        PasswordStore.sendPassword(to, password);
+        new PasswordStore().sendPassword(to, password);
     }
 }

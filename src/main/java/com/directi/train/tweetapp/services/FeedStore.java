@@ -63,7 +63,7 @@ public class FeedStore  {
                     userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId);
         }
 
-        return shardStore.getShardByUserId(userId).queryForObject(userStore.getPreSQL() + "feeds.id = ?" + userStore.getPostSQL() + "desc", FeedItem.rowMapper, id);
+        return shardStore.getShardByUserId(userId).queryForObject(userStore.getPreSQL() + "feeds.id = ?" + userStore.getPostSQL() + "true" + userStore.getPreOrderSQL() + "desc", FeedItem.rowMapper, id);
     }
 
     public List<FeedItem> feed(Long userId) {

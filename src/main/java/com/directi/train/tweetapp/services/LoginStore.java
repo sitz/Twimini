@@ -60,7 +60,7 @@ public class LoginStore {
         }
         catch (IndexOutOfBoundsException e) {
             password = PasswordStore.SHA(password);
-            shardStore.getNewUserShard().update(String.format("insert into users (email, username, password) values('%s', '%s', '%s')", email, userName, password));
+            shardStore.getNewUserShard().update("insert into users (email, username, password) values(?, ?, ?)", email, userName, password);
         }
         return "0";
     }
@@ -68,7 +68,7 @@ public class LoginStore {
     public UserItem checkLogin(String userName,String password) throws Exception {
         UserItem userData;
         try {
-            userData = shardStore.getShardByUserName(userName).query("select * from users where username = '%s'", UserItem.rowMapper, userName).get(0);
+            userData = shardStore.getShardByUserName(userName).query("select * from users where username = ?", UserItem.rowMapper, userName).get(0);
             if (userData.getPassword().equals(PasswordStore.SHA(password))) {
                 userData.getId();
             } else {
@@ -82,8 +82,8 @@ public class LoginStore {
     }
 
     public void changePassword(String password, String userName) {
-        shardStore.getShardByUserName(userName).update("update users set password = '?' where username = '?'", PasswordStore.SHA(password), userName);
-        String eMail = shardStore.getShardByUserName(userName).query("select email from users where username = '?'",  new RowMapper<String>() {
+        shardStore.getShardByUserName(userName).update("update users set password = ? where username = ?", PasswordStore.SHA(password), userName);
+        String eMail = shardStore.getShardByUserName(userName).query("select email from users where username = ?",  new RowMapper<String>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("email");
@@ -95,7 +95,7 @@ public class LoginStore {
     public void forgotPassword(String userName) {
         String eMail = null;
         try {
-            eMail = shardStore.getShardByUserName(userName).query("select email from users where username = '%s'", new RowMapper<String>() {
+            eMail = shardStore.getShardByUserName(userName).query("select email from users where username = ?", new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet resultSet, int i) throws SQLException {
                     return resultSet.getString("email");
@@ -105,7 +105,7 @@ public class LoginStore {
             E.printStackTrace();
         }
         String pwd = randomStore.getPassword();
-        shardStore.getShardByUserName(userName).update("update users set password = '%s' where email = ?", PasswordStore.SHA(pwd), eMail);
+        shardStore.getShardByUserName(userName).update("update users set password = ? where email = ?", PasswordStore.SHA(pwd), eMail);
         PasswordStore.sendPassword(eMail, pwd);
     }
 

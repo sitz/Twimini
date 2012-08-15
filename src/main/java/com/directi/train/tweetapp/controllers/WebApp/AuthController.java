@@ -1,8 +1,6 @@
 package com.directi.train.tweetapp.controllers.WebApp;
 
 import com.directi.train.tweetapp.controllers.API.ApiAuthController;
-import com.directi.train.tweetapp.services.AuthStore;
-import com.directi.train.tweetapp.services.RandomStore;
 import com.directi.train.tweetapp.services.UserStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

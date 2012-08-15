@@ -17,7 +17,7 @@ public class RandomStore {
     @Autowired private ShardStore shardStore;
 
     public String getAccessToken() {
-        return Integer.toString(shardStore.getAuthShard().queryForInt(String.format("select max(access_token) from auth")) + 1);
+        return Integer.toString(shardStore.getAuthShard().queryForInt("select max(access_token) from auth")) + 1;
     }
 
     public String getPassword() {

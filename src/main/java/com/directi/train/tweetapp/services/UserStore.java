@@ -31,12 +31,12 @@ public class UserStore {
 
     public UserProfileItem getUserProfileItem(String userName) {
         long userId = getUserId(userName);
-        return shardStore.getShardByUserName(userName).queryForObject("select username, id, email from users where id = ?",UserProfileItem.rowMapper,userId);
+        return shardStore.getShardByUserName(userName).queryForObject("select username, id, email from users where id = ?", UserProfileItem.rowMapper, userId);
     }
 
     public List<UserProfileItem> followingList(String userName) {
         long userId = getUserId(userName);
-        List<UserProfileItem> users = shardStore.getShardByUserName(userName).query("select username, id, email from users inner join following on following.following_id = users.id where user_id =%d", UserProfileItem.rowMapper,userId );
+        List<UserProfileItem> users = shardStore.getShardByUserName(userName).query("select username, id, email from users inner join following on following.following_id = users.id where user_id =?", UserProfileItem.rowMapper,userId );
         return applyFollowing(userId, users);
     }
 
@@ -60,8 +60,8 @@ public class UserStore {
                 return 1;
             }
 
-            shardStore.getShardByUserName(userName).update("insert into following (user_id, following_id) values (%d ,%d)", loggedUserId, otherUserId);
-            shardStore.getShardByUserName(userName).update("insert into followers (user_id, follower_id) values  (%d, %d)", otherUserId, loggedUserId);
+            shardStore.getShardByUserName(userName).update("insert into following (user_id, following_id) values (? ,?)", loggedUserId, otherUserId);
+            shardStore.getShardByUserName(userName).update("insert into followers (user_id, follower_id) values  (?, ?)", otherUserId, loggedUserId);
             return 0;
         } catch (IndexOutOfBoundsException E) {
             return 1;
@@ -98,25 +98,25 @@ public class UserStore {
 
     public Integer checkFollowingStatus(String curUser,String otherUser) {
         return shardStore.getShardByUserName(curUser).queryForInt("select count(*) from followers where user_id = ? and follower_id = ?",
-                getUserId(otherUser),getUserId(curUser));
+                getUserId(otherUser), getUserId(curUser));
     }
 
     public Integer noOfFollowers(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from followers where user_id=?",getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from followers where user_id=?", getUserId(userName));
     }
 
     public Integer noOfFollowing(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from following where user_id=?",getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from following where user_id=?", getUserId(userName));
     }
 
     public List<Long> getFavoriteTweetsOfAUser(String userName) {
         long userId = getUserId(userName);
-        return shardStore.getShardByUserId(userId).query("select tweet_id from favorites where user_id = ?",  new RowMapper<Long>() {
+        return shardStore.getShardByUserId(userId).query("select tweet_id from favorites where user_id = ?", new RowMapper<Long>() {
             @Override
             public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getLong("tweet_id");
             }
-        },userId);
+        }, userId);
     }
 
     public List<Long> getReTweetsOfAUser(String userName) {
@@ -126,11 +126,11 @@ public class UserStore {
             public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getLong("tweet_id");
             }
-        },userId );
+        }, userId);
     }
 
     public int noOfTweets(String userName) {
-        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from feeds where user_id = receiver_id and user_id=?",getUserId(userName));
+        return shardStore.getShardByUserName(userName).queryForInt("select count(*) from feeds where user_id = receiver_id and user_id=?", getUserId(userName));
     }
 
     public String getPreOrderSQL() {
@@ -155,8 +155,8 @@ public class UserStore {
     }
 
     public List<FeedItem> feedQueryAndFavoriteStatus(Long userId, Long loggedUserId, String conditionalSQL, String otherCondition, String orderingSQL, Long feedId, Long feedLimit) {
-        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(String.format(getPreSQL() + conditionalSQL + getPostSQL() + otherCondition + getPreOrderSQL() + orderingSQL,
-                userId, feedId, feedLimit), FeedItem.rowMapper);
+        List<FeedItem> feedItems = shardStore.getShardByUserId(userId).query(getPreSQL() + conditionalSQL + getPostSQL() + otherCondition + getPreOrderSQL() + orderingSQL,
+                FeedItem.rowMapper, userId, feedId, feedLimit);
 
         for (FeedItem feedItem : feedItems) {
             feedItem.setFavorite(isFavorited(feedItem.getCreatorId(), feedItem.getTweetId(), loggedUserId));
@@ -167,7 +167,7 @@ public class UserStore {
     }
 
     private Long reTweetCount(Long creatorId, Long tweetId) {
-        return shardStore.getShardByUserId(creatorId).queryForLong("select count(*) from retweets where creator_id = %d and tweet_id = %d", creatorId, tweetId);
+        return shardStore.getShardByUserId(creatorId).queryForLong("select count(*) from retweets where creator_id = ? and tweet_id = ?", creatorId, tweetId);
     }
 
     private Long favoriteCount(Long creatorId, Long tweetId) {
@@ -175,7 +175,7 @@ public class UserStore {
     }
 
     public boolean isFavorited(Long creatorId, Long tweetId, Long userId) {
-        return shardStore.getShardByUserId(creatorId).queryForInt(String.format("select count(*) from favorites where tweet_id = %d and user_id = %d and creator_id = %d", tweetId, userId, creatorId)) > 0;
+        return shardStore.getShardByUserId(creatorId).queryForInt("select count(*) from favorites where tweet_id = ? and user_id = ? and creator_id = ?", tweetId, userId, creatorId) > 0;
     }
 
     public boolean isRetweeted(Long creatorId, Long tweetId, long userId, FeedStore feedStore) {

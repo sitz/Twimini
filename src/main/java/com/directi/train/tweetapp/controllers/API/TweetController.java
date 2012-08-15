@@ -35,14 +35,14 @@ public class TweetController {
 
     @RequestMapping(value = "retweets/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
-        return feedStore.reTweetedUsers(creatorId, tweetId);
+    public List<UserProfileItem> getUsersWhoReTweeted(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        return feedStore.reTweetedUsers(creatorId, tweetId, (String) request.getAttribute("curUserName"));
     }
 
     @RequestMapping(value = "favorites/{creatorId}/{tweetId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserProfileItem> getUsersWhoLiked(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId) {
-        return feedStore.favoritedUsers(creatorId, tweetId);
+    public List<UserProfileItem> getUsersWhoLiked(@PathVariable("creatorId") Long creatorId, @PathVariable("tweetId") Long tweetId, HttpServletRequest request) {
+        return feedStore.favoritedUsers(creatorId, tweetId, (String) request.getAttribute("curUserName"));
     }
 
     @RequestMapping(value = "favorite/{creatorId}/{tweetId}", method = RequestMethod.POST)

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -115,12 +116,37 @@ public class FeedStore  {
         return add(feedItem, userId);
     }
 
-    public List<UserProfileItem> favoritedUsers(Long creatorId, Long tweetId) {
-        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join favorites on users.id = favorites.user_id) where creator_id = ? and  tweet_id = ?", UserProfileItem.rowMapper, creatorId, tweetId);
+    public List<UserProfileItem> favoritedUsers(Long creatorId, Long tweetId, String loggeduser) {
+        List<Long> userIds = shardStore.getShardByUserId(creatorId).query("select user_id from favorites where tweet_id = ? and creator_id = ?", new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("user_id");
+            }
+        }, tweetId, creatorId);
+
+        return idToUserProfileItem(loggeduser, userIds);
     }
 
-    public List<UserProfileItem> reTweetedUsers(Long creatorId, Long tweetId) {
-        return shardStore.getShardByUserId(creatorId).query("select id, username, email from (users inner join retweets on users.id = retweets.user_id) where creator_id = ? and  tweet_id = ?", UserProfileItem.rowMapper, creatorId, tweetId);
+    public List<UserProfileItem> reTweetedUsers(Long creatorId, Long tweetId, String loggedUser) {
+        List<Long> userIds = shardStore.getShardByUserId(creatorId).query("select user_id from retweets where tweet_id = ? and creator_id = ?", new RowMapper<Long>() {
+            @Override
+            public Long mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getLong("user_id");
+            }
+        }, tweetId, creatorId);
+
+        return idToUserProfileItem(loggedUser, userIds);
+    }
+
+    private List<UserProfileItem> idToUserProfileItem(String loggedUser, List<Long> userIds) {
+        List<UserProfileItem> users = new ArrayList<UserProfileItem>();
+        for (Long userId : userIds) {
+            users.add(shardStore.getShardDB().queryForObject("select userid as id, username, email from shards where userid = ?", UserProfileItem.rowMapper, userId));
+        }
+        if (loggedUser != null) {
+            users = userStore.applyFollowing(userStore.getUserId(loggedUser), users);
+        }
+        return users;
     }
 
 }

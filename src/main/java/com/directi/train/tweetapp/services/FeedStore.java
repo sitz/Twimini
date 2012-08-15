@@ -68,8 +68,7 @@ public class FeedStore  {
                     userId, i, feedItem.getTweet(), nextUniqueTweetId, creatorId));
         }
 
-        return db.queryForObject(String.format(localUserStore.getPreSQL() + "feeds.id = %d" + localUserStore.getPostSQL() + "true" + localUserStore.getPreOrderSQL() + "desc",
-                id), FeedItem.rowMapper);
+        return db.queryForObject(String.format(localUserStore.getPreSQL() + "feeds.id = %d" + localUserStore.getPostSQL() + "desc", id), FeedItem.rowMapper);
     }
 
     public List<FeedItem> feed(Long userId) {

@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.services;
+package com.directi.train.tweetapp.services.Auxillary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +28,13 @@ public class ShardStore {
     }
 
     public SimpleJdbcTemplate getShardByUserEmail(String eMail) {
+        return db1;
+    }
+
+    public SimpleJdbcTemplate getNewUserShard() {
+        return db1;
+    }
+    public SimpleJdbcTemplate getAuthShard() {
         return db1;
     }
 }

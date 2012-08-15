@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.services;
+package com.directi.train.tweetapp.services.Auxillary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,12 +14,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RandomStore {
-    @Autowired
-    @Qualifier("simpleJdbcTemplate1")
-    private SimpleJdbcTemplate db;
+    @Autowired private ShardStore shardStore;
 
     public String getAccessToken() {
-        return Integer.toString(db.queryForInt(String.format("select max(access_token) from auth")) + 1);
+        return Integer.toString(shardStore.getAuthShard().queryForInt(String.format("select max(access_token) from auth")) + 1);
     }
 
     public String getPassword() {

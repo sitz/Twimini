@@ -1,4 +1,4 @@
-package com.directi.train.tweetapp.services;
+package com.directi.train.tweetapp.services.Auxillary;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -7,13 +7,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
-/**
- * Created with IntelliJ IDEA.
- * User: sitesh
- * Date: 6/8/12
- * Time: 8:43 PM
- * To change this template use File | Settings | File Templates.
- */
 public class PasswordStore {
 
     public static void sendPassword(String receiver, String pwd) {

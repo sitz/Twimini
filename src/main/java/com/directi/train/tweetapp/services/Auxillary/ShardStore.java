@@ -57,13 +57,13 @@ public class ShardStore {
 
     private int cacheLayer(String query, Object arg) {
         String argStr = arg.toString();
-        Integer result = (Integer)memcachedClient.get(query + argStr);
+        String trimmedQuery = query.replace(" ","");
+        Integer result = (Integer)memcachedClient.get(trimmedQuery + argStr);
         if (result!= null) {
-            System.out.println("Entering MemCached");
             return result;
         }
-        result = shardDB.queryForInt(query,argStr);
-        memcachedClient.set(query + argStr,3600,result);
+        result = shardDB.queryForInt(query,arg);
+        memcachedClient.set(trimmedQuery + argStr,3600,result);
         return result;
     }
 

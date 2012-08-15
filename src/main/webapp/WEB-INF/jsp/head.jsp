@@ -21,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="/tweet">Mini Twitter</a>
+            <a class="brand" href="/tweet">TwiMini</a>
             <div class="nav-collapse" id="main-menu"><ul class="nav" id="main-menu-left">
             </ul>
                 <ul class="nav pull-right" id="main-menu-right">

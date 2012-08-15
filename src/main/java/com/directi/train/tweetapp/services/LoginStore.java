@@ -5,10 +5,8 @@ import com.directi.train.tweetapp.services.Auxillary.PasswordStore;
 import com.directi.train.tweetapp.services.Auxillary.RandomStore;
 import com.directi.train.tweetapp.services.Auxillary.ShardStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
@@ -46,21 +44,24 @@ public class LoginStore {
             return "5";
         }
 
-        List<UserItem> userData = shardStore.getShardByUserName(userName).query("select * from users where username= ? or email=?", UserItem.rowMapper,userName, email );
-        UserItem userItem;
-
         try {
-            userItem = userData.get(0);
+            List<UserItem> userData = shardStore.getShardByUserEmail(email).query("select * from users where email=?", UserItem.rowMapper, email);
+            UserItem userItem = userData.get(0);
             if(userItem.getEmail().equals(email) ){
                 return "1";
             }
-            if(userItem.getUsername().equals(userName)){
-                return "2";
+
+        } catch (Exception e) {
+            try {
+                List<UserItem> userData = shardStore.getShardByUserName(userName).query("select * from users where username= ?", UserItem.rowMapper, userName);
+                UserItem userItem = userData.get(0);
+                if(userItem.getUsername().equals(userName)){
+                    return "2";
+                }
+            } catch(Exception E) {
+                password = PasswordStore.SHA(password);
+                shardStore.insertNew(email, userName, password);
             }
-        }
-        catch (IndexOutOfBoundsException e) {
-            password = PasswordStore.SHA(password);
-            shardStore.getNewUserShard().update("insert into users (email, username, password) values(?, ?, ?)", email, userName, password);
         }
         return "0";
     }

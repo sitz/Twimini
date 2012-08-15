@@ -1,8 +1,6 @@
 package com.directi.train.tweetapp.services.Auxillary;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +29,7 @@ public class RandomStore {
         return pwd;
     }
 
-    private int getRandomInt(int lo, int hi) {
+    public int getRandomInt(int lo, int hi) {
         return (int) (lo + Math.ceil(Math.random() * (hi - lo)));
     }
 }

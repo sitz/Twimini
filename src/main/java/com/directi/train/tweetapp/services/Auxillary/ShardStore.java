@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShardStore {
+    @Autowired private RandomStore randomStore;
+
     @Autowired
     @Qualifier("simpleJdbcTemplate2")
     private SimpleJdbcTemplate db2;
@@ -20,21 +22,40 @@ public class ShardStore {
     private SimpleJdbcTemplate shardDB;
 
     public SimpleJdbcTemplate getShardByUserId(Long userId) {
-        return db1;
+        return shardByIndex(shardDB.queryForInt("select shard from shards where userid = ?", userId));
     }
 
     public SimpleJdbcTemplate getShardByUserName(String userName) {
-        return db1;
+        return shardByIndex(shardDB.queryForInt("select shard from shards where username = ?", userName));
     }
 
     public SimpleJdbcTemplate getShardByUserEmail(String eMail) {
-        return db1;
+        return shardByIndex(shardDB.queryForInt("select shard from shards where email = ?", eMail));
     }
 
-    public SimpleJdbcTemplate getNewUserShard() {
-        return db1;
-    }
     public SimpleJdbcTemplate getAuthShard() {
-        return db1;
+        return shardDB;
+    }
+
+    public void insertNew(String eMail, String userName, String password) {
+        SimpleJdbcTemplate db;
+
+        int random = Math.random() <= 0.5 ? 1 : 2;
+        db = shardByIndex(random);
+
+        shardDB.update("insert into shards (username, email, shard) values(?, ?, ?)", userName, eMail, random);
+        int userId = shardDB.queryForInt("select userid from shards where username = ?", userName);
+
+        db.update("insert into users (id, email, username, password) values(?, ?, ?, ?)", userId, eMail, userName, password);
+
+    }
+
+    private SimpleJdbcTemplate shardByIndex(int random) {
+        SimpleJdbcTemplate db;
+        if (random == 1)
+            db = db1;
+        else
+            db = db2;
+        return db;
     }
 }

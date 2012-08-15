@@ -11,7 +11,7 @@ public class AppConfig {
     @Bean
     public SimpleJdbcTemplate simpleJdbcTemplate1() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
+        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter1");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("qwerty");
@@ -21,7 +21,7 @@ public class AppConfig {
     @Bean
     public SimpleJdbcTemplate simpleJdbcTemplate2() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
+        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter2");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("qwerty");
@@ -31,7 +31,7 @@ public class AppConfig {
     @Bean
     public SimpleJdbcTemplate shardTemplate() {
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwitter");
+        basicDataSource.setUrl("jdbc:postgresql://localhost/minitwittershard");
         basicDataSource.setDriverClassName("org.postgresql.Driver");
         basicDataSource.setUsername("postgres");
         basicDataSource.setPassword("qwerty");
